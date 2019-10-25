@@ -745,7 +745,7 @@ function get_html_translation_table ($table = null, $quote_style = null, string 
  * @since 4.3.0
  * @since 5.0
  */
-function sha1 ($str, $raw_output = null) {}
+function sha1 ($str, $raw_output = false) {}
 
 /**
  * Calculate the sha1 hash of a file
@@ -761,7 +761,7 @@ function sha1 ($str, $raw_output = null) {}
  * @since 4.3.0
  * @since 5.0
  */
-function sha1_file ($filename, $raw_output = null) {}
+function sha1_file ($filename, $raw_output = false) {}
 
 /**
  * Calculate the md5 hash of a string
@@ -778,7 +778,7 @@ function sha1_file ($filename, $raw_output = null) {}
  * @since 4.0
  * @since 5.0
  */
-function md5 ($str, $raw_output = null) {}
+function md5 ($str, $raw_output = false) {}
 
 /**
  * Calculates the md5 hash of a given file
@@ -794,7 +794,7 @@ function md5 ($str, $raw_output = null) {}
  * @since 4.2.0
  * @since 5.0
  */
-function md5_file ($filename, $raw_output = null) {}
+function md5_file ($filename, $raw_output = false) {}
 
 /**
  * Calculates the crc32 polynomial of a string
@@ -836,7 +836,7 @@ function iptcparse ($iptcblock) {}
  * Spool flag. If the spool flag is over 2 then the JPEG will be 
  * returned as a string.
  * </p>
- * @return mixed If success and spool flag is lower than 2 then the JPEG will not be
+ * @return string|bool If success and spool flag is lower than 2 then the JPEG will not be
  * returned as a string, false on errors.
  * @since 4.0
  * @since 5.0

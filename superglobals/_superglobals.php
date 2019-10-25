@@ -33,7 +33,7 @@ $_ENV = array();
  */
 $_SERVER = array();
 /**
- * @deprecated 4.1.0
+ * @deprecated 4.1
  */
 $HTTP_SERVER_VARS = array();
 

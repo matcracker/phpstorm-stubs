@@ -221,15 +221,16 @@ function ord ($string) {}
  * @param string $str <p>
  * The input string.
  * </p>
- * @param array $arr [optional] <p>
+ * @param array $result [optional] <p>
  * If the second parameter arr is present,
- * variables are stored in this variable as array elements instead.
+ * variables are stored in this variable as array elements instead.<br/>
+ * Since 7.2.0 this parameter is not optional.
  * </p>
  * @return void 
  * @since 4.0
  * @since 5.0
  */
-function parse_str ($str, array &$arr = null) {}
+function parse_str ($str, array &$result = null) {}
 
 /**
  * Parse a CSV string into an array
@@ -436,7 +437,7 @@ function vfprintf ($handle, $format, array $args) {}
  * n stands for number of characters processed so far.
  * </p>
  * @param mixed ...$_
- * @return mixed If only
+ * @return array|int If only
  * two parameters were passed to this function, the values parsed
  * will be returned as an array. Otherwise, if optional parameters are passed,
  * the function will return the number of assigned values. The optional
@@ -455,7 +456,7 @@ function sscanf ($str, $format, &...$_) {}
  * sprintf documentation.
  * </p>
  * @param mixed $_ [optional] 
- * @return mixed If only two parameters were passed to this function, the values parsed will be
+ * @return array|int If only two parameters were passed to this function, the values parsed will be
  * returned as an array. Otherwise, if optional parameters are passed, the
  * function will return the number of assigned values. The optional
  * parameters must be passed by reference.
@@ -479,7 +480,7 @@ function fscanf ($handle, $format, &$_ = null) {}
  * or PHP_URL_FRAGMENT to retrieve just a specific
  * URL component as a string.
  * </p>
- * @return mixed On seriously malformed URLs, parse_url() may return FALSE.
+ * @return array|string|int|null|false On seriously malformed URLs, parse_url() may return FALSE.
  * If the component parameter is omitted, an associative array is returned.
  * At least one element will be present within the array. Potential keys within this array are:
  * scheme - e.g. http
@@ -941,7 +942,8 @@ function proc_terminate ($process, $signal = 15) {}
 function proc_get_status ($process) {}
 
 /**
- * Change the priority of the current process
+ * Change the priority of the current process. <br/>
+ * Since 7.2.0 supported on Windows platforms.
  * @link https://php.net/manual/en/function.proc-nice.php
  * @param int $increment <p>
  * The increment value of the priority change.
