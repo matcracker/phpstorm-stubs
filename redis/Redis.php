@@ -18,7 +18,11 @@ class Redis
     const OPT_PREFIX            = 2;
     const OPT_READ_TIMEOUT      = 3;
     const OPT_SCAN              = 4;
-    const OPT_SLAVE_FAILOVER    = 5;
+    const OPT_FAILOVER          = 5;
+    const OPT_TCP_KEEPALIVE     = 6;
+    const OPT_COMPRESSION       = 7;
+    const OPT_REPLY_LITERAL     = 8;
+    const OPT_COMPRESSION_LEVEL = 9;    
 
     /**
      * Cluster options
@@ -26,6 +30,7 @@ class Redis
     const FAILOVER_NONE         = 0;
     const FAILOVER_ERROR        = 1;
     const FAILOVER_DISTRIBUTE   = 2;
+    const FAILOVER_DISTRIBUTE_SLAVES = 3;
 
     /**
      * SCAN options
@@ -58,6 +63,7 @@ class Redis
     const REDIS_LIST            = 3;
     const REDIS_ZSET            = 4;
     const REDIS_HASH            = 5;
+    const REDIS_STREAM          = 6;
 
     /**
      * Creates a Redis client
@@ -358,12 +364,14 @@ class Redis
     /**
      * Check the current connection status
      *
-     * @return  string STRING: +PONG on success.
+     * @param string $message
+     *
+     * @return bool|string TRUE if the command is successful or returns message
      * Throws a RedisException object on connectivity error, as described above.
      * @throws RedisException
      * @link    https://redis.io/commands/ping
      */
-    public function ping()
+    public function ping($message)
     {
     }
 
@@ -2910,14 +2918,14 @@ class Redis
     /**
      * Adds the specified member with a given score to the sorted set stored at key
      *
-     * @param string       $key     Required key
-     * @param array        $options Options if needed
-     * @param float        $score1  Required score
-     * @param string|mixed $value1  Required value
-     * @param float        $score2  Optional score
-     * @param string|mixed $value2  Optional value
-     * @param float        $scoreN  Optional score
-     * @param string|mixed $valueN  Optional value
+     * @param string                $key     Required key
+     * @param array|float           $options Options if needed or score if omitted
+     * @param float|string|mixed    $score1  Required score or value if options omitted
+     * @param string|float|mixed    $value1  Required value or optional score if options omitted
+     * @param float|string|mixed    $score2  Optional score or value if options omitted
+     * @param string|float|mixed    $value2  Optional value or score if options omitted
+     * @param float|string|mixed    $scoreN  Optional score or value if options omitted
+     * @param string|float|mixed    $valueN  Optional value or score if options omitted
      *
      * @return int Number of values added
      *
@@ -2951,7 +2959,7 @@ class Redis
      * </pre>
      * </pre>
      */
-    public function zAdd($key, $options, $score1, $value1, $score2 = null, $value2 = null, $scoreN = null, $valueN = null)
+    public function zAdd($key, $options, $score1, $value1 = null, $score2 = null, $value2 = null, $scoreN = null, $valueN = null)
     {
     }
 
