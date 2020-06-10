@@ -2,7 +2,6 @@
 /**
  * Generated stub file for code completion purposes
  */
-
 namespace pocketmine\world\format {
 final class PalettedBlockArray{
 
