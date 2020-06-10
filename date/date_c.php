@@ -17,7 +17,7 @@ interface DateTimeInterface {
     const RFC7231 = 'D, d M Y H:i:s \G\M\T';
     const RSS = 'D, d M Y H:i:s O';
     const W3C = 'Y-m-d\TH:i:sP';
-    
+
     /* Methods */
     /**
      * (PHP 5 &gt;=5.5.0)<br/>
@@ -28,7 +28,6 @@ interface DateTimeInterface {
      * @return DateInterval
      * The https://secure.php.net/manual/en/class.dateinterval.php DateInterval} object representing the
      * difference between the two dates or <b>FALSE</b> on failure.
-     *
      */
     public function diff($datetime2, $absolute = false);
 
@@ -41,7 +40,6 @@ interface DateTimeInterface {
      * </p>
      * @return string
      * Returns the formatted date string on success or <b>FALSE</b> on failure.
-     *
      */
     public function format($format);
 
@@ -51,7 +49,6 @@ interface DateTimeInterface {
      * @return int
      * Returns the timezone offset in seconds from UTC on success
      * or <b>FALSE</b> on failure.
-     *
      */
     public function getOffset();
 
@@ -162,7 +159,6 @@ class DateTimeImmutable implements DateTimeInterface {
      * @return static
      * Returns the {@link https://secure.php.net/manual/en/class.datetimeimmutable.php DateTimeImmutable} object for method chaining or <b>FALSE</b> on failure.
      */
-
     public function modify($modify) { }
 
     /**
@@ -184,7 +180,6 @@ class DateTimeImmutable implements DateTimeInterface {
      * @param int $day <p>Day of the date.</p>
      * @return static|false
      * Returns the {@link https://secure.php.net/manual/en/class.datetimeimmutable.php DateTimeImmutable} object for method chaining or <b>FALSE</b> on failure.
-     *
      */
     public function setDate($year, $month, $day) { }
 
@@ -269,7 +264,6 @@ class DateTimeImmutable implements DateTimeInterface {
      * </p>
      * @return string
      * Returns the formatted date string on success or <b>FALSE</b> on failure.
-     *
      */
     public function format($format) { }
 
@@ -279,7 +273,6 @@ class DateTimeImmutable implements DateTimeInterface {
      * @return int
      * Returns the timezone offset in seconds from UTC on success
      * or <b>FALSE</b> on failure.
-     *
      */
     public function getOffset() { }
 
@@ -639,7 +632,7 @@ class DateInterval {
 
     /**
      * Total number of days the interval spans. If this is unknown, days will be FALSE.
-     * @var mixed
+     * @var int|false
      */
     public $days;
 
@@ -678,7 +671,7 @@ class DateInterval {
  */
 class DatePeriod implements Traversable {
     const EXCLUDE_START_DATE = 1;
-    
+
     /**
      * Start date
      * @var DateTimeInterface
@@ -690,31 +683,31 @@ class DatePeriod implements Traversable {
      * @var DateTimeInterface|null
      */
     public $current;
-    
+
     /**
      * End date.
      * @var DateTimeInterface|null
      */
     public $end;
-    
+
     /**
      * The interval
      * @var DateInterval
      */
     public $interval;
-    
+
     /**
      * Number of recurrences.
      * @var int
      */
     public $recurrences;
-    
+
     /**
      * Start of period.
      * @var bool
      */
     public $include_start_date;
-    
+
     /**
      * @param DateTimeInterface $start
      * @param DateInterval $interval

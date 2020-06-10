@@ -555,12 +555,26 @@ function apcu_entry($key, callable $generator, $ttl = 0){}
  * Retrieves cached information from APCu's data store
  *
  * @link https://php.net/manual/en/function.apcu-cache-info.php
- * 
+ *
  * @param bool $limited If limited is TRUE, the return value will exclude the individual list of cache entries.
  * This is useful when trying to optimize calls for statistics gathering.
  * @return array|false Array of cached data (and meta-data) or FALSE on failure
  */
 function apcu_cache_info($limited = false){}
+
+/**
+ * Whether APCu is usable in the current environment
+ *
+ * @link https://www.php.net/manual/en/function.apcu-enabled.php
+ *
+ * @return bool
+ */
+function apcu_enabled(){}
+
+/**
+ * @param string $key
+ */
+function apcu_key_info($key){}
 
 /**
  * The APCUIterator class

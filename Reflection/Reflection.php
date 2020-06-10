@@ -36,7 +36,7 @@ class Reflection  {
 	 * Setting to <b>TRUE</b> will return the export,
 	 * as opposed to emitting it. Setting to <b>FALSE</b> (the default) will do the opposite.
 	 * </p>
-	 * @return string If the <i>return</i> parameter
+	 * @return string|null If the <i>return</i> parameter
 	 * is set to <b>TRUE</b>, then the export is returned as a string,
 	 * otherwise <b>NULL</b> is returned.
 	 */
@@ -54,7 +54,7 @@ interface Reflector  {
 	/**
 	 * Exports
 	 * @link https://php.net/manual/en/reflector.export.php
-	 * @return string
+	 * @return string|null
 	 * @deprecated 7.4
 	 */
 	static function export ();
@@ -62,7 +62,7 @@ interface Reflector  {
 	/**
 	 * To string
 	 * @link https://php.net/manual/en/reflector.tostring.php
-	 * @return string 
+	 * @return string
 	 */
 	function __toString ();
 
@@ -173,7 +173,7 @@ abstract class ReflectionFunctionAbstract implements Reflector {
 	/**
 	 * Gets file name
 	 * @link https://php.net/manual/en/reflectionfunctionabstract.getfilename.php
-	 * @return string The file name.
+	 * @return string|false The file name.
 	 */
 	public function getFileName () {}
 
@@ -314,7 +314,7 @@ class ReflectionFunction extends ReflectionFunctionAbstract implements Reflector
 	 * Setting to <b>TRUE</b> will return the export,
 	 * as opposed to emitting it. Setting to <b>FALSE</b> (the default) will do the opposite.
 	 * </p>
-	 * @return string If the <i>return</i> parameter
+	 * @return string|null If the <i>return</i> parameter
 	 * is set to <b>TRUE</b>, then the export is returned as a string,
 	 * otherwise <b>NULL</b> is returned.
 	 * @deprecated 7.4
@@ -336,7 +336,7 @@ class ReflectionFunction extends ReflectionFunctionAbstract implements Reflector
 	 * arguments which are passed to the function much like
 	 * call_user_func is.
 	 * </p>
-	 * @return mixed 
+	 * @return mixed
 	 */
 	public function invoke ($args = null) {}
 
@@ -390,7 +390,7 @@ class ReflectionParameter implements Reflector {
 	 * Setting to <b>TRUE</b> will return the export,
 	 * as opposed to emitting it. Setting to <b>FALSE</b> (the default) will do the opposite.
 	 * </p>
-	 * @return string The exported reflection.
+	 * @return string|null The exported reflection.
 	 * @deprecated 7.4
 	 */
 	public static function export ($function, $parameter, $return = null) {}
@@ -587,7 +587,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract implements Reflector {
 	 * Setting to <b>TRUE</b> will return the export,
 	 * as opposed to emitting it. Setting to <b>FALSE</b> (the default) will do the opposite.
 	 * </p>
-	 * @return string If the <i>return</i> parameter
+	 * @return string|null If the <i>return</i> parameter
 	 * is set to <b>TRUE</b>, then the export is returned as a string,
 	 * otherwise <b>NULL</b> is returned.
 	 * @deprecated 7.4
@@ -806,7 +806,7 @@ class ReflectionClass implements Reflector {
 	/**
 	 * Clones object
 	 * @link https://php.net/manual/en/reflectionclass.clone.php
-	 * @return void 
+	 * @return void
 	 */
 	final private function __clone () {}
 
@@ -820,7 +820,7 @@ class ReflectionClass implements Reflector {
 	 * Setting to <b>TRUE</b> will return the export,
 	 * as opposed to emitting it. Setting to <b>FALSE</b> (the default) will do the opposite.
 	 * </p>
-	 * @return string If the <i>return</i> parameter
+	 * @return string|null If the <i>return</i> parameter
 	 * is set to <b>TRUE</b>, then the export is returned as a string,
 	 * otherwise <b>NULL</b> is returned.
 	 * @deprecated 7.4
@@ -914,7 +914,7 @@ class ReflectionClass implements Reflector {
 	/**
 	 * Gets the constructor of the class
 	 * @link https://php.net/manual/en/reflectionclass.getconstructor.php
-	 * @return ReflectionMethod A <b>ReflectionMethod</b> object reflecting the class' constructor, or <b>NULL</b> if the class
+	 * @return ReflectionMethod|null A <b>ReflectionMethod</b> object reflecting the class' constructor, or <b>NULL</b> if the class
 	 * has no constructor.
 	 */
 	public function getConstructor () {}
@@ -1308,7 +1308,7 @@ class ReflectionObject extends ReflectionClass implements Reflector {
 	 * Setting to <b>TRUE</b> will return the export,
 	 * as opposed to emitting it. Setting to <b>FALSE</b> (the default) will do the opposite.
 	 * </p>
-	 * @return string If the <i>return</i> parameter
+	 * @return string|null If the <i>return</i> parameter
 	 * is set to <b>TRUE</b>, then the export is returned as a string,
 	 * otherwise <b>NULL</b> is returned.
 	 * @deprecated 7.4
@@ -1344,14 +1344,14 @@ class ReflectionProperty implements Reflector {
 	/**
 	 * Clone
 	 * @link https://php.net/manual/en/reflectionproperty.clone.php
-	 * @return void 
+	 * @return void
 	 */
 	final private function __clone () {}
 
 	/**
 	 * Export
 	 * @link https://php.net/manual/en/reflectionproperty.export.php
-	 * @param mixed $class 
+	 * @param mixed $class
 	 * @param string $name <p>
 	 * The property name.
 	 * </p>
@@ -1359,7 +1359,7 @@ class ReflectionProperty implements Reflector {
 	 * Setting to <b>TRUE</b> will return the export,
 	 * as opposed to emitting it. Setting to <b>FALSE</b> (the default) will do the opposite.
 	 * </p>
-	 * @return string
+	 * @return string|null
 	 * @deprecated 7.4
 	 */
 	public static function export ($class, $name, $return = null) {}
@@ -1537,7 +1537,7 @@ class ReflectionExtension implements Reflector {
 	 * Setting to <b>TRUE</b> will return the export,
 	 * as opposed to emitting it. Setting to <b>FALSE</b> (the default) will do the opposite.
 	 * </p>
-	 * @return string If the <i>return</i> parameter
+	 * @return string|null If the <i>return</i> parameter
 	 * is set to <b>TRUE</b>, then the export is returned as a string,
 	 * otherwise <b>NULL</b> is returned.
 	 * @deprecated 7.4
@@ -1677,7 +1677,7 @@ class ReflectionZendExtension implements Reflector {
 	 * </p>
 	 * @param string $return [optional] <p>
 	 * </p>
-	 * @return string
+	 * @return string|null
 	 * @since 5.4
 	 * @deprecated 7.4
 	 */
@@ -1765,7 +1765,6 @@ class ReflectionGenerator
 	 * @link https://php.net/manual/en/reflectiongenerator.getexecutingfile.php
 	 * @return string Returns the full path and file name of the currently executing generator.
 	 * @since 7.0
-	 *
 	 */
 	public function getExecutingFile()
 	{
@@ -1776,7 +1775,6 @@ class ReflectionGenerator
 	 * @link https://php.net/manual/en/reflectiongenerator.construct.php
 	 * @return Generator Returns the currently executing Generator object.
 	 * @since 7.0
-	 *
 	 */
 	public function getExecutingGenerator()
 	{
@@ -1928,7 +1926,7 @@ class ReflectionClassConstant implements Reflector {
      * @param mixed $class The reflection to export.
      * @param string $name The class constant name.
      * @param bool $return Setting to TRUE will return the export, as opposed to emitting it. Setting to FALSE (the default) will do the opposite.
-     * @return string
+     * @return string|null
      * @deprecated 7.4
      */
 	public static function export($class, $name, $return) {}
@@ -2035,16 +2033,26 @@ final class ReflectionReference
 	 * @return self|null
 	 */
 	public static function fromArrayElement($array, $key) {}
-	
+
 	/**
 	 * Returns unique identifier for the reference. The return value format is unspecified
 	 * @return int|string
 	 */
 	public function getId() {}
-	
+
 	private function __construct() {}
-	
+
 	private function __clone() {}
+}
+
+/**
+ * @since 8.0
+ */
+class ReflectionUnionType extends ReflectionType {
+	/**
+	 * @return ReflectionType[]
+	 */
+	public function getTypes() {}
 }
 
 // End of Reflection v.$Id: bcdcdaeea3aba34a8083bb62c6eda69ff3c3eab5 $

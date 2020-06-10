@@ -1436,7 +1436,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param array|object $input The input parameter accepts an array or an Object.
      * @param int $flags Flags to control the behaviour of the ArrayObject object.
      * @param string $iterator_class Specify the class that will be used for iteration of the ArrayObject object. ArrayIterator is the default class used.
-     *
      */
     public function __construct($input = array(), $flags = 0, $iterator_class = "ArrayIterator") { }
 
@@ -1630,6 +1629,13 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @return string The serialized representation of the <b>ArrayObject</b>.
      */
     public function serialize() { }
+
+    /**
+     * @return array
+     * @since 7.4
+     */
+    public function __debugInfo(){}
+
 
     /**
      * @return array
@@ -1900,6 +1906,13 @@ class ArrayIterator implements SeekableIterator, ArrayAccess, Serializable, Coun
      * @return array
      * @since 7.4
      */
+    public function __debugInfo(){}
+
+
+    /**
+     * @return array
+     * @since 7.4
+     */
     public function __serialize(): array {}
 
     /**
@@ -1935,15 +1948,3 @@ class RecursiveArrayIterator extends ArrayIterator implements RecursiveIterator 
      */
     public function getChildren() { }
 }
-
-/**
- * @since 7.1
- */
-define ("MT_RAND_MT19937", 0);
-
-/**
- * @since 7.1
- */
-define ("MT_RAND_PHP", 1);
-// End of SPL v.0.2
-?>

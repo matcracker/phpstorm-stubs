@@ -129,9 +129,7 @@ class MemcachePool  {
      */
     public function setServerParams ($host, $port = 11211, $timeout = 1, $retry_interval = 15, $status = true, callable $failure_callback = null) {}
 
-    /**
-     *
-     */
+
     public function setFailureCallback () {}
 
     /**
@@ -144,9 +142,7 @@ class MemcachePool  {
      */
     public function getServerStatus ($host, $port = 11211) {}
 
-    /**
-     *
-     */
+
     public function findServer () {}
 
     /**
@@ -387,7 +383,7 @@ function memcache_connect ($host, $port, $timeout = 1) {}
 /**
  * (PECL memcache >= 0.4.0)
  * Memcache::pconnect — Open memcached server persistent connection
- * 
+ *
  * @link https://php.net/manual/en/memcache.pconnect.php#example-5242
  * @param      $host
  * @param null $port

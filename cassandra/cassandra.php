@@ -25,7 +25,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 namespace {
 
     /**
@@ -41,7 +40,7 @@ namespace {
         /**
          * Consistency level ANY means the request is fulfilled as soon as the data
          * has been written on the Coordinator. Requests with this consistency level
-         * are not guranteed to make it to Replica nodes.
+         * are not guaranteed to make it to Replica nodes.
          *
          * @see \Cassandra\Session::execute()
          * @link https://docs.datastax.com/en/developer/php-driver/latest/api/class.Cassandra/#constant-CONSISTENCY_ANY
@@ -472,7 +471,6 @@ namespace {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/
  */
-
 namespace Cassandra {
 
     /**
@@ -4914,9 +4912,9 @@ namespace Cassandra {
     {
 
         /**
-         * @param long|double|string|\Cassandra\Bigint $months Months attribute of the duration.
-         * @param long|double|string|\Cassandra\Bigint $days Days attribute of the duration.
-         * @param long|double|string|\Cassandra\Bigint $nanos Nanos attribute of the duration.
+         * @param int|double|string|\Cassandra\Bigint $months Months attribute of the duration.
+         * @param int|double|string|\Cassandra\Bigint $days Days attribute of the duration.
+         * @param int|double|string|\Cassandra\Bigint $nanos Nanos attribute of the duration.
          *
          * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.Duration/#method-__construct
          */
@@ -6099,7 +6097,6 @@ namespace Cassandra {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/Cluster/
  */
-
 namespace Cassandra\Cluster {
 
     /**
@@ -6212,7 +6209,7 @@ namespace Cassandra\Cluster {
 
         /**
          * Sets the blacklist hosts. Any host in the blacklist will be ignored and
-         * a conneciton will not be established. This is useful for ensuring that
+         * a connection will not be established. This is useful for ensuring that
          * the driver will not connection to a predefied set of hosts.
          *
          * @param string $hosts A comma delimited list of addresses.
@@ -6546,7 +6543,6 @@ namespace Cassandra\Cluster {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/TimestampGenerator/
  */
-
 namespace Cassandra\TimestampGenerator {
 
     /**
@@ -6578,7 +6574,6 @@ namespace Cassandra\TimestampGenerator {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/RetryPolicy/
  */
-
 namespace Cassandra\RetryPolicy {
 
     /**
@@ -6658,7 +6653,6 @@ namespace Cassandra\RetryPolicy {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/Type/
  */
-
 namespace Cassandra\Type {
 
     /**
@@ -7116,7 +7110,6 @@ namespace Cassandra\Type {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/SSLOptions/
  */
-
 namespace Cassandra\SSLOptions {
 
     /**
@@ -7207,7 +7200,6 @@ namespace Cassandra\SSLOptions {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/Exception/
  */
-
 namespace Cassandra\Exception {
 
     /**

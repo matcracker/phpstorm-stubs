@@ -5,7 +5,6 @@ namespace Sodium;
 /**
  * To silence the phpstorm "unknown namespace" errors.
  */
-
     const CRYPTO_AEAD_AES256GCM_KEYBYTES = 32;
     const CRYPTO_AEAD_AES256GCM_NSECBYTES = 0;
     const CRYPTO_AEAD_AES256GCM_NPUBBYTES = 12;
@@ -54,7 +53,7 @@ namespace Sodium;
     const CRYPTO_STREAM_NONCEBYTES = 24;
     const CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE = 4;
     const CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE = 33554432;
-    const CRYPTO_PWHASH_OPSLIMIT_MODERATE = 6; 
+    const CRYPTO_PWHASH_OPSLIMIT_MODERATE = 6;
     const CRYPTO_PWHASH_MEMLIMIT_MODERATE = 134217728;
     const CRYPTO_PWHASH_OPSLIMIT_SENSITIVE = 8;
     const CRYPTO_PWHASH_MEMLIMIT_SENSITIVE = 536870912;
@@ -63,7 +62,7 @@ namespace Sodium;
     /**
      * Can you access AES-256-GCM? This is only available if you have supported
      * hardware.
-     * 
+     *
      * @return bool
      */
     function crypto_aead_aes256gcm_is_available(): bool
@@ -74,7 +73,7 @@ namespace Sodium;
     /**
      * Authenticated Encryption with Associated Data (decrypt)
      * AES-256-GCM
-     * 
+     *
      * @param string $msg encrypted message
      * @param string $nonce
      * @param string $key
@@ -94,7 +93,7 @@ namespace Sodium;
     /**
      * Authenticated Encryption with Associated Data (encrypt)
      * AES-256-GCM
-     * 
+     *
      * @param string $msg plaintext message
      * @param string $nonce
      * @param string $key
@@ -114,7 +113,7 @@ namespace Sodium;
     /**
      * Authenticated Encryption with Associated Data (decrypt)
      * ChaCha20 + Poly1305
-     * 
+     *
      * @param string $msg encrypted message
      * @param string $nonce
      * @param string $key
@@ -134,7 +133,7 @@ namespace Sodium;
     /**
      * Authenticated Encryption with Associated Data (encrypt)
      * ChaCha20 + Poly1305
-     * 
+     *
      * @param string $msg plaintext message
      * @param string $nonce
      * @param string $key
@@ -154,7 +153,7 @@ namespace Sodium;
     /**
      * Secret-key message authentication
      * HMAC SHA-512/256
-     * 
+     *
      * @param string $msg
      * @param string $key
      * @return string
@@ -170,7 +169,7 @@ namespace Sodium;
     /**
      * Secret-key message verification
      * HMAC SHA-512/256
-     * 
+     *
      * @param string $mac
      * @param string $msg
      * @param string $key
@@ -188,7 +187,7 @@ namespace Sodium;
     /**
      * Public-key authenticated encryption (encrypt)
      * X25519 + Xsalsa20 + Poly1305
-     * 
+     *
      * @param string $msg
      * @param string $nonce
      * @param string $keypair
@@ -205,7 +204,7 @@ namespace Sodium;
 
     /**
      * Generate an X25519 keypair for use with the crypto_box API
-     * 
+     *
      * @return string
      */
     function crypto_box_keypair(): string {
@@ -214,7 +213,7 @@ namespace Sodium;
 
     /**
      * Derive an X25519 keypair for use with the crypto_box API from a seed
-     * 
+     *
      * @param string $seed
      * @return string
      */
@@ -227,7 +226,7 @@ namespace Sodium;
 
     /**
      * Create an X25519 keypair from an X25519 secret key and X25519 public key
-     * 
+     *
      * @param string $secretkey
      * @param string $publickey
      * @return string
@@ -243,7 +242,7 @@ namespace Sodium;
     /**
      * Public-key authenticated encryption (decrypt)
      * X25519 + Xsalsa20 + Poly1305
-     * 
+     *
      * @param string $msg
      * @param string $nonce
      * @param string $keypair
@@ -260,7 +259,7 @@ namespace Sodium;
 
     /**
      * Get an X25519 public key from an X25519 keypair
-     * 
+     *
      * @param string $keypair
      * @return string
      */
@@ -273,7 +272,7 @@ namespace Sodium;
 
     /**
      * Derive an X25519 public key from an X25519 secret key
-     * 
+     *
      * @param string $secretkey
      * @return string
      */
@@ -287,7 +286,7 @@ namespace Sodium;
     /**
      * Anonymous public-key encryption (encrypt)
      * X25519 + Xsalsa20 + Poly1305 + BLAKE2b
-     * 
+     *
      * @param string $message
      * @param string $publickey
      * @return string
@@ -303,7 +302,7 @@ namespace Sodium;
     /**
      * Anonymous public-key encryption (decrypt)
      * X25519 + Xsalsa20 + Poly1305 + BLAKE2b
-     * 
+     *
      * @param string $encrypted
      * @param string $keypair
      * @return string
@@ -318,7 +317,7 @@ namespace Sodium;
 
     /**
      * Extract the X25519 secret key from an X25519 keypair
-     * 
+     *
      * @param string $keypair
      * @return string
      */
@@ -331,7 +330,7 @@ namespace Sodium;
     /**
      * Elliptic Curve Diffie Hellman Key Exchange
      * X25519
-     * 
+     *
      * @param string $secretkey
      * @param string $publickey
      * @param string $client_publickey
@@ -350,7 +349,7 @@ namespace Sodium;
 
     /**
      * Fast and secure cryptographic hash
-     * 
+     *
      * @param string $input
      * @param string $key
      * @param int $length
@@ -368,7 +367,7 @@ namespace Sodium;
     /**
      * Create a new hash state (e.g. to use for streams)
      * BLAKE2b
-     * 
+     *
      * @param string $key
      * @param int $length
      * @return string
@@ -384,7 +383,7 @@ namespace Sodium;
     /**
      * Update the hash state with some data
      * BLAKE2b
-     * 
+     *
      * @param string &$hashState
      * @param string $append
      * @return bool
@@ -400,7 +399,7 @@ namespace Sodium;
     /**
      * Get the final hash
      * BLAKE2b
-     * 
+     *
      * @param string $hashState
      * @param int $length
      * @return string
@@ -416,7 +415,7 @@ namespace Sodium;
     /**
      * Secure password-based key derivation function
      * Argon2i
-     * 
+     *
      * @param int $out_len
      * @param string $passwd
      * @param string $salt
@@ -438,7 +437,7 @@ namespace Sodium;
     /**
      * Get a formatted password hash (for storage)
      * Argon2i
-     * 
+     *
      * @param string $passwd
      * @param int $opslimit
      * @param int $memlimit
@@ -456,7 +455,7 @@ namespace Sodium;
     /**
      * Verify a password against a hash
      * Argon2i
-     * 
+     *
      * @param string $hash
      * @param string $passwd
      * @return bool
@@ -472,7 +471,7 @@ namespace Sodium;
     /**
      * Secure password-based key derivation function
      * Scrypt
-     * 
+     *
      * @param int $out_len
      * @param string $passwd
      * @param string $salt
@@ -494,7 +493,7 @@ namespace Sodium;
     /**
      * Get a formatted password hash (for storage)
      * Scrypt
-     * 
+     *
      * @param string $passwd
      * @param int $opslimit
      * @param int $memlimit
@@ -512,7 +511,7 @@ namespace Sodium;
     /**
      * Verify a password against a hash
      * Scrypt
-     * 
+     *
      * @param string $hash
      * @param string $passwd
      * @return bool
@@ -528,7 +527,7 @@ namespace Sodium;
     /**
      * Elliptic Curve Diffie Hellman over Curve25519
      * X25519
-     * 
+     *
      * @param string $ecdhA
      * @param string $ecdhB
      * @return string
@@ -544,7 +543,7 @@ namespace Sodium;
     /**
      * Authenticated secret-key encryption (encrypt)
      * Xsals20 + Poly1305
-     * 
+     *
      * @param string $plaintext
      * @param string $nonce
      * @param string $key
@@ -562,7 +561,7 @@ namespace Sodium;
     /**
      * Authenticated secret-key encryption (decrypt)
      * Xsals20 + Poly1305
-     * 
+     *
      * @param string $ciphertext
      * @param string $nonce
      * @param string $key
@@ -580,7 +579,7 @@ namespace Sodium;
     /**
      * A short keyed hash suitable for data structures
      * SipHash-2-4
-     * 
+     *
      * @param string $message
      * @param string $key
      * @return string
@@ -596,7 +595,7 @@ namespace Sodium;
     /**
      * Digital Signature
      * Ed25519
-     * 
+     *
      * @param string $message
      * @param string $secretkey
      * @return string
@@ -612,7 +611,7 @@ namespace Sodium;
     /**
      * Digital Signature (detached)
      * Ed25519
-     * 
+     *
      * @param string $message
      * @param string $secretkey
      * @return string
@@ -627,7 +626,7 @@ namespace Sodium;
 
     /**
      * Convert an Ed25519 public key to an X25519 public key
-     * 
+     *
      * @param string $sign_pk
      * @return string
      */
@@ -640,7 +639,7 @@ namespace Sodium;
 
     /**
      * Convert an Ed25519 secret key to an X25519 secret key
-     * 
+     *
      * @param string $sign_sk
      * @return string
      */
@@ -653,7 +652,7 @@ namespace Sodium;
 
     /**
      * Generate an Ed25519 keypair for use with the crypto_sign API
-     * 
+     *
      * @return string
      */
     function crypto_sign_keypair(): string
@@ -664,7 +663,7 @@ namespace Sodium;
 
     /**
      * Create an Ed25519 keypair from an Ed25519 secret key + Ed25519 public key
-     * 
+     *
      * @param string $secretkey
      * @param string $publickey
      * @return string
@@ -679,7 +678,7 @@ namespace Sodium;
 
     /**
      * Verify a signed message and return the plaintext
-     * 
+     *
      * @param string $signed_message
      * @param string $publickey
      * @return string
@@ -694,7 +693,7 @@ namespace Sodium;
 
     /**
      * Get the public key from an Ed25519 keypair
-     * 
+     *
      * @param string $keypair
      * @return string
      */
@@ -707,7 +706,7 @@ namespace Sodium;
 
     /**
      * Get the secret key from an Ed25519 keypair
-     * 
+     *
      * @param string $keypair
      * @return string
      */
@@ -720,7 +719,7 @@ namespace Sodium;
 
     /**
      * Derive an Ed25519 public key from an Ed25519 secret key
-     * 
+     *
      * @param string $secretkey
      * @return string
      */
@@ -733,7 +732,7 @@ namespace Sodium;
 
     /**
      * Derive an Ed25519 keypair for use with the crypto_sign API from a seed
-     * 
+     *
      * @param string $seed
      * @return string
      */
@@ -746,7 +745,7 @@ namespace Sodium;
 
     /**
      * Verify a detached signature
-     * 
+     *
      * @param string $signature
      * @param string $msg
      * @param string $publickey
@@ -764,7 +763,7 @@ namespace Sodium;
     /**
      * Create a keystream from a key and nonce
      * Xsalsa20
-     * 
+     *
      * @param int $length
      * @param string $nonce
      * @param string $key
@@ -782,7 +781,7 @@ namespace Sodium;
     /**
      * Encrypt a message using a stream cipher
      * Xsalsa20
-     * 
+     *
      * @param string $plaintext
      * @param string $nonce
      * @param string $key
@@ -800,7 +799,7 @@ namespace Sodium;
     /**
      * Generate a string of random bytes
      * /dev/urandom
-     * 
+     *
      * @param int $length
      * @return string
      */
@@ -814,7 +813,7 @@ namespace Sodium;
     /**
      * Generate a 16-bit integer
      * /dev/urandom
-     * 
+     *
      * @return int
      */
     function randombytes_random16(): string {
@@ -824,7 +823,7 @@ namespace Sodium;
     /**
      * Generate an unbiased random integer between 0 and a specified value
      * /dev/urandom
-     * 
+     *
      * @param int $upperBoundNonInclusive
      * @return int
      */
@@ -837,7 +836,7 @@ namespace Sodium;
 
     /**
      * Convert to hex without side-chanels
-     * 
+     *
      * @param string $binary
      * @return string
      */
@@ -850,7 +849,7 @@ namespace Sodium;
 
     /**
      * Compare two strings in constant time
-     * 
+     *
      * @param string $left
      * @param string $right
      * @return int
@@ -865,7 +864,7 @@ namespace Sodium;
 
     /**
      * Convert from hex without side-chanels
-     * 
+     *
      * @param string $binary
      * @return string
      */
@@ -878,7 +877,7 @@ namespace Sodium;
 
     /**
      * Increment a string in little-endian
-     * 
+     *
      * @param string &$nonce
      * @return string
      */
@@ -890,7 +889,7 @@ namespace Sodium;
 
     /**
      * Add the right operand to the left
-     * 
+     *
      * @param string &$left
      * @param string $right
      */
@@ -919,7 +918,7 @@ namespace Sodium;
 
     /**
      * Compare two strings in constant time
-     * 
+     *
      * @param string $left
      * @param string $right
      * @return int
@@ -934,7 +933,7 @@ namespace Sodium;
 
     /**
      * Wipe a buffer
-     * 
+     *
      * @param string &$nonce
      */
     function memzero(
@@ -945,7 +944,7 @@ namespace Sodium;
 
     /**
      * Get the version string
-     * 
+     *
      * @return string
      */
     function version_string(): string {
@@ -954,7 +953,7 @@ namespace Sodium;
 
     /**
      * Scalar multiplication of the base point and your key
-     * 
+     *
      * @param string $sk
      * @return string
      */

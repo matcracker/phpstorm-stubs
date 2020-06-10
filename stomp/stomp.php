@@ -3,7 +3,6 @@
  * Stubs for stomp
  * https://pecl.php.net/package/stomp
  */
-
 class Stomp
 {
 
@@ -143,7 +142,7 @@ class StompFrame
 
     /**
      * Frame headers
-     * @var Array
+     * @var array
      */
     public $headers;
 

@@ -29,7 +29,7 @@
  * Examples of these values can be found on the {@link "https://secure.php.net/manual/en/function.crypt.php crypt()"} page.
  * </p>
  * <p>
- * If ommitted, a default value of <em>10</em> will be used. This is a good
+ * If omitted, a default value of <em>10</em> will be used. This is a good
  * baseline cost, but you may want to consider increasing it depending on your hardware.
  * </p>
  * </li>
@@ -64,7 +64,7 @@ define("PASSWORD_BCRYPT_DEFAULT_COST", 10);
  * change. Therefore you should be aware that the length of the resulting
  * hash can change. Therefore, if you use <b>PASSWORD_DEFAULT</b>
  * you should store the resulting hash in a way that can store more than 60
- * characters (255 is the recomended width).
+ * characters (255 is the recommended width).
  * </p>
  * <p>
  * Values for this constant:
@@ -78,7 +78,6 @@ define("PASSWORD_BCRYPT_DEFAULT_COST", 10);
 define("PASSWORD_BCRYPT", '2y');
 
 /**
- *
  * PASSWORD_ARGON2I is used to create new password hashes using the Argon2i algorithm.
  *
  * Supported Options:
@@ -95,7 +94,6 @@ define("PASSWORD_BCRYPT", '2y');
 define('PASSWORD_ARGON2I', 'argon2i');
 
 /**
- *
  * PASSWORD_ARGON2ID is used to create new password hashes using the Argon2id algorithm.
  *
  * Supported Options:
