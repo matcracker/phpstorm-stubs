@@ -339,7 +339,7 @@ class ZipArchive implements Countable {
 	 * <p>
 	 * <b>ZipArchive::OVERWRITE</b>
 	 * </p>
-	 * @return mixed <i>Error codes</i>
+	 * @return int|true <i>Error codes</i>
 	 * <p>
 	 * Returns <b>TRUE</b> on success or the error code.
 	 * <p>
