@@ -109,7 +109,7 @@ class Threaded implements Traversable, Countable, ArrayAccess, Collectable{
 	/**
 	 * A default method for marking an object as ready to be destroyed
 	 *
-	 * @return bool(true) The referenced object can be destroyed
+	 * @return bool The referenced object can be destroyed
 	 */
 	public function isGarbage() : bool{}
 
