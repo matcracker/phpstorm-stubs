@@ -28,9 +28,8 @@ class StubParser
         self::$stubs = new StubsContainer();
         $visitor = new ASTVisitor(self::$stubs);
         $coreStubVisitor = new CoreStubASTVisitor(self::$stubs);
-        /** @noinspection PhpUnhandledExceptionInspection */
         self::processStubs($visitor, $coreStubVisitor,
-            fn(SplFileInfo $file) => $file->getFilename() !== '.phpstorm.meta.php');
+            fn(SplFileInfo $file): bool => $file->getFilename() !== '.phpstorm.meta.php');
         foreach (self::$stubs->getInterfaces() as $interface) {
             $interface->parentInterfaces = $visitor->combineParentInterfaces($interface);
         }
@@ -39,10 +38,26 @@ class StubParser
             $class->interfaces =
                 Utils::flattenArray($visitor->combineImplementedInterfaces($class), false);
         }
+        $jsonData = json_decode(file_get_contents(__DIR__ . '/../TestData/mutedProblems.json'));
+        foreach (self::$stubs->getClasses() as $class) {
+            $class->readMutedProblems($jsonData->classes);
+        }
+        foreach (self::$stubs->getInterfaces() as $interface) {
+            $interface->readMutedProblems($jsonData->interfaces);
+        }
+        foreach (self::$stubs->getFunctions() as $function) {
+            $function->readMutedProblems($jsonData->functions);
+        }
+        foreach (self::$stubs->getConstants() as $constant) {
+            $constant->readMutedProblems($jsonData->constants);
+        }
         return self::$stubs;
     }
 
     /**
+     * @param NodeVisitorAbstract $visitor
+     * @param CoreStubASTVisitor|null $coreStubASTVisitor
+     * @param callable $fileCondition
      * @throws LogicException
      * @throws UnexpectedValueException
      */

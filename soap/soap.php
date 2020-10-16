@@ -297,7 +297,7 @@ class SoapClient  {
 	 * @param mixed $input_headers [optional] <p>
 	 * An array of headers to be sent along with the SOAP request.
 	 * </p>
-	 * @param array $output_headers [optional] <p>
+	 * @param array &$output_headers [optional] <p>
 	 * If supplied, this array will be filled with the headers from the SOAP response.
 	 * </p>
 	 * @return mixed SOAP functions may return one, or multiple values. If only one value is returned
@@ -463,7 +463,7 @@ class SoapVar  {
 	 * </p>
 	 * @since 5.0.1
 	 */
-	public function SoapVar ($data, $encoding, $type_name = null, $type_namespace = null, $node_name = null, $node_namespace = null) {}
+	public function __construct ($data, $encoding, $type_name = null, $type_namespace = null, $node_name = null, $node_namespace = null) {}
 
 }
 
@@ -513,7 +513,7 @@ class SoapServer  {
 	 * </p>
 	 * @since 5.0.1
 	 */
-	public function SoapServer ($wsdl, array $options = null) {}
+	public function __construct ($wsdl, array $options = null) {}
 
 	/**
 	 * Sets SoapServer persistence mode
@@ -543,11 +543,11 @@ class SoapServer  {
 	 * @param string $class_name <p>
 	 * The name of the exported class.
 	 * </p>
-	 * @param mixed $_ [optional] These optional parameters will be passed to the default class constructor during object creation.
+	 * @param mixed ...$_ [optional] These optional parameters will be passed to the default class constructor during object creation.
 	 * @return void No value is returned.
 	 * @since 5.0.1
 	 */
-	public function setClass ($class_name, $_ = null) {}
+	public function setClass ($class_name, ...$_) {}
 
 	/**
 	 * Sets the object which will be used to handle SOAP requests
@@ -693,7 +693,7 @@ class SoapFault extends Exception  {
 	 * </p>
 	 * @since 5.0.1
 	 */
-	public function SoapFault ($faultcode, $faultstring, $faultactor = null, $detail = null, $faultname = null, $headerfault = null) {}
+	public function __construct ($faultcode, $faultstring, $faultactor = null, $detail = null, $faultname = null, $headerfault = null) {}
 
 	/**
 	 * Obtain a string representation of a SoapFault
@@ -725,7 +725,7 @@ class SoapParam  {
 	 * </p>
 	 * @since 5.0.1
 	 */
-	public function SoapParam ($data, $name) {}
+	public function __construct ($data, $name) {}
 
 }
 

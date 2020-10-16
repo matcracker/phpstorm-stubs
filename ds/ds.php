@@ -7,6 +7,7 @@
  * @copyright © 2019 PHP Documentation Group
  * @license CC-BY 3.0, https://www.php.net/manual/en/cc.license.php
  */
+
 namespace Ds {
 
     use Countable;
@@ -47,7 +48,7 @@ namespace Ds {
 
         /**
          * Converts the collection to an array.
-         * <p>Note: Casting to an array is not supported yet.
+         * <p><b>Note:</b> Casting to an array is not supported yet.
          * @link https://www.php.net/manual/en/ds-collection.toarray.php
          * @return array An array containing all the values in the same order as
          * the collection.
@@ -58,7 +59,7 @@ namespace Ds {
     /**
      * Hashable is an interface which allows objects to be used as keys. It’s
      * an alternative to spl_object_hash(), which determines an object’s hash
-     * based on its handle: this means that two objects that are considered
+     * based on its <b>handle:</b> this means that two objects that are considered
      * equal by an implicit definition would not treated as equal because they
      * are not the same instance.
      *
@@ -81,9 +82,9 @@ namespace Ds {
          * Ds\Map and Ds\Set, or any other lookup structure that honors this
          * interface.
          *
-         * Note: It's guaranteed that $obj is an instance of the same class.
+         * <b>Note:</b> It's guaranteed that $obj is an instance of the same class.
          *
-         * Caution: It's important that objects which are equal also have the
+         * <b>Caution:</b> It's important that objects which are equal also have the
          * same hash value.
          * @see https://www.php.net/manual/en/ds-hashable.hash.php
          * @link https://www.php.net/manual/en/ds-hashable.equals.php
@@ -110,11 +111,11 @@ namespace Ds {
          * Ds\Map and Ds\Set, or any other lookup structure that honors this
          * interface.
          *
-         * Caution: Do not pick a value that might change within the object,
+         * <b>Caution:</b> Do not pick a value that might change within the object,
          * such as a public property. Hash table lookups would fail because
          * the hash has changed.
          *
-         * Caution: All objects that are equal must have the same hash value.
+         * <b>Caution:</b> All objects that are equal must have the same hash value.
          *
          * @return mixed A scalar value to be used as this object's hash value.
          * @link https://www.php.net/manual/en/ds-hashable.hash.php
@@ -143,7 +144,7 @@ namespace Ds {
          * This removes the need to reallocate the internal as values are added.
          *
          * @param int $capacity The number of values for which capacity should
-         * be allocated.<p>Note: Capacity will stay the same if this value is
+         * be allocated.<p><b>Note:</b> Capacity will stay the same if this value is
          * less than or equal to the current capacity.
          * @link https://www.php.net/manual/en/ds-sequence.allocate.php
          */
@@ -194,7 +195,7 @@ namespace Ds {
         /**
          * Returns the index of the value, or FALSE if not found.
          * @param mixed $value The value to find.
-         * @return int|bool The index of the value, or FALSE if not found.
+         * @return int|false The index of the value, or FALSE if not found.
          * @link https://www.php.net/manual/en/ds-sequence.find.php
          */
         public function find($value);
@@ -220,7 +221,7 @@ namespace Ds {
          * Inserts values into the sequence at a given index.
          *
          * @param int $index The index at which to insert. 0 <= index <= count
-         * <p> Note: You can insert at the index equal to the number of values.
+         * <p> <b>Note:</b> You can insert at the index equal to the number of values.
          * @param mixed ...$values The value or values to insert.
          * @throws OutOfRangeException if the index is not valid.
          * @link https://www.php.net/manual/en/ds-sequence.insert.php
@@ -254,7 +255,7 @@ namespace Ds {
          * sequence.
          * <code>callback ( mixed $value ) : mixed</code>
          * @return Sequence The result of applying a callback to each value in
-         * the sequence.<p>Note: The values of the current instance won't be
+         * the sequence.<p><b>Note:</b> The values of the current instance won't be
          * affected.
          * @link https://www.php.net/manual/en/ds-sequence.map.php
          */
@@ -315,7 +316,7 @@ namespace Ds {
         /**
          * Returns a reversed copy of the sequence.
          * @return Sequence A reversed copy of the sequence.
-         * <p>Note: The current instance is not affected.
+         * <p><b>Note:</b> The current instance is not affected.
          */
         public function reversed();
 
@@ -372,14 +373,14 @@ namespace Ds {
          * greater than the second. Note that before PHP 7.0.0 this integer had
          * to be in the range from -2147483648 to 2147483647.<p>
          * <code>callback ( mixed $a, mixed $b ) : int</code>
-         * <p>Caution: Returning non-integer values from the comparison
+         * <p><b>Caution:</b> Returning non-integer values from the comparison
          * function, such as float, will result in an internal cast to integer
          * of the callback's return value. So values such as 0.99 and 0.1 will
          * both be cast to an integer value of 0, which will compare such
          * values as equal.
          * @link https://www.php.net/manual/en/ds-sequence.sort.php
          */
-        public function sort(callable $comparator = null): void;
+        public function sort(?callable $comparator = null): void;
 
         /**
          * Returns a sorted copy, using an optional comparator function.
@@ -389,7 +390,7 @@ namespace Ds {
          * greater than the second. Note that before PHP 7.0.0 this integer had
          * to be in the range from -2147483648 to 2147483647.<p>
          * <code>callback ( mixed $a, mixed $b ) : int</code>
-         * <p>Caution: Returning non-integer values from the comparison
+         * <p><b>Caution:</b> Returning non-integer values from the comparison
          * function, such as float, will result in an internal cast to integer
          * of the callback's return value. So values such as 0.99 and 0.1 will
          * both be cast to an integer value of 0, which will compare such
@@ -397,11 +398,11 @@ namespace Ds {
          * @return Sequence Returns a sorted copy of the sequence.
          * @link https://www.php.net/manual/en/ds-sequence.sort.php
          */
-        public function sorted(callable $comparator);
+        public function sorted(?callable $comparator = null);
 
         /**
          * Returns the sum of all values in the sequence.
-         * <p>Note: Arrays and objects are considered equal to zero when
+         * <p><b>Note:</b> Arrays and objects are considered equal to zero when
          * calculating the sum.
          * @return float|int The sum of all the values in the sequence as
          * either a float or int depending on the values in the sequence.
@@ -412,7 +413,7 @@ namespace Ds {
          * Adds values to the front of the sequence, moving all the current
          * values forward to make room for the new values.
          * @param mixed $values The values to add to the front of the sequence.
-         * <p>Note: Multiple values will be added in the same order that they
+         * <p><b>Note:</b> Multiple values will be added in the same order that they
          * are passed.
          */
         public function unshift($values): void;
@@ -435,6 +436,8 @@ namespace Ds {
      * <h3>Weaknesses
      * <li>shift(), unshift(), insert() and remove() are all O(n).
      *
+     * @link https://www.php.net/manual/en/class.ds-vector.php
+     *
      * @package Ds
      */
     class Vector implements Sequence
@@ -443,11 +446,21 @@ namespace Ds {
         const MIN_CAPACITY = 10;
 
         /**
+         * Creates a new instance, using either a traversable object or an array for the initial values.
+         *
+         * @param array|Traversable $values
+         */
+        public function __construct($values = null)
+        {
+        }
+
+
+        /**
          * Ensures that enough memory is allocated for a required capacity.
          * This removes the need to reallocate the internal as values are added.
          * @param int $capacity The number of values for which capacity should
          * be allocated.
-         * <p>Note: Capacity will stay the same if this value is less than or
+         * <p><b>Note:</b> Capacity will stay the same if this value is less than or
          * equal to the current capacity.
          * @link https://www.php.net/manual/en/ds-vector.allocate.php
          */
@@ -525,8 +538,8 @@ namespace Ds {
         /**
          * Returns the index of the value, or FALSE if not found.
          * @param mixed $value The value to find.
-         * @return mixed|bool The index of the value, or FALSE if not found.
-         * <p>Note: Values will be compared by value and by type.
+         * @return mixed|false The index of the value, or FALSE if not found.
+         * <p><b>Note:</b> Values will be compared by value and by type.
          * @link https://www.php.net/manual/en/ds-vector.find.php
          */
         public function find($value)
@@ -670,7 +683,7 @@ namespace Ds {
         /**
          * Returns a reversed copy of the sequence.
          * @return Vector A reversed copy of the sequence.<br>
-         * Note: The current instance is not affected.
+         * <b>Note:</b> The current instance is not affected.
          * @link https://www.php.net/manual/en/ds-vector.reversed.php
          */
         public function reversed(): Vector
@@ -740,40 +753,42 @@ namespace Ds {
         /**
          * Sorts the sequence in-place, using an optional comparator function.
          * @link https://www.php.net/manual/en/ds-vector.sort.php
-         * @param callable $comparator The comparison function must return an
+         * @param callable|null $comparator The comparison function must return an
          * integer less than, equal to, or greater
          * than zero if the first argument is considered to be respectively less than, equal to, or greater than the
          * second. Note that before PHP 7.0.0 this integer had to be in the
          * range from -2147483648 to 2147483647.<br>
          * <code>callback ( mixed $a, mixed $b ) : int</code>
-         * Caution: Returning non-integer values from the comparison function,
+         * <b>Caution:</b> Returning non-integer values from the comparison function,
          * such as float, will result in an
          * internal cast to integer of the callback's return value. So values
          * such as 0.99 and 0.1 will both be cast to an integer value of 0,
          * which will compare such values as equal.
          */
-        public function sort(callable $comparator = null): void
+        public function sort(?callable $comparator = null): void
         {
         }
 
         /**
          * Returns a sorted copy, using an optional comparator function.
          * @link https://www.php.net/manual/en/ds-vector.sorted.php
-         * @param callable $comparator The comparison function must return an integer less than, equal to, or greater
-         * than zero if the first argument is considered to be respectively less than, equal to, or greater than the
-         * second. Note that before PHP 7.0.0 this integer had to be in the range from -2147483648 to 2147483647.<br>
+         * @param callable|null $comparator The comparison function must return an integer less than, equal to, or
+         * greater  than zero if the first argument is considered to be respectively less than, equal to, or greater
+         * than the second. Note that before PHP 7.0.0 this integer had to be in the range from -2147483648 to
+         * 2147483647.<br>
          * <code>callback ( mixed $a, mixed $b ) : int</code>
-         * Caution: Returning non-integer values from the comparison function, such as float, will result in an
-         * internal cast to integer of the callback's return value. So values such as 0.99 and 0.1 will both be cast to an integer value of 0, which will compare such values as equal.
+         * <b>Caution:</b> Returning non-integer values from the comparison function, such as float, will result in an
+         * internal cast to integer of the callback's return value. So values such as 0.99 and 0.1 will both be cast to
+         * an integer value of 0, which will compare such values as equal.
          * @return Vector Returns a sorted copy of the sequence.
          */
-        public function sorted(callable $comparator): Vector
+        public function sorted(?callable $comparator = null): Vector
         {
         }
 
         /**
          * Returns the sum of all values in the sequence.<br>
-         * Note: Arrays and objects are considered equal to zero when
+         * <b>Note:</b> Arrays and objects are considered equal to zero when
          * calculating the sum.
          * @link https://www.php.net/manual/en/ds-vector.sum.php
          * @return float
@@ -786,7 +801,7 @@ namespace Ds {
          * Adds values to the front of the sequence, moving all the current
          * values forward to make room for the new values.
          * @param mixed $values The values to add to the front of the sequence.<br>
-         * Note: Multiple values will be added in the same order that they are
+         * <b>Note:</b> Multiple values will be added in the same order that they are
          * passed
          * @link https://www.php.net/manual/en/ds-vector.unshift.php
          */
@@ -818,7 +833,7 @@ namespace Ds {
 
         /**
          * Converts the collection to an array.
-         * <p>Note: Casting to an array is not supported yet.
+         * <p><b>Note:</b> Casting to an array is not supported yet.
          * @link https://www.php.net/manual/en/ds-vector.toarray.php
          * @return array An array containing all the values in the same order as
          * the collection.
@@ -841,6 +856,16 @@ namespace Ds {
 
     class Deque implements Sequence
     {
+        /**
+         * Creates a new instance, using either a traversable object or an array for the initial values.
+         * @param mixed ...$values A traversable object or an array to use for the initial values.
+         *
+         * @link https://www.php.net/manual/en/ds-deque.construct.php
+         */
+        public function __construct(...$values)
+        {
+        }
+
         /**
          * Count elements of an object
          * @link https://php.net/manual/en/countable.count.php
@@ -882,7 +907,7 @@ namespace Ds {
 
         /**
          * Converts the deque to an array.
-         * <p>Note: Casting to an array is not supported yet.
+         * <p><b>Note:</b> Casting to an array is not supported yet.
          * @link https://www.php.net/manual/en/ds-deque.toarray.php
          * @return array An array containing all the values in the same order as
          * the deque.
@@ -896,9 +921,9 @@ namespace Ds {
          * This removes the need to reallocate the internal as values are added.
          *
          * @param int $capacity The number of values for which capacity should
-         * be allocated.<p>Note: Capacity will stay the same if this value is
+         * be allocated.<p><b>Note:</b> Capacity will stay the same if this value is
          * less than or equal to the current capacity.
-         * <p>Note: Capacity will always be rounded up to the nearest power of 2.
+         * <p><b>Note:</b> Capacity will always be rounded up to the nearest power of 2.
          * @link https://www.php.net/manual/en/ds-deque.allocate.php
          */
         public function allocate(int $capacity): void
@@ -958,7 +983,7 @@ namespace Ds {
         /**
          * Returns the index of the value, or FALSE if not found.
          * @param mixed $value The value to find.
-         * @return int|bool The index of the value, or FALSE if not found.
+         * @return int|false The index of the value, or FALSE if not found.
          * @link https://www.php.net/manual/en/ds-deque.find.php
          */
         public function find($value)
@@ -990,7 +1015,7 @@ namespace Ds {
          * Inserts values into the deque at a given index.
          *
          * @param int $index The index at which to insert. 0 <= index <= count
-         * <p> Note: You can insert at the index equal to the number of values.
+         * <p> <b>Note:</b> You can insert at the index equal to the number of values.
          * @param mixed ...$values The value or values to insert.
          * @throws OutOfRangeException if the index is not valid.
          * @link https://www.php.net/manual/en/ds-deque.insert.php
@@ -1030,7 +1055,7 @@ namespace Ds {
          * deque.
          * <code>callback ( mixed $value ) : mixed</code>
          * @return Deque The result of applying a callback to each value in
-         * the deque.<p>Note: The values of the current instance won't be
+         * the deque.<p><b>Note:</b> The values of the current instance won't be
          * affected.
          * @link https://www.php.net/manual/en/ds-deque.map.php
          */
@@ -1105,7 +1130,7 @@ namespace Ds {
         /**
          * Returns a reversed copy of the deque.
          * @return Deque A reversed copy of the deque.
-         * <p>Note: The current instance is not affected.
+         * <p><b>Note:</b> The current instance is not affected.
          */
         public function reversed(): Deque
         {
@@ -1172,14 +1197,14 @@ namespace Ds {
          * greater than the second. Note that before PHP 7.0.0 this integer had
          * to be in the range from -2147483648 to 2147483647.<p>
          * <code>callback ( mixed $a, mixed $b ) : int</code>
-         * <p>Caution: Returning non-integer values from the comparison
+         * <p><b>Caution:</b> Returning non-integer values from the comparison
          * function, such as float, will result in an internal cast to integer
          * of the callback's return value. So values such as 0.99 and 0.1 will
          * both be cast to an integer value of 0, which will compare such
          * values as equal.
          * @link https://www.php.net/manual/en/ds-deque.sort.php
          */
-        public function sort(callable $comparator = null): void
+        public function sort(?callable $comparator = null): void
         {
         }
 
@@ -1191,7 +1216,7 @@ namespace Ds {
          * greater than the second. Note that before PHP 7.0.0 this integer had
          * to be in the range from -2147483648 to 2147483647.<p>
          * <code>callback ( mixed $a, mixed $b ) : int</code>
-         * <p>Caution: Returning non-integer values from the comparison
+         * <p><b>Caution:</b> Returning non-integer values from the comparison
          * function, such as float, will result in an internal cast to integer
          * of the callback's return value. So values such as 0.99 and 0.1 will
          * both be cast to an integer value of 0, which will compare such
@@ -1199,13 +1224,13 @@ namespace Ds {
          * @return Deque Returns a sorted copy of the deque.
          * @link https://www.php.net/manual/en/ds-deque.sort.php
          */
-        public function sorted(callable $comparator): Deque
+        public function sorted(?callable $comparator = null): Deque
         {
         }
 
         /**
          * Returns the sum of all values in the deque.
-         * <p>Note: Arrays and objects are considered equal to zero when
+         * <p><b>Note:</b> Arrays and objects are considered equal to zero when
          * calculating the sum.
          * @return float|int The sum of all the values in the deque as
          * either a float or int depending on the values in the deque.
@@ -1218,7 +1243,7 @@ namespace Ds {
          * Adds values to the front of the deque, moving all the current
          * values forward to make room for the new values.
          * @param mixed $values The values to add to the front of the deque.
-         * <p>Note: Multiple values will be added in the same order that they
+         * <p><b>Note:</b> Multiple values will be added in the same order that they
          * are passed.
          */
         public function unshift($values): void
@@ -1241,6 +1266,52 @@ namespace Ds {
 
     class Map implements Collection
     {
+        /**
+         * Creates a new instance, using either a traversable object or an array for the initial values.
+         * @param mixed ...$values A traversable object or an array to use for the initial values.
+         *
+         * @link https://www.php.net/manual/en/ds-map.construct.php
+         */
+        public function __construct(...$values)
+        {
+        }
+
+        /**
+         * Allocates enough memory for a required capacity.
+         *
+         * @param int $capacity The number of values for which capacity should be allocated.<br>
+         * <p><b>Note:</b> Capacity will stay the same if this value is less than or equal to the current capacity.
+         * Capacity will always be rounded up to the nearest power of 2.
+         *
+         * @link https://www.php.net/manual/en/ds-map.allocate.php
+         */
+        public function allocate(int $capacity)
+        {
+        }
+
+        /**
+         * Updates all values by applying a callback function to each value in the map.
+         *
+         * @param callable $callback A callable to apply to each value in the map. The callback should return what
+         * the value should be replaced by.
+         *
+         * @link https://www.php.net/manual/en/ds-map.apply.php
+         */
+        public function apply(callable $callback)
+        {
+        }
+
+        /**
+         * Returns the current capacity.
+         *
+         * @return int
+         *
+         * @link https://www.php.net/manual/en/ds-map.capacity.php
+         */
+        public function capacity(): int
+        {
+        }
+
         /**
          * Count elements of an object
          * @link https://php.net/manual/en/countable.count.php
@@ -1272,9 +1343,126 @@ namespace Ds {
         }
 
         /**
+         * Returns the result of removing all keys from the current instance that are present in a given map.
+         *
+         * A \ B = {x ∈ A | x ∉ B}
+         *
+         * @param Map $map The map containing the keys to exclude in the resulting map.
+         *
+         * @return Map The result of removing all keys from the current instance that are present in a given map.
+         *
+         * @link https://www.php.net/manual/en/ds-map.diff.php
+         */
+        public function diff(Map $map): Map
+        {
+        }
+
+        /**
+         * Creates a new map using a callable to determine which pairs to include
+         *
+         * @param callable $callback Optional callable which returns TRUE if the pair should be included, FALSE
+         * otherwise. If a callback is not provided, only values which are TRUE (see converting to boolean) will be included.
+         *
+         * @return Map
+         *
+         * @link https://www.php.net/manual/en/ds-map.filter.php
+         */
+        public function filter(callable $callback = null): Map
+        {
+        }
+
+        /**
+         * Returns the first pair in the map
+         *
+         * @return Pair The first pair in the map.
+         *
+         * @throws UnderflowException if empty
+         *
+         * @link https://www.php.net/manual/en/ds-map.first.php
+         */
+        public function first(): Pair
+        {
+        }
+
+        /**
+         * Returns the value for a given key, or an optional default value if the key could not be found.
+         * <p>
+         * <b>Note:</b> Keys of type object are supported. If an object implements Ds\Hashable, equality will be
+         * determined by the object's equals function. If an object does not implement Ds\Hashable, objects must be references to the same instance to be considered equal.
+         * <p>
+         * <b>Note:</b> You can also use array syntax to access values by key, eg. $map["key"].
+         * <p>
+         * <b>Caution:</b> Be careful when using array syntax. Scalar keys will be coerced to integers by the engine. For
+         * example, $map["1"] will attempt to access int(1), while $map->get("1") will correctly look up the string key.
+         *
+         * @param mixed $key The key to look up.
+         * @param mixed $default The optional default value, returned if the key could not be found.
+         *
+         * @return mixed The value mapped to the given key, or the default value if provided and the key could not be found in the map.
+         *
+         * @throws OutOfBoundsException if the key could not be found and a default value was not provided.
+         *
+         * @link https://www.php.net/manual/en/ds-map.get.php
+         */
+        public function get($key, $default = null)
+        {
+        }
+
+        /**
+         * Determines whether the map contains a given key
+         *
+         * @param mixed $key The key to look for.
+         *
+         * @return bool Returns TRUE if the key could found, FALSE otherwise.
+         *
+         * @link https://www.php.net/manual/en/ds-map.hasKey.php
+         */
+        public function hasKey($key): bool
+        {
+        }
+
+        /**
+         * Determines whether the map contains a given value
+         *
+         * @param mixed $value The value to look for.
+         *
+         * @return bool Returns TRUE if the value could found, FALSE otherwise.
+         *
+         * @link https://www.php.net/manual/en/ds-map.hasValue.php
+         */
+        public function hasValue($value): bool
+        {
+        }
+
+        /**
+         * Creates a new map containing the pairs of the current instance whose
+         * keys are also present in the given map. In other words, returns a
+         * copy of the current instance with all keys removed that are not also
+         * in the other map.
+         *
+         * A ∩ B = {x : x ∈ A ∧ x ∈ B}
+         *
+         * <p>
+         * <b>Note:</b> Values from the current instance will be kept.
+         *
+         * @param Map $map The other map, containing the keys to intersect with.
+         *
+         * @return Map The key intersection of the current instance and another map.
+         *
+         * @link https://www.php.net/manual/en/ds-map.intersect.php
+         */
+        public function intersect(Map $map): Map
+        {
+        }
+
+        /**
          * Returns whether the collection is empty.
+         *
          * @link https://www.php.net/manual/en/ds-collection.isempty.php
-         * @return bool
+         *
+         * @return bool Returns TRUE if the map is empty, FALSE otherwise.
+         *
+         * @link https://www.php.net/manual/en/ds-map.isempty.php
          */
         public function isEmpty(): bool
         {
@@ -1282,10 +1470,10 @@ namespace Ds {
 
         /**
          * Converts the map to an array.
-         * <p>Note: Casting to an array is not supported yet.
-         * <p>Caution: Maps where non-scalar keys are can't be converted to an
+         * <p><b>Note:</b> Casting to an array is not supported yet.
+         * <p><b>Caution:</b> Maps where non-scalar keys are can't be converted to an
          * array.
-         * <p>Caution: An array will treat all numeric keys as integers, eg.
+         * <p><b>Caution:</b> An array will treat all numeric keys as integers, eg.
          * "1" and 1 as keys in the map will only result in 1 being included in
          * the array.
          * @link https://www.php.net/manual/en/ds-map.toarray.php
@@ -1324,7 +1512,7 @@ namespace Ds {
          * greater than the second. Note that before PHP 7.0.0 this integer had
          * to be in the range from -2147483648 to  2147483647.
          * <code>callback ( mixed $a, mixed $b ) : int</code>
-         * <p>Caution: Returning non-integer values from the comparison function, such
+         * <p><b>Caution:</b> Returning non-integer values from the comparison function, such
          * as float, will result in an internal cast to integer of the
          * callback's return value. So values such as 0.99 and 0.1 will both be
          * cast to an  integer value of 0, which will compare such values as
@@ -1343,7 +1531,7 @@ namespace Ds {
          * greater than the second. Note that before PHP 7.0.0 this integer had
          * to be in the range from -2147483648 to 2147483647.
          * <code>callback ( mixed $a, mixed $b ) : int</code>
-         * <p>Caution: Returning non-integer values from the comparison function, such
+         * <p><b>Caution:</b> Returning non-integer values from the comparison function, such
          * as float, will result in an internal cast to integer of the
          * callback's return value. So values such as 0.99 and 0.1 will both be
          * cast to an  integer value of 0, which will compare such values as
@@ -1351,7 +1539,7 @@ namespace Ds {
          * @return Map Returns a copy of the map, sorted by key.
          * @link https://www.php.net/manual/en/ds-map.ksorted.php
          */
-        public function ksorted(callable $comparator = null): Map
+        public function ksorted(?callable $comparator = null): Map
         {
         }
 
@@ -1375,7 +1563,7 @@ namespace Ds {
          * @return Map The result of applying a callback to each value in the
          * map.
          *
-         * Note: The keys and values of the current instance won't be affected.
+         * <b>Note:</b> The keys and values of the current instance won't be affected.
          *
          * @link https://www.php.net/manual/en/ds-map.map.php
          */
@@ -1392,7 +1580,7 @@ namespace Ds {
          * object or array with their corresponding values, combined with the
          * current instance.
          *
-         * Note: The current instance won't be affected.
+         * <b>Note:</b> The current instance won't be affected.
          *
          * @link https://www.php.net/manual/en/ds-map.merge.php
          */
@@ -1417,15 +1605,15 @@ namespace Ds {
          * @param mixed $key The key to associate the value with.
          * @param mixed $value The value to be associated with the key.
          *
-         * Note: Keys of type object are supported. If an object implements
+         * <b>Note:</b> Keys of type object are supported. If an object implements
          * Ds\Hashable, equality will be determined by the object's equals
          * function. If an object does not implement Ds\Hashable, objects must
          * be references to the same instance to be considered equal.
          *
-         * Note: You can also use array syntax to associate values by key, eg.
+         * <b>Note:</b> You can also use array syntax to associate values by key, eg.
          * $map["key"] = $value.
          *
-         * Caution: Be careful when using array syntax. Scalar keys will be
+         * <b>Caution:</b> Be careful when using array syntax. Scalar keys will be
          * coerced to integers by the engine. For example, $map["1"] will
          * attempt to access int(1), while $map->get("1") will correctly look up
          * the string key.
@@ -1439,7 +1627,7 @@ namespace Ds {
         /**
          * Associates all key-value pairs of a traversable object or array.
          *
-         * Note: Keys of type object are supported. If an object implements
+         * <b>Note:</b> Keys of type object are supported. If an object implements
          * Ds\Hashable, equality will be determined
          * by the object's equals function. If an object does not implement
          * Ds\Hashable, objects must be references to the same instance to be
@@ -1480,16 +1668,16 @@ namespace Ds {
          * @param mixed $default The optional default value, returned if the key
          * could not be found.
          *
-         * Note: Keys of type object are supported. If an object implements
+         * <b>Note:</b> Keys of type object are supported. If an object implements
          * Ds\Hashable, equality will be determined
          * by the object's equals function. If an object does not implement
          * Ds\Hashable, objects must be references to the same instance to be
          * considered equal.
          *
-         * Note: You can also use array syntax to access values by key, eg.
+         * <b>Note:</b> You can also use array syntax to access values by key, eg.
          * $map["key"].
          *
-         * Caution: Be careful when using array syntax. Scalar keys will be
+         * <b>Caution:</b> Be careful when using array syntax. Scalar keys will be
          * coerced to integers by the engine. For example, $map["1"] will
          * attempt to access int(1), while $map->get("1") will correctly look up
          * the string key.
@@ -1502,7 +1690,7 @@ namespace Ds {
          *
          * @link https://www.php.net/manual/en/ds-map.remove.php
          */
-        public function remove($key, $default)
+        public function remove($key, $default = null)
         {
         }
 
@@ -1520,7 +1708,7 @@ namespace Ds {
          *
          * @return Map A reversed copy of the map.
          *
-         * <p>Note: The current instance is not affected.</p>
+         * <p><b>Note:</b> The current instance is not affected.</p>
          *
          * @link https://www.php.net/manual/en/ds-map.reversed.php
          */
@@ -1579,7 +1767,7 @@ namespace Ds {
          *
          * <code>callback ( mixed $a, mixed $b ) : int</code>
          *
-         * Caution: Returning non-integer values from the comparison function,
+         * <b>Caution:</b> Returning non-integer values from the comparison function,
          * such as float, will result in an internal cast to integer of the
          * callback's return value. So values such as 0.99 and 0.1 will both be
          * cast to an integer value of 0, which will compare such values as
@@ -1602,7 +1790,7 @@ namespace Ds {
          *
          * <code>callback ( mixed $a, mixed $b ) : int</code>
          *
-         * Caution: Returning non-integer values from the comparison function,
+         * <b>Caution:</b> Returning non-integer values from the comparison function,
          * such as float, will result in an internal cast to integer of the
          * callback's return value. So values such as 0.99 and 0.1 will both be
          * cast to an integer value of 0, which will compare such values as
@@ -1619,7 +1807,7 @@ namespace Ds {
         /**
          * Returns the sum of all values in the map.
          *
-         * Note: Arrays and objects are considered equal to zero when
+         * <b>Note:</b> Arrays and objects are considered equal to zero when
          * calculating the sum.
          *
          * @return float|int The sum of all the values in the map as either a
@@ -1637,7 +1825,7 @@ namespace Ds {
          *
          * A ∪ B = {x: x ∈ A ∨ x ∈ B}
          *
-         * <p>Note: Values of the current instance will be overwritten by those
+         * <p><b>Note:</b> Values of the current instance will be overwritten by those
          * provided where keys are equal.
          *
          * @param Map $map The other map, to combine with the current instance.
@@ -1688,6 +1876,16 @@ namespace Ds {
     class Pair implements JsonSerializable
     {
         /**
+         * @var mixed
+         */
+        public $key;
+
+        /**
+         * @var mixed
+         */
+        public $value;
+
+        /**
          * Creates a new instance using a given key and value.
          *
          * @param mixed $key
@@ -1733,7 +1931,7 @@ namespace Ds {
         /**
          * Converts the pair to an array.
          *
-         * <p>Note: Casting to an array is not supported yet.
+         * <p><b>Note:</b> Casting to an array is not supported yet.
          *
          * @return array An array containing all the values in the same order as
          * the pair.
@@ -1783,12 +1981,12 @@ namespace Ds {
         /**
          * Adds all given values to the set that haven't already been added.
          *
-         * <p>Note: Values of type object are supported. If an object implements
+         * <p><b>Note:</b> Values of type object are supported. If an object implements
          * Ds\Hashable, equality will be determined by the object's equals
          * function. If an object does not implement Ds\Hashable, objects must
          * be references to the same instance to be considered equal.
          *
-         * <p>Caution: All comparisons are strict (type and value).
+         * <p><b>Caution:</b> All comparisons are strict (type and value).
          *
          * @param mixed ...$values Values to add to the set.
          *
@@ -1804,7 +2002,7 @@ namespace Ds {
          * @param int $capacity The number of values for which capacity should
          * be allocated.
          *
-         * <p>Note: Capacity will stay the same if this value is less than or
+         * <p><b>Note:</b> Capacity will stay the same if this value is less than or
          * equal to the current capacity.
          *
          * <p>Capacity will always be rounded up to the nearest power of 2.
@@ -1823,9 +2021,9 @@ namespace Ds {
          * function. If an object does not implement Ds\Hashable, objects must
          * be references to the same instance to be considered equal.
          *
-         * <p>Caution: All comparisons are strict (type and value).
+         * <p><b>Caution:</b> All comparisons are strict (type and value).
          *
-         * @param mixed ...$values  Values to check.
+         * @param mixed ...$values Values to check.
          *
          * @return bool
          *
@@ -1907,7 +2105,7 @@ namespace Ds {
          * callback returned TRUE, or all values that convert to TRUE if a
          * callback was not provided.
          */
-        public function filter(callable $callback): Set
+        public function filter(callable $callback = null): Set
         {
         }
 
@@ -1979,7 +2177,7 @@ namespace Ds {
         /**
          * Returns the result of adding all given values to the set.
          *
-         * <p>Note: The current instance won't be affected.
+         * <p><b>Note:</b> The current instance won't be affected.
          *
          * @link https://www.php.net/manual/en/ds-set.merge.php
          *
@@ -2004,7 +2202,7 @@ namespace Ds {
          * it's the first iteration.
          *  $value   The value of the current iteration.
          *
-         * @param null $initial The initial value of the carry value. Can be
+         * @param mixed|null $initial The initial value of the carry value. Can be
          * NULL.
          *
          * @return mixed The return value of the final callback.
@@ -2039,7 +2237,7 @@ namespace Ds {
          *
          * @link https://www.php.net/manual/en/ds-set.reversed.php
          *
-         * <p>Note: The current instance is not affected.
+         * <p><b>Note:</b> The current instance is not affected.
          *
          * @return Set A reversed copy of the set.
          */
@@ -2090,7 +2288,7 @@ namespace Ds {
          * greater than the second. Note that before PHP 7.0.0 this integer had
          * to be in the range from -2147483648 to 2147483647.
          * <code>callback ( mixed $a, mixed $b ) : int</code>
-         * <note>Caution: Returning non-integer values from the comparison
+         * <note><b>Caution:</b> Returning non-integer values from the comparison
          * function, such as float, will result in an internal cast to integer
          * of the callback's return value. So values such as 0.99 and 0.1 will
          * both be cast to an integer value of 0, which will compare such values
@@ -2098,7 +2296,7 @@ namespace Ds {
          *
          * @link https://www.php.net/manual/en/ds-set.sort.php
          */
-        public function sort(callable $comparator = null)
+        public function sort(?callable $comparator = null)
         {
         }
 
@@ -2115,7 +2313,7 @@ namespace Ds {
          *
          * <code>callback ( mixed $a, mixed $b ) : int</code>
          *
-         * <p>Caution: Returning non-integer values from the comparison
+         * <p><b>Caution:</b> Returning non-integer values from the comparison
          * function, such as float, will result in an
          * internal cast to integer of the callback's return value. So values
          * such as 0.99 and 0.1 will both be cast to an integer value of 0,
@@ -2123,14 +2321,14 @@ namespace Ds {
          *
          * @return Set Returns a sorted copy of the set.
          */
-        public function sorted(callable $comparator = null): Set
+        public function sorted(?callable $comparator = null): Set
         {
         }
 
         /**
          * Returns the sum of all values in the set.
          *
-         * <p>Note: Arrays and objects are considered equal to zero when
+         * <p><b>Note:</b> Arrays and objects are considered equal to zero when
          * calculating the sum.
          *
          * @link https://www.php.net/manual/en/ds-set.sum.php
@@ -2150,7 +2348,7 @@ namespace Ds {
          *
          * @link https://www.php.net/manual/en/ds-set.union.php
          *
-         * @param Set $set  The other set, to combine with the current instance.
+         * @param Set $set The other set, to combine with the current instance.
          *
          * @return Set A new set containing all the values of the current
          * instance as well as another set.
@@ -2178,7 +2376,7 @@ namespace Ds {
 
         /**
          * Converts the set to an array.
-         * <p>Note: Casting to an array is not supported yet.
+         * <p><b>Note:</b> Casting to an array is not supported yet.
          * @link https://www.php.net/manual/en/ds-set.toarray.php
          * @return array An array containing all the values in the same order as
          * the collection.
@@ -2234,7 +2432,7 @@ namespace Ds {
          * @param int $capacity The number of values for which capacity should
          * be allocated.
          *
-         * <p>Note: Capacity will stay the same if this value is less than or
+         * <p><b>Note:</b> Capacity will stay the same if this value is less than or
          * equal to the current capacity.
          */
         public function allocate(int $capacity)
@@ -2293,7 +2491,7 @@ namespace Ds {
 
         /**
          * Converts the collection to an array.
-         * <p>Note: Casting to an array is not supported yet.
+         * <p><b>Note:</b> Casting to an array is not supported yet.
          * @link https://www.php.net/manual/en/ds-stack.toarray.php
          * @return array An array containing all the values in the same order as
          * the collection.
@@ -2384,7 +2582,7 @@ namespace Ds {
          * @param int $capacity The number of values for which capacity should
          * be allocated.
          *
-         * <p>Note: Capacity will stay the same if this value is less than or
+         * <p><b>Note:</b> Capacity will stay the same if this value is less than or
          * equal to the current capacity.
          */
         public function allocate(int $capacity)
@@ -2443,7 +2641,7 @@ namespace Ds {
 
         /**
          * Converts the collection to an array.
-         * <p>Note: Casting to an array is not supported yet.
+         * <p><b>Note:</b> Casting to an array is not supported yet.
          * @link https://www.php.net/manual/en/ds-queue.toarray.php
          * @return array An array containing all the values in the same order as
          * the collection.
@@ -2556,8 +2754,18 @@ namespace Ds {
         }
 
         /**
+         * Pushes a value with a given priority into the queue.
+         *
+         * @param mixed $value
+         * @param int   $priority
+         */
+        public function push($value, int $priority)
+        {
+        }
+
+        /**
          * Converts the collection to an array.
-         * <p>Note: Casting to an array is not supported yet.
+         * <p><b>Note:</b> Casting to an array is not supported yet.
          * @link https://www.php.net/manual/en/ds-collection.toarray.php
          * @return array An array containing all the values in the same order as
          * the collection.

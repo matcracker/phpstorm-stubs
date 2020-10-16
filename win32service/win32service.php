@@ -411,6 +411,7 @@ function win32_continue_service( $serviceName, $machine = "" ) { }
  * @return int|false Returns WIN32_NO_ERROR on success, FALSE if there is a problem with the parameters or a Win32 Error Code
  *             on failure.
  */
+
 function win32_create_service( $details, $machine = "" ) { }
 
 /**
@@ -449,6 +450,7 @@ function win32_get_last_control_message() { }
  *
  * @return int|false Returns WIN32_NO_ERROR on success, FALSE if there is a problem with the parameters or a Win32 Error Code
  *             on failure.
+ *
  */
 function win32_pause_service( $serviceName, $machine = "" ) { }
 
@@ -525,8 +527,9 @@ function win32_query_service_status( $serviceName, $machine = "" ) { }
  *                              WIN32_SERVICE_STOP_PENDING, WIN32_SERVICE_START_PENDING, WIN32_SERVICE_CONTINUE_PENDING
  *                              or WIN32_SERVICE_PAUSE_PENDING.
  *
- * @return mixed Returns TRUE on success, FALSE if there is a problem with the parameters or a Win32 Error Code on
+ * @return bool|int Returns TRUE on success, FALSE if there is a problem with the parameters or a Win32 Error Code on
  *             failure.
+ *
  */
 function win32_set_service_status( $status, $checkpoint = 0 ) { }
 
@@ -549,7 +552,7 @@ function win32_set_service_status( $status, $checkpoint = 0 ) { }
  *
  * @param string $name The short-name of the service, as registered by win32_create_service().
  *
- * @return mixed Returns TRUE on success, FALSE if there is a problem with the parameters or a Win32 Error Code on
+ * @return bool|int Returns TRUE on success, FALSE if there is a problem with the parameters or a Win32 Error Code on
  *               failure.
  */
 function win32_start_service_ctrl_dispatcher( $name ) { }
@@ -563,6 +566,7 @@ function win32_start_service_ctrl_dispatcher( $name ) { }
  *
  * @return int|false Returns WIN32_NO_ERROR on success, FALSE if there is a problem with the parameters or a Win32 Error Code
  *             on failure.
+ *
  */
 function win32_start_service( $serviceName, $machine = "" ) { }
 

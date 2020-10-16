@@ -155,7 +155,7 @@ class Redis
     /**
      * Retrieve our host or unix socket that we're connected to
      *
-     * @return string|bool The host or unix socket we're connected to or FALSE if we're not connected
+     * @return string|false The host or unix socket we're connected to or FALSE if we're not connected
      */
     public function getHost()
     {
@@ -164,7 +164,7 @@ class Redis
     /**
      * Get the port we're connected to
      *
-     * @return int|bool Returns the port we're connected to or FALSE if we're not connected
+     * @return int|false Returns the port we're connected to or FALSE if we're not connected
      */
     public function getPort()
     {
@@ -183,7 +183,7 @@ class Redis
     /**
      * Get the (write) timeout in use for phpredis
      *
-     * @return float|bool The timeout (DOUBLE) specified in our connect call or FALSE if we're not connected
+     * @return float|false The timeout (DOUBLE) specified in our connect call or FALSE if we're not connected
      */
     public function getTimeout()
     {
@@ -378,14 +378,14 @@ class Redis
     /**
      * Check the current connection status
      *
-     * @param string $message
+     * @param string $message [optional]
      *
      * @return bool|string TRUE if the command is successful or returns message
      * Throws a RedisException object on connectivity error, as described above.
      * @throws RedisException
      * @link    https://redis.io/commands/ping
      */
-    public function ping($message)
+    public function ping($message=null)
     {
     }
 
@@ -407,7 +407,7 @@ class Redis
      *
      * @param string $key
      *
-     * @return string|mixed|bool If key didn't exist, FALSE is returned.
+     * @return string|mixed|false If key didn't exist, FALSE is returned.
      * Otherwise, the value related to this key is returned
      *
      * @link    https://redis.io/commands/get
@@ -443,7 +443,6 @@ class Redis
      * @param int|array    $timeout [optional] Calling setex() is preferred if you want a timeout.<br>
      * Since 2.6.12 it also supports different flags inside an array. Example ['NX', 'EX' => 60]<br>
      *  - EX seconds -- Set the specified expire time, in seconds.<br>
-     *  - PX milliseconds -- Set the specified expire time, in milliseconds.<br>
      *  - PX milliseconds -- Set the specified expire time, in milliseconds.<br>
      *  - NX -- Only set the key if it does not already exist.<br>
      *  - XX -- Only set the key if it already exist.<br>
@@ -959,9 +958,9 @@ class Redis
      * If the key exists and is not a list, FALSE is returned.
      *
      * @param string $key
-     * @param string|mixed $value1... Variadic list of values to push in key, if dont used serialized, used string
+     * @param string|mixed ...$value1 Variadic list of values to push in key, if dont used serialized, used string
      *
-     * @return int|bool The new length of the list in case of success, FALSE in case of Failure
+     * @return int|false The new length of the list in case of success, FALSE in case of Failure
      *
      * @link https://redis.io/commands/lpush
      * @example
@@ -987,9 +986,9 @@ class Redis
      * If the key exists and is not a list, FALSE is returned.
      *
      * @param string $key
-     * @param string|mixed $value1... Variadic list of values to push in key, if dont used serialized, used string
+     * @param string|mixed ...$value1 Variadic list of values to push in key, if dont used serialized, used string
      *
-     * @return int|bool The new length of the list in case of success, FALSE in case of Failure
+     * @return int|false The new length of the list in case of success, FALSE in case of Failure
      *
      * @link    https://redis.io/commands/rpush
      * @example
@@ -1015,7 +1014,7 @@ class Redis
      * @param string $key
      * @param string|mixed $value String, value to push in key
      *
-     * @return int|bool The new length of the list in case of success, FALSE in case of Failure.
+     * @return int|false The new length of the list in case of success, FALSE in case of Failure.
      *
      * @link    https://redis.io/commands/lpushx
      * @example
@@ -1038,7 +1037,7 @@ class Redis
      * @param string $key
      * @param string|mixed $value String, value to push in key
      *
-     * @return int|bool The new length of the list in case of success, FALSE in case of Failure.
+     * @return int|false The new length of the list in case of success, FALSE in case of Failure.
      *
      * @link    https://redis.io/commands/rpushx
      * @example
@@ -1331,7 +1330,7 @@ class Redis
      * @param int    $start
      * @param int    $stop
      *
-     * @return array|bool Bool return FALSE if the key identify a non-list value
+     * @return array|false Bool return FALSE if the key identify a non-list value
      *
      * @link        https://redis.io/commands/ltrim
      * @example
@@ -1688,7 +1687,7 @@ class Redis
      * @param string $key1         keys identifying the different sets on which we will apply the intersection.
      * @param string ...$otherKeys variadic list of keys
      *
-     * @return int|bool The cardinality of the resulting set, or FALSE in case of a missing key
+     * @return int|false The cardinality of the resulting set, or FALSE in case of a missing key
      *
      * @link    https://redis.io/commands/sinterstore
      * @example
@@ -1840,7 +1839,7 @@ class Redis
      * @param string $key1         first key for diff
      * @param string ...$otherKeys variadic list of keys corresponding to sets in redis
      *
-     * @return int|bool The cardinality of the resulting set, or FALSE in case of a missing key
+     * @return int|false The cardinality of the resulting set, or FALSE in case of a missing key
      *
      * @link    https://redis.io/commands/sdiffstore
      * @example
@@ -1919,11 +1918,11 @@ class Redis
      * Scan a set for members
      *
      * @param string $key      The set to search.
-     * @param int    $iterator LONG (reference) to the iterator as we go.
+     * @param int    &$iterator LONG (reference) to the iterator as we go.
      * @param string   $pattern  String, optional pattern to match against.
      * @param int    $count    How many members to return at a time (Redis might return a different amount)
      *
-     * @return array|bool PHPRedis will return an array of keys or FALSE when we're done iterating
+     * @return array|false PHPRedis will return an array of keys or FALSE when we're done iterating
      *
      * @link    https://redis.io/commands/sscan
      * @example
@@ -2310,7 +2309,7 @@ class Redis
      * @param string $string
      * @param string $key
      *
-     * @return string|int|bool for "encoding", int for "refcount" and "idletime", FALSE if the key doesn't exist.
+     * @return string|int|false for "encoding", int for "refcount" and "idletime", FALSE if the key doesn't exist.
      *
      * @link    https://redis.io/commands/object
      * @example
@@ -2908,7 +2907,7 @@ class Redis
      * @param string $srcKey
      * @param string $dstKey
      *
-     * @return string|mixed|bool The element that was moved in case of success, FALSE in case of failure.
+     * @return string|mixed|false The element that was moved in case of success, FALSE in case of failure.
      *
      * @link    https://redis.io/commands/rpoplpush
      * @example
@@ -3353,7 +3352,7 @@ class Redis
      * @param string       $key
      * @param string|mixed $member
      *
-     * @return int|bool the item's score, or false if key or member is not exists
+     * @return int|false the item's score, or false if key or member is not exists
      *
      * @link    https://redis.io/commands/zrank
      * @example
@@ -3376,7 +3375,7 @@ class Redis
      * @param string       $key
      * @param string|mixed $member
      *
-     * @return int|bool the item's score, false - if key or member is not exists
+     * @return int|false the item's score, false - if key or member is not exists
      *
      * @link   https://redis.io/commands/zrevrank
      */
@@ -3526,11 +3525,11 @@ class Redis
      * Scan a sorted set for members, with optional pattern and count
      *
      * @param string $key      String, the set to scan.
-     * @param int    $iterator Long (reference), initialized to NULL.
+     * @param int    &$iterator Long (reference), initialized to NULL.
      * @param string $pattern  String (optional), the pattern to match.
      * @param int    $count    How many keys to return per iteration (Redis might return a different number).
      *
-     * @return array|bool PHPRedis will return matching keys from Redis, or FALSE when iteration is complete
+     * @return array|false PHPRedis will return matching keys from Redis, or FALSE when iteration is complete
      *
      * @link    https://redis.io/commands/zscan
      * @example
@@ -3692,7 +3691,7 @@ class Redis
      * @param string $key
      * @param string $hashKey
      *
-     * @return string The value, if the command executed successfully BOOL FALSE in case of failure
+     * @return string|false The value, if the command executed successfully BOOL FALSE in case of failure
      *
      * @link    https://redis.io/commands/hget
      */
@@ -3705,7 +3704,7 @@ class Redis
      *
      * @param string $key
      *
-     * @return int|bool the number of items in a hash, FALSE if the key doesn't exist or isn't a hash
+     * @return int|false the number of items in a hash, FALSE if the key doesn't exist or isn't a hash
      *
      * @link    https://redis.io/commands/hlen
      * @example
@@ -3956,7 +3955,7 @@ class Redis
     }
 
     /**
-     * Retirieve the values associated to the specified fields in the hash.
+     * Retrieve the values associated to the specified fields in the hash.
      *
      * @param string $key
      * @param array  $hashKeys
@@ -3981,7 +3980,7 @@ class Redis
      * Scan a HASH value for members, with an optional pattern and count.
      *
      * @param string $key
-     * @param int    $iterator
+     * @param int    &$iterator
      * @param string $pattern    Optional pattern to match against.
      * @param int    $count      How many keys to return in a go (only a sugestion to Redis).
      *
@@ -4569,7 +4568,7 @@ class Redis
      * The data that comes out of DUMP is a binary representation of the key as Redis stores it.
      * @param string $key
      *
-     * @return string|bool The Redis encoded value of the key, or FALSE if the key doesn't exist
+     * @return string|false The Redis encoded value of the key, or FALSE if the key doesn't exist
      *
      * @link    https://redis.io/commands/dump
      * @example
@@ -4649,11 +4648,11 @@ class Redis
     /**
      * Scan the keyspace for keys
      *
-     * @param int    $iterator Iterator, initialized to NULL.
+     * @param int    &$iterator Iterator, initialized to NULL.
      * @param string $pattern  Pattern to match.
      * @param int    $count    Count of keys per iteration (only a suggestion to Redis).
      *
-     * @return array|bool This function will return an array of keys or FALSE if there are no more keys.
+     * @return array|false This function will return an array of keys or FALSE if there are no more keys.
      *
      * @link   https://redis.io/commands/scan
      * @example
@@ -5108,6 +5107,15 @@ class RedisArray
      * @return  string  the host to be used for a certain key
      */
     public function _target($key)
+    {
+    }
+
+    /**
+     * @param string $host The host you want to retrieve the instance for
+     *
+     * @return Redis a redis instance connected to a specific node
+     */
+    public function _instance($host)
     {
     }
 

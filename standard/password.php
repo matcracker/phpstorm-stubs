@@ -36,6 +36,9 @@
  * </ul>
  * @link https://secure.php.net/manual/en/password.constants.php
  */
+
+use JetBrains\PhpStorm\ArrayShape;
+
 define("PASSWORD_DEFAULT", "2y");
 
 /**
@@ -78,6 +81,7 @@ define("PASSWORD_BCRYPT_DEFAULT_COST", 10);
 define("PASSWORD_BCRYPT", '2y');
 
 /**
+ *
  * PASSWORD_ARGON2I is used to create new password hashes using the Argon2i algorithm.
  *
  * Supported Options:
@@ -94,6 +98,7 @@ define("PASSWORD_BCRYPT", '2y');
 define('PASSWORD_ARGON2I', 'argon2i');
 
 /**
+ *
  * PASSWORD_ARGON2ID is used to create new password hashes using the Argon2id algorithm.
  *
  * Supported Options:
@@ -157,6 +162,7 @@ define('PASSWORD_ARGON2_PROVIDER', 'standard');
  * </ul>
  * @since 5.5
  */
+#[ArrayShape(["algo" => "int", "algoName" => "string", "options" => "array"])]
 function password_get_info ($hash) {}
 
 /**

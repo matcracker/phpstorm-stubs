@@ -6,7 +6,7 @@
  * Represents an element in an XML document.
  * @link https://php.net/manual/en/class.simplexmlelement.php
  */
-class SimpleXMLElement implements Traversable, ArrayAccess, Countable {
+class SimpleXMLElement implements Traversable, ArrayAccess, Countable, Iterator, Stringable, RecursiveIterator {
 
 	/**
 	 * Creates a new SimpleXMLElement object
@@ -19,7 +19,7 @@ class SimpleXMLElement implements Traversable, ArrayAccess, Countable {
      * @param bool $is_prefix TRUE if ns is a prefix, FALSE if it's a URI; defaults to FALSE.
 	 * @since 5.0.1
 	 */
-	final public function __construct ($data, $options = 0, $data_is_url = false, $ns = "", $is_prefix = false) {}
+	public function __construct ($data, $options = 0, $data_is_url = false, $ns = "", $is_prefix = false) {}
 
 	/**
      * Provides access to element's children
@@ -218,15 +218,15 @@ class SimpleXMLElement implements Traversable, ArrayAccess, Countable {
      * @param string|int $offset
      * @return bool true on success or false on failure.
      */
-    private function offsetExists ($offset) {}
+    public function offsetExists ($offset) {}
 
     /**
      * Class provides access to children by position, and attributes by name
      * private Method not callable directly, stub exists for typehint only
      * @param string|int $offset
-     * @return SimpleXMLElement Either a named attribute or an element from a list of children
+     * @return static Either a named attribute or an element from a list of children
      */
-    private function offsetGet ($offset) {}
+    public function offsetGet ($offset) {}
 
     /**
      * Class provides access to children by position, and attributes by name
@@ -235,7 +235,7 @@ class SimpleXMLElement implements Traversable, ArrayAccess, Countable {
      * @param mixed $value
      * @return void
      */
-    private function offsetSet ($offset, $value) {}
+    public function offsetSet ($offset, $value) {}
 
     /**
      * Class provides access to children by position, and attributes by name
@@ -243,14 +243,60 @@ class SimpleXMLElement implements Traversable, ArrayAccess, Countable {
      * @param string|int $offset
      * @return void
      */
-    private function offsetUnset ($offset) {}
+    public function offsetUnset ($offset) {}
+
+    /**
+     * Rewind to the first element
+     * @link https://php.net/manual/en/simplexmliterator.rewind.php
+     * @return void No value is returned.
+     */
+    public function rewind () {}
+
+    /**
+     * Check whether the current element is valid
+     * @link https://php.net/manual/en/simplexmliterator.valid.php
+     * @return bool <b>TRUE</b> if the current element is valid, otherwise <b>FALSE</b>
+     */
+    public function valid () {}
+
+    /**
+     * Returns the current element
+     * @link https://php.net/manual/en/simplexmliterator.current.php
+     * @return static|null the current element as a <b>SimpleXMLElement</b> object or <b>NULL</b> on failure.
+     */
+    public function current () {}
+
+    /**
+     * Return current key
+     * @link https://php.net/manual/en/simplexmliterator.key.php
+     * @return string|false the XML tag name of the element referenced by the current <b>SimpleXMLIterator</b> object or <b>FALSE</b>
+     */
+    public function key () {}
+
+    /**
+     * Move to next element
+     * @link https://php.net/manual/en/simplexmliterator.next.php
+     * @return void No value is returned.
+     */
+    public function next () {}
+
+    /**
+     * @return bool
+     * @since 8.0
+     */
+    public function hasChildren(){}
+
+    /**
+     * @since 8.0
+     */
+    public function getChildren(){}
 }
 
 /**
  * The SimpleXMLIterator provides recursive iteration over all nodes of a <b>SimpleXMLElement</b> object.
  * @link https://php.net/manual/en/class.simplexmliterator.php
  */
-class SimpleXMLIterator extends SimpleXMLElement implements RecursiveIterator, Countable {
+class SimpleXMLIterator extends SimpleXMLElement implements RecursiveIterator, Countable, Stringable {
 
 	/**
 	 * Rewind to the first element
@@ -269,14 +315,14 @@ class SimpleXMLIterator extends SimpleXMLElement implements RecursiveIterator, C
 	/**
 	 * Returns the current element
 	 * @link https://php.net/manual/en/simplexmliterator.current.php
-	 * @return mixed the current element as a <b>SimpleXMLIterator</b> object or <b>NULL</b> on failure.
+	 * @return static|null the current element as a <b>SimpleXMLIterator</b> object or <b>NULL</b> on failure.
 	 */
 	public function current () {}
 
 	/**
 	 * Return current key
 	 * @link https://php.net/manual/en/simplexmliterator.key.php
-	 * @return mixed the XML tag name of the element referenced by the current <b>SimpleXMLIterator</b> object or <b>FALSE</b>
+	 * @return string|false the XML tag name of the element referenced by the current <b>SimpleXMLIterator</b> object or <b>FALSE</b>
 	 */
 	public function key () {}
 
@@ -343,7 +389,7 @@ class SimpleXMLIterator extends SimpleXMLElement implements RecursiveIterator, C
  * Since PHP 5.1.0 and Libxml 2.6.0, you may also use the
  * <i>options</i> parameter to specify additional Libxml parameters.
  * </p>
- * @param string $ns [optional] <p>
+ * @param string $namespace_or_prefix [optional] <p>
  * Namespace prefix or URI.
  * </p>
  * @param bool $is_prefix [optional] <p>
@@ -353,7 +399,7 @@ class SimpleXMLIterator extends SimpleXMLElement implements RecursiveIterator, C
  * @return SimpleXMLElement an object of class SimpleXMLElement with
  * properties containing the data held within the XML document, or <b>FALSE</b> on failure.
  */
-function simplexml_load_file ($filename, $class_name = "SimpleXMLElement", $options = 0, $ns = "", $is_prefix = false) {}
+function simplexml_load_file ($filename, $class_name = "SimpleXMLElement", $options = 0, $namespace_or_prefix = "", $is_prefix = false) {}
 
 /**
  * Interprets a string of XML into an object
@@ -371,7 +417,7 @@ function simplexml_load_file ($filename, $class_name = "SimpleXMLElement", $opti
  * Since PHP 5.1.0 and Libxml 2.6.0, you may also use the
  * <i>options</i> parameter to specify additional Libxml parameters.
  * </p>
- * @param string $ns [optional] <p>
+ * @param string $namespace_or_prefix [optional] <p>
  * Namespace prefix or URI.
  * </p>
  * @param bool $is_prefix [optional] <p>
@@ -381,7 +427,7 @@ function simplexml_load_file ($filename, $class_name = "SimpleXMLElement", $opti
  * @return SimpleXMLElement an object of class SimpleXMLElement with
  * properties containing the data held within the xml document, or <b>FALSE</b> on failure.
  */
-function simplexml_load_string ($data, $class_name = "SimpleXMLElement", $options = 0, $ns = "", $is_prefix = false) {}
+function simplexml_load_string ($data, $class_name = "SimpleXMLElement", $options = 0, $namespace_or_prefix = "", $is_prefix = false) {}
 
 /**
  * Get a SimpleXMLElement object from a DOM node.

@@ -33,6 +33,7 @@ define('GNUPG_ERROR_SILENT', 3);
  * @link https://php.net/manual/en/book.gnupg.php
  * Class gnupg
  */
+
 class gnupg {
 	/**
 	 * Add a key for decryption
@@ -53,12 +54,12 @@ class gnupg {
 	 *
 	 * * @param string $signed_text
 	 * @param string $signature
-	 * @param string $plaintext
+	 * @param string &$plaintext
 	 *
 	 * @return array|false On success, this function returns information about the signature.
 	 *               On failure, this function returns false.
 	 */
-	function verify($signed_text, $signature, &$plaintext = NULL)
+	function verify($signed_text, $signature, &$plaintext = null)
 	{
 	}
 
@@ -83,7 +84,7 @@ class gnupg {
 	 *
 	 * @return bool
 	 */
-	function addsignkey($fingerprint, $passphrase = NULL)
+	function addsignkey($fingerprint, $passphrase = null)
 	{
 	}
 
@@ -135,7 +136,7 @@ class gnupg {
 	 * @link https://php.net/manual/en/function.gnupg-decryptverify.php
 	 *
 	 * @param string $text
-	 * @param string $plaintext
+	 * @param string &$plaintext
 	 *
 	 * @return array|false On success, this function returns information about the signature and
 	 *               fills the  parameter with the decrypted text.

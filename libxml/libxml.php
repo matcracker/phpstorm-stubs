@@ -18,14 +18,14 @@ class LibXMLError  {
 	 * </p>
 	 * @var int
 	 */
-	public $level;
+	public int $level;
 	/**
 	 * <p style="margin-top:0;">
 	 * The error's code.
 	 * </p>
 	 * @var int
 	 */
-	public $code;
+	public int $code;
 	/**
 	 * <p style="margin-top:0;">
 	 * The column where the error occurred.
@@ -37,39 +37,39 @@ class LibXMLError  {
 	 * </p>
 	 * @var int
 	 */
-	public $column;
+	public int $column;
 	/**
 	 * <p style="margin-top:0;">
 	 * The error message, if any.
 	 * </p>
 	 * @var string
 	 */
-	public $message;
+	public string $message;
 	/**
 	 * <p style="margin-top:0;">The filename, or empty if the XML was loaded from a string.</p>
 	 * @var string
 	 */
-	public $file;
+	public string $file;
 	/**
 	 * <p style="margin-top:0;">
 	 * The line where the error occurred.
 	 * </p>
 	 * @var int
 	 */
-	public $line;
+	public int $line;
 
 }
 
 /**
  * Set the streams context for the next libxml document load or write
  * @link https://php.net/manual/en/function.libxml-set-streams-context.php
- * @param resource $streams_context <p>
+ * @param resource $context <p>
  * The stream context resource (created with
  * <b>stream_context_create</b>)
  * </p>
  * @return void No value is returned.
  */
-function libxml_set_streams_context ($streams_context) {}
+function libxml_set_streams_context ($context) {}
 
 /**
  * Disable libxml errors and allow user to fetch error information as needed
@@ -115,6 +115,7 @@ function libxml_get_errors () {}
  * </p>
  * @return bool the previous value.
  * @since 5.2.11
+ * @deprecated 8.0
  */
 function libxml_disable_entity_loader ($disable = true) {}
 

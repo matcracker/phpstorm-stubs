@@ -14,10 +14,10 @@
     "inspection"
   ],
   "require-dev": {
-    "php": "^7.4",
-    "nikic/php-parser": "^4",
-    "phpdocumentor/reflection-docblock": "^4.3",
-    "phpunit/phpunit": "^7",
+    "php": "^8.0",
+    "nikic/php-parser": "dev-master",
+    "phpdocumentor/reflection-docblock": "dev-master",
+    "phpunit/phpunit": "^9",
     "friendsofphp/php-cs-fixer": "^2.16"
   },
   "autoload": {
@@ -29,7 +29,12 @@
     }
   },
   "scripts": {
-    "cs": "php-cs-fixer fix -v --allow-risky=yes --diff --dry-run",
-    "cs-fix": "php-cs-fixer fix -v --diff --allow-risky=yes"
+    "cs": "php-cs-fixer fix -v --diff --dry-run",
+    "cs-fix": "php-cs-fixer fix -v --diff"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2020.x"
+    }
   }
 }

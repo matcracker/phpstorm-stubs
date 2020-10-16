@@ -1,691 +1,530 @@
 <?php
-/**
- * pthreads extension stub file for code completion purposes
- *
- * @author Lisachenko Alexander <lisachenko.it@gmail.com>
- * @version 3.0.0
- */
+
+// Start of PECL pthreads 3.1.6
 
 /**
- * The default inheritance mask used when starting Threads and Workers
+ * The default options for all Threads, causes pthreads to copy the environment
+ * when new Threads are started
+ * @link https://php.net/manual/en/pthreads.constants.php
  */
-define('PTHREADS_INHERIT_ALL', 0x111111);
+define('PTHREADS_INHERIT_ALL', 1118481);
 
 /**
- * Nothing will be inherited by the new context
+ * Do not inherit anything when new Threads are started
+ * @link https://php.net/manual/en/pthreads.constants.php
  */
 define('PTHREADS_INHERIT_NONE', 0);
 
 /**
- * Determines whether the ini entries are inherited by the new context
+ * Inherit INI entries when new Threads are started
+ * @link https://php.net/manual/en/pthreads.constants.php
  */
-define('PTHREADS_INHERIT_INI', 0x1);
+define('PTHREADS_INHERIT_INI', 1);
 
 /**
- * Determines whether the constants are inherited by the new context
+ * Inherit user declared constants when new Threads are started
+ * @link https://php.net/manual/en/pthreads.constants.php
  */
-define('PTHREADS_INHERIT_CONSTANTS', 0x10);
+define('PTHREADS_INHERIT_CONSTANTS', 16);
 
 /**
- * Determines whether the class table is inherited by the new context
+ * Inherit user declared classes when new Threads are started
+ * @link https://php.net/manual/en/pthreads.constants.php
  */
-define('PTHREADS_INHERIT_CLASSES', 0x100);
+define('PTHREADS_INHERIT_CLASSES', 4096);
 
 /**
- * Determines whether the function table is inherited by the new context
+ * Inherit user declared functions when new Threads are started
+ * @link https://php.net/manual/en/pthreads.constants.php
  */
-define('PTHREADS_INHERIT_FUNCTIONS', 0x100);
+define('PTHREADS_INHERIT_FUNCTIONS', 256);
 
 /**
- * Determines whether the included_files table is inherited by the new context
+ * Inherit included file information when new Threads are started
+ * @link https://php.net/manual/en/pthreads.constants.php
  */
-define('PTHREADS_INHERIT_INCLUDES', 0x10000);
+define('PTHREADS_INHERIT_INCLUDES', 65536);
 
 /**
- * Determines whether the comments are inherited by the new context
+ * Inherit all comments when new Threads are started
+ * @link https://php.net/manual/en/pthreads.constants.php
  */
-define('PTHREADS_INHERIT_COMMENTS', 0x100000);
+define('PTHREADS_INHERIT_COMMENTS', 1048576);
 
 /**
- * Allow output headers from the threads
+ * Allow new Threads to send headers to standard output (normally prohibited)
+ * @link https://php.net/manual/en/pthreads.constants.php
  */
-define('PTHREADS_ALLOW_HEADERS', 0x1000000);
+define('PTHREADS_ALLOW_HEADERS', 268435456);
 
 /**
- * Threaded class
- *
- * Threaded objects form the basis of pthreads ability to execute user code in parallel;
- * they expose and include synchronization methods and various useful interfaces.
- *
+ * (PECL pthreads &gt;= 2.0.0)<br/>
+ * A Pool is a container for, and controller of, an adjustable number of
+ * Workers.<br/>
+ * Pooling provides a higher level abstraction of the Worker functionality,
+ * including the management of references in the way required by pthreads.
+ * @link https://secure.php.net/manual/en/class.pool.php
+ */
+class Pool {
+    /**
+     * Maximum number of Workers this Pool can use
+     * @var int
+     */
+    protected $size;
+
+    /**
+     * The class of the Worker
+     * @var string
+     */
+    protected $class;
+
+    /**
+     * The arguments for constructor of new Workers
+     * @var array
+     */
+    protected $ctor;
+
+    /**
+     * References to Workers
+     * @var array
+     */
+    protected $workers;
+
+    /**
+     * Offset in workers of the last Worker used
+     * @var int
+     */
+    protected $last;
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Construct a new pool of workers. Pools lazily create their threads, which means
+     * new threads will only be spawned when they are required to execute tasks.
+     * @link https://secure.php.net/manual/en/pool.construct.php
+     * @param int $size <p>The maximum number of workers for this pool to create</p>
+     * @param string $class [optional] <p>The class for new Workers. If no class is
+     * given, then it defaults to the {@link Worker} class.</p>
+     * @param array $ctor [optional] <p>An array of arguments to be passed to new
+     * Workers</p>
+     */
+    public function __construct( int $size, string $class = 'Worker', array $ctor = [] ) {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Allows the pool to collect references determined to be garbage by the
+     * optionally given collector
+     * @link https://secure.php.net/manual/en/pool.collect.php
+     * @param callable $collector [optional] <p>A Callable collector that returns a
+     * boolean on whether the task can be collected or not. Only in rare cases should
+     * a custom collector need to be used.</p>
+     * @return int <p>The number of remaining tasks in the pool to be collected</p>
+     */
+    public function collect( callable $collector = null ) {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Resize the Pool
+     * @link https://secure.php.net/manual/en/pool.resize.php
+     * @param int $size <p>The maximum number of Workers this Pool can create</p>
+     * @return void
+     */
+    public function resize( int $size ) {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Shuts down all of the workers in the pool. This will block until all submitted
+     * tasks have been executed.
+     * @link https://secure.php.net/manual/en/pool.shutdown.php
+     * @return void
+     */
+    public function shutdown() {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Submit the task to the next Worker in the Pool
+     * @link https://secure.php.net/manual/en/pool.submit.php
+     * @param Threaded $task <p>The task for execution</p>
+     * @return int <p>the identifier of the Worker executing the object</p>
+     */
+    public function submit( Threaded $task ) {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Submit a task to the specified worker in the pool. The workers are indexed
+     * from 0, and will only exist if the pool has needed to create them (since
+     * threads are lazily spawned).
+     * @link https://secure.php.net/manual/en/pool.submitTo.php
+     * @param int $worker <p>The worker to stack the task onto, indexed from 0</p>
+     * @param Threaded $task <p>The task for execution</p>
+     * @return int <p>The identifier of the worker that accepted the task</p>
+     */
+    public function submitTo( int $worker, Threaded $task ) {}
+}
+
+/**
+ * Threaded objects form the basis of pthreads ability to execute user code
+ * in parallel; they expose synchronization methods and various useful
+ * interfaces.<br/>
  * Threaded objects, most importantly, provide implicit safety for the programmer;
  * all operations on the object scope are safe.
  *
- * @link https://www.php.net/manual/en/class.threaded.php
- * @since 2.0.0
+ * @link https://secure.php.net/manual/en/class.threaded.php
  */
-class Threaded implements Traversable, Countable, ArrayAccess, Collectable{
-	/**
-	 * Increments the object's reference count
-	 */
-	public function addRef(){}
+class Threaded implements Collectable, Traversable, Countable, ArrayAccess {
+    /**
+     * Worker object in which this Threaded is being executed
+     * @var Worker
+     */
+    protected $worker;
 
-	/**
-	 * Fetches a chunk of the objects properties table of the given size
-	 *
-	 * @param int  $size The number of items to fetch
-	 * @param bool $preserve Preserve the keys of members
-	 *
-	 * @link https://www.php.net/manual/en/threaded.chunk.php
-	 * @return array An array of items from the objects member table
-	 */
-	public function chunk($size, $preserve = false){}
+    /**
+     * (PECL pthreads &gt;= 3.0.0)<br/>
+     * Increments the internal number of references to a Threaded object
+     * @return void
+     */
+    public function addRef() {}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function count(){}
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Fetches a chunk of the objects property table of the given size,
+     * optionally preserving keys
+     * @link https://secure.php.net/manual/en/threaded.chunk.php
+     * @param int $size <p>The number of items to fetch</p>
+     * @param bool $preserve [optional] <p>Preserve the keys of members, by default false</p>
+     * @return array <p>An array of items from the objects property table</p>
+     */
+    public function chunk( $size, $preserve = false ) {}
 
-	/**
-	 * Decrements the object's reference count
-	 */
-	public function delRef(){}
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Returns the number of properties for this object
+     * @link https://secure.php.net/manual/en/threaded.count.php
+     * @return int <p>The number of properties for this object</p>
+     */
+    public function count() {}
 
-	/**
-	 * Runtime extending of the Threaded class
-	 *
-	 * @param string $class The name of the class to extend Threaded
-	 *
-	 * @return bool A boolean indication of success
-	 */
-	public static function extend($class){}
+    /**
+     * (PECL pthreads &gt;= 3.0.0)<br/>
+     * Decrements the internal number of references to a Threaded object
+     * @return void
+     */
+    public function delRef() {}
 
-	/**
-	 * Gets the object's reference count
-	 *
-	 * @return int The object's reference count
-	 */
-	public function getRefCount(){}
+    /**
+     * (PECL pthreads &gt;= 2.0.8)<br/>
+     * Makes thread safe standard class at runtime
+     * @link https://secure.php.net/manual/en/threaded.extend.php
+     * @param string $class <p>The class to extend</p>
+     * @return bool <p>A boolean indication of success</p>
+     */
+    public static function extend( $class ) {}
 
-	/**
-	 * A default method for marking an object as ready to be destroyed
-	 *
-	 * @return bool The referenced object can be destroyed
-	 */
-	public function isGarbage() : bool{}
+    /**
+     * (PECL pthreads &gt;= 3.0.0)<br/>
+     * Retrieves the internal number of references to a Threaded object
+     * @return int <p>The number of references to the Threaded object</p>
+     */
+    public function getRefCount() {}
 
-	/**
-	 * Tell if the referenced object is executing
-	 *
-	 * @link https://www.php.net/manual/en/threaded.isrunning.php
-	 * @return bool A boolean indication of state
-	 */
-	public function isRunning(){}
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Tell if the referenced object is executing
+     * @link https://secure.php.net/manual/en/thread.isrunning.php
+     * @return bool <p>A boolean indication of state</p>
+     */
+    public function isRunning() {}
 
-	/**
-	 * Tell if the referenced object exited, suffered fatal errors, or threw uncaught exceptions during execution
-	 *
-	 * @link https://www.php.net/manual/en/threaded.isterminated.php
-	 * @return bool A boolean indication of state
-	 */
-	public function isTerminated(){}
+    /**
+     * (PECL pthreads &gt;= 3.1.0)<br/>
+     * @inheritdoc
+     * @see Collectable::isGarbage()
+     */
+    public function isGarbage(): bool{}
 
-	/**
-	 * Merges data into the current object
-	 *
-	 * @param mixed $from The data to merge
-	 * @param bool  $overwrite Overwrite existing keys flag
-	 *
-	 * @link https://www.php.net/manual/en/threaded.merge.php
-	 * @return bool A boolean indication of success
-	 */
-	public function merge($from, $overwrite = true){}
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Tell if the referenced object was terminated during execution; suffered
+     * fatal errors, or threw uncaught exceptions
+     * @link https://secure.php.net/manual/en/threaded.isterminated.php
+     * @return bool <p>A boolean indication of state</p>
+     */
+    public function isTerminated() {}
 
-	/**
-	 * Send notification to the referenced object
-	 *
-	 * @link https://www.php.net/manual/en/threaded.notify.php
-	 * @return bool A boolean indication of success
-	 */
-	public function notify(){}
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Merges data into the current object
+     * @link https://secure.php.net/manual/en/threaded.merge.php
+     * @var mixed $from <p>The data to merge</p>
+     * @var bool $overwrite [optional] <p>Overwrite existing keys, by default true</p>
+     * @return bool <p>A boolean indication of success</p>
+     */
+    public function merge( $from, $overwrite = true ) {}
 
-	/**
-	 * Send notification to one context waiting on the Threaded
-	 *
-	 * @return bool A boolean indication of success
-	 */
-	public function notifyOne(){}
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Send notification to the referenced object
+     * @link https://secure.php.net/manual/en/threaded.notify.php
+     * @return bool <p>A boolean indication of success</p>
+     */
+    public function notify() {}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function offsetGet($offset){}
+    /**
+     * (PECL pthreads &gt;= 3.0.0)<br/>
+     * Send notification to the referenced object. This unblocks at least one
+     * of the blocked threads (as opposed to unblocking all of them, as seen with
+     * Threaded::notify()).
+     * @link https://secure.php.net/manual/en/threaded.notifyone.php
+     * @return bool <p>A boolean indication of success</p>
+     */
+    public function notifyOne() {}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function offsetSet($offset, $value){}
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Pops an item from the objects property table
+     * @link https://secure.php.net/manual/en/threaded.pop.php
+     * @return mixed <p>The last item from the objects property table</p>
+     */
+    public function pop() {}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function offsetExists($offset){}
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * The programmer should always implement the run method for objects
+     * that are intended for execution.
+     * @link https://secure.php.net/manual/en/threaded.run.php
+     * @return void
+     */
+    public function run() {}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function offsetUnset($offset){}
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Shifts an item from the objects property table
+     * @link https://secure.php.net/manual/en/threaded.shift.php
+     * @return mixed <p>The first item from the objects property table</p>
+     */
+    public function shift() {}
 
-	/**
-	 * Pops an item from the objects property table
-	 *
-	 * @link https://www.php.net/manual/en/threaded.pop.php
-	 * @return mixed The last item from the objects properties table
-	 */
-	public function pop(){}
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Executes the block while retaining the referenced objects
+     * synchronization lock for the calling context
+     * @link https://secure.php.net/manual/en/threaded.synchronized.php
+     * @param Closure $block <p>The block of code to execute</p>
+     * @param mixed ...$_ [optional] <p>Variable length list of arguments
+     * to use as function arguments to the block</p>
+     * @return mixed <p>The return value from the block</p>
+     */
+    public function synchronized( Closure $block, ...$_ ) {}
 
-	/**
-	 * The programmer should always implement the run method for objects that are intended for execution.
-	 *
-	 * @link https://www.php.net/manual/en/threaded.run.php
-	 * @return void The methods return value, if used, will be ignored
-	 */
-	public function run(){}
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Will cause the calling context to wait for notification from the
+     * referenced object
+     * @link https://secure.php.net/manual/en/threaded.wait.php
+     * @param int $timeout [optional] <p>An optional timeout in microseconds</p>
+     * @return bool <p>A boolean indication of success</p>
+     */
+    public function wait( int $timeout = 0 ) {}
 
-	/**
-	 * Shifts an item from the objects properties table
-	 *
-	 * @link https://www.php.net/manual/en/threaded.shift.php
-	 * @return mixed The first item from the objects properties table
-	 */
-	public function shift(){}
 
-	/**
-	 * Executes the block while retaining the synchronization lock for the current context.
-	 *
-	 * @param \Closure $function The block of code to execute
-	 * @param mixed    $args ... Variable length list of arguments to use as function arguments to the block
-	 *
-	 * @link https://www.php.net/manual/en/threaded.synchronized.php
-	 * @return mixed The return value from the block
-	 */
-	public function synchronized(\Closure $function, ...$args){}
+    /**
+     * @inheritdoc
+     * @see ArrayAccess::offsetExists()
+     */
+    public function offsetExists( $offset ) {}
 
-	/**
-	 * Waits for notification from the Stackable
-	 *
-	 * @param int $timeout An optional timeout in microseconds
-	 *
-	 * @link https://www.php.net/manual/en/threaded.wait.php
-	 * @return bool A boolean indication of success
-	 */
-	public function wait(int $timeout = 0){}
+    /**
+     * @inheritdoc
+     * @see ArrayAccess::offsetGet()
+     */
+    public function offsetGet( $offset ) {}
+
+    /**
+     * @inheritdoc
+     * @see ArrayAccess::offsetSet()
+     */
+    public function offsetSet( $offset, $value ) {}
+
+    /**
+     * @inheritdoc
+     * @see ArrayAccess::offsetUnset()
+     */
+    public function offsetUnset( $offset ) {}
 }
 
 /**
- * Volatile class
+ * (PECL pthreads &gt;= 2.0.0)<br/>
+ * When the start method of a Thread is invoked, the run method code will be
+ * executed in separate Thread, in parallel.<br/>
+ * After the run method is executed the Thread will exit immediately, it will
+ * be joined with the creating Thread at the appropriate time.
  *
- * The Volatile class is new to pthreads v3. Its introduction is a consequence of the new immutability semantics of
- * Threaded members of Threaded classes. The Volatile class enables for mutability of its Threaded members, and is also
+ * @link https://secure.php.net/manual/en/class.thread.php
+ */
+class Thread extends Threaded implements Countable, Traversable, ArrayAccess {
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Will return the identity of the Thread that created the referenced Thread
+     * @link https://secure.php.net/manual/en/thread.getcreatorid.php
+     * @return int <p>A numeric identity</p>
+     */
+    public function getCreatorId() {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Return a reference to the currently executing Thread
+     * @link https://secure.php.net/manual/en/thread.getcurrentthread.php
+     * @return Thread <p>An object representing the currently executing Thread</p>
+     */
+    public static function getCurrentThread() {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Will return the identity of the currently executing Thread
+     * @link https://secure.php.net/manual/en/thread.getcurrentthreadid.php
+     * @return int <p>A numeric identity</p>
+     */
+    public static function getCurrentThreadId() {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Will return the identity of the referenced Thread
+     * @link https://secure.php.net/manual/en/thread.getthreadid.php
+     * @return int <p>A numeric identity</p>
+     */
+    public function getThreadId() {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Tell if the referenced Thread has been joined
+     * @link https://secure.php.net/manual/en/thread.isjoined.php
+     * @return bool <p>A boolean indication of state</p>
+     */
+    public function isJoined() {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Tell if the referenced Thread was started
+     * @link https://secure.php.net/manual/en/thread.isstarted.php
+     * @return bool <p>A boolean indication of state</p>
+     */
+    public function isStarted() {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Causes the calling context to wait for the referenced Thread to finish executing
+     * @link https://secure.php.net/manual/en/thread.join.php
+     * @return bool <p>A boolean indication of success</p>
+     */
+    public function join() {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Will start a new Thread to execute the implemented run method
+     * @link https://secure.php.net/manual/en/thread.start.php
+     * @param int $options [optional] <p>An optional mask of inheritance
+     * constants, by default <b>{@link PTHREADS_INHERIT_ALL}</b></p>
+     * @return bool <p>A boolean indication of success</p>
+     */
+    public function start( int $options = PTHREADS_INHERIT_ALL ) {}
+}
+
+/**
+ * (PECL pthreads &gt;= 2.0.0)<br/>
+ * Worker Threads have a persistent context, as such should be used over
+ * Threads in most cases.<br/>
+ * When a Worker is started, the run method will be executed, but the Thread will
+ * not leave until one of the following conditions are met:<br/><ul>
+ * <li>the Worker goes out of scope (no more references remain)</li>
+ * <li>the programmer calls shutdown</li>
+ * <li>the script dies</li></ul>
+ * This means the programmer can reuse the context throughout execution; placing
+ * objects on the stack of the Worker will cause the Worker to execute the stacked
+ * objects run method.
+ * @link https://secure.php.net/manual/en/class.worker.php
+ */
+class Worker extends Thread implements Traversable, Countable, ArrayAccess {
+    /**
+     * (PECL pthreads &gt;= 3.0.0)<br/>
+     * Allows the worker to collect references determined to be garbage by the
+     * optionally given collector
+     * @link https://secure.php.net/manual/en/worker.collect.php
+     * @param callable $collector [optional] <p>A Callable collector that returns
+     * a boolean on whether the task can be collected or not. Only in rare cases
+     * should a custom collector need to be used</p>
+     * @return int <p>The number of remaining tasks on the worker's stack to be
+     * collected</p>
+     */
+    public function collect( callable $collector = null ) {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Returns the number of tasks left on the stack
+     * @link https://secure.php.net/manual/en/worker.getstacked.php
+     * @return int <p>Returns the number of tasks currently waiting to be
+     * executed by the worker</p>
+     */
+    public function getStacked() {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Whether the worker has been shutdown or not
+     * @link https://secure.php.net/manual/en/worker.isshutdown.php
+     * @return bool <p>Returns whether the worker has been shutdown or not</p>
+     */
+    public function isShutdown() {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Shuts down the Worker after executing all of the stacked tasks
+     * @link https://secure.php.net/manual/en/worker.shutdown.php
+     * @return bool <p>Whether the worker was successfully shutdown or not</p>
+     */
+    public function shutdown() {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Appends the new work to the stack of the referenced worker
+     * @link https://secure.php.net/manual/en/worker.stack.php
+     * @param Threaded $work <p>A Threaded object to be executed by the Worker</p>
+     * @return int <p>The new size of the stack</p>
+     */
+    public function stack( Threaded $work ) {}
+
+    /**
+     * (PECL pthreads &gt;= 2.0.0)<br/>
+     * Removes the first task (the oldest one) in the stack
+     * @link https://secure.php.net/manual/en/worker.unstack.php
+     * @return Threaded|null <p>The item removed from the stack</p>
+     */
+    public function unstack() {}
+}
+
+/**
+ * (PECL pthreads &gt;= 2.0.8)<br/>
+ * Represents a garbage-collectable object.
+ * @link https://secure.php.net/manual/en/class.collectable.php
+ */
+interface Collectable {
+    /**
+     * (PECL pthreads &gt;= 2.0.8)<br/>
+     * Can be called in {@link Pool::collect()} to determine if this object is garbage
+     * @link https://secure.php.net/manual/en/collectable.isgarbage.php
+     * @return bool <p>Whether this object is garbage or not</p>
+     */
+    public function isGarbage(): bool;
+}
+
+/**
+ * (PECL pthreads &gt;= 3.0.0)<br/>
+ * The Volatile class is new to pthreads v3. Its introduction is a consequence of
+ * the new immutability semantics of Threaded members of Threaded classes. The
+ * Volatile class enables for mutability of its Threaded members, and is also
  * used to store PHP arrays in Threaded contexts.
- *
- * @link https://php.net/manual/en/class.volatile.php
- * @since 3.0.0
+ * @see Threaded
+ * @link https://secure.php.net/manual/en/class.volatile.php
  */
-class Volatile extends Threaded{
-}
+class Volatile extends Threaded implements Collectable, Traversable
+    {
 
-/**
- * Basic thread implementation
- *
- * An implementation of a Thread should extend this declaration, implementing the run method.
- * When the start method of that object is called, the run method code will be executed in separate Thread.
- *
- * @link https://www.php.net/manual/en/class.thread.php
- */
-class Thread extends Threaded{
-	/**
-	 * Will return the identity of the Thread that created the referenced Thread
-	 *
-	 * @link https://www.php.net/manual/en/thread.getcreatorid.php
-	 * @return int A numeric identity
-	 */
-	public function getCreatorId(){}
-
-	/**
-	 * Will return the instance of currently executing thread
-	 *
-	 * @return static
-	 */
-	public static function getCurrentThread(){}
-
-	/**
-	 * Will return the identity of the currently executing thread
-	 *
-	 * @link https://www.php.net/manual/en/thread.getcurrentthreadid.php
-	 * @return int
-	 */
-	public static function getCurrentThreadId(){}
-
-	/**
-	 * Will return the identity of the referenced Thread
-	 *
-	 * @link https://www.php.net/manual/en/thread.getthreadid.php
-	 * @return int
-	 */
-	public function getThreadId(){}
-
-	/**
-	 * Tell if the referenced Thread has been joined by another context
-	 *
-	 * @link https://www.php.net/manual/en/thread.isjoined.php
-	 * @return bool A boolean indication of state
-	 */
-	public function isJoined(){}
-
-	/**
-	 * Tell if the referenced Thread has been started
-	 *
-	 * @link https://www.php.net/manual/en/thread.isstarted.php
-	 * @return bool A boolean indication of state
-	 */
-	public function isStarted(){}
-
-	/**
-	 * Causes the calling context to wait for the referenced Thread to finish executing
-	 *
-	 * @link https://www.php.net/manual/en/thread.join.php
-	 * @return bool A boolean indication of state
-	 */
-	public function join(){}
-
-	/**
-	 * Will start a new Thread to execute the implemented run method
-	 *
-	 * @param int $options An optional mask of inheritance constants, by default PTHREADS_INHERIT_ALL
-	 *
-	 * @link https://www.php.net/manual/en/thread.start.php
-	 * @return bool A boolean indication of success
-	 */
-	public function start(int $options = PTHREADS_INHERIT_ALL){}
-}
-
-/**
- * Worker
- *
- * Worker Threads have a persistent context, as such should be used over Threads in most cases.
- *
- * When a Worker is started, the run method will be executed, but the Thread will not leave until one
- * of the following conditions are met:
- *   - the Worker goes out of scope (no more references remain)
- *   - the programmer calls shutdown
- *   - the script dies
- * This means the programmer can reuse the context throughout execution; placing objects on the stack of
- * the Worker will cause the Worker to execute the stacked objects run method.
- *
- * @link https://www.php.net/manual/en/class.worker.php
- */
-class Worker extends Thread{
-	/**
-	 * Executes the optional collector on each of the tasks, removing the task if true is returned
-	 *
-	 * @param callable $function The collector to be executed upon each task
-	 *
-	 * @return int The number of tasks left to be collected
-	 */
-	public function collect(callable $function = null){}
-
-	/**
-	 * Executes the collector on the collectable object passed
-	 *
-	 * @param Collectable $collectable The collectable object to run the collector on
-	 *
-	 * @return bool The referenced object can be destroyed
-	 */
-	public function collector(Collectable $collectable){}
-
-	/**
-	 * Returns the number of threaded tasks waiting to be executed by the referenced Worker
-	 *
-	 * @link https://www.php.net/manual/en/worker.getstacked.php
-	 * @return int An integral value
-	 */
-	public function getStacked(){}
-
-	/**
-	 * Tell if the referenced Worker has been shutdown
-	 *
-	 * @link https://www.php.net/manual/en/worker.isshutdown.php
-	 * @return bool A boolean indication of state
-	 */
-	public function isShutdown(){}
-
-	/**
-	 * Shuts down the Worker after executing all the threaded tasks previously stacked
-	 *
-	 * @link https://www.php.net/manual/en/worker.shutdown.php
-	 * @return bool A boolean indication of success
-	 */
-	public function shutdown(){}
-
-	/**
-	 * Appends the referenced object to the stack of the referenced Worker
-	 *
-	 * @param Threaded $work Threaded object to be executed by the referenced Worker
-	 *
-	 * @link https://www.php.net/manual/en/worker.stack.php
-	 * @return int The new length of the stack
-	 */
-	public function stack(Threaded $work){}
-
-	/**
-	 * Removes the first task (the oldest one) in the stack.
-	 *
-	 * @link https://www.php.net/manual/en/worker.unstack.php
-	 * @return Collectable|null The item removed from the stack
-	 */
-	public function unstack(){}
-}
-
-/**
- * Pool class
- *
- * A Pool is a container for, and controller of, a number of Worker threads, the number of threads can be adjusted
- * during execution, additionally the Pool provides an easy mechanism to maintain and collect references in the
- * proper way.
- *
- * @link https://www.php.net/manual/en/class.pool.php
- */
-class Pool{
-	/**
-	 * The maximum number of Worker threads allowed in this Pool
-	 *
-	 * @var integer
-	 */
-	protected $size;
-
-	/**
-	 * The name of the Worker class for this Pool
-	 *
-	 * @var string
-	 */
-	protected $class;
-
-	/**
-	 * The array of Worker threads for this Pool
-	 *
-	 * @var array|Worker[]
-	 */
-	protected $workers;
-
-	/**
-	 * The constructor arguments to be passed by this Pool to new Workers upon construction
-	 *
-	 * @var array
-	 */
-	protected $ctor;
-
-	/**
-	 * The numeric identifier for the last Worker used by this Pool
-	 *
-	 * @var integer
-	 */
-	protected $last;
-
-	/**
-	 * Construct a new Pool of Workers
-	 *
-	 * @param integer $size The maximum number of Workers this Pool can create
-	 * @param string  $class The class for new Workers
-	 * @param array   $ctor An array of arguments to be passed to new Workers
-	 *
-	 * @link https://www.php.net/manual/en/pool.__construct.php
-	 */
-	public function __construct(int $size, string $class = Worker::class, array $ctor = array()){}
-
-	/**
-	 * Collect references to completed tasks
-	 *
-	 * Allows the Pool to collect references determined to be garbage by the given collector
-	 *
-	 * @param callable $collector
-	 *
-	 * @link https://www.php.net/manual/en/pool.collect.php
-	 */
-	public function collect(callable $collector = null){}
-
-	/**
-	 * Resize the Pool
-	 *
-	 * @param integer $size The maximum number of Workers this Pool can create
-	 *
-	 * @link https://www.php.net/manual/en/pool.resize.php
-	 */
-	public function resize(int $size){}
-
-	/**
-	 * Shutdown all Workers in this Pool
-	 *
-	 * @link https://www.php.net/manual/en/pool.shutdown.php
-	 */
-	public function shutdown(){}
-
-	/**
-	 * Submit the task to the next Worker in the Pool
-	 *
-	 * @param Threaded $task The task for execution
-	 *
-	 * @return int the identifier of the Worker executing the object
-	 */
-	public function submit(Threaded $task){}
-
-	/**
-	 * Submit the task to the specific Worker in the Pool
-	 *
-	 * @param int      $worker The worker for execution
-	 * @param Threaded $task The task for execution
-	 *
-	 * @return int the identifier of the Worker that accepted the object
-	 */
-	public function submitTo(int $worker, Threaded $task){}
-}
-
-/**
- * Collectable Class
- *
- * Garbage Collection interface for references to objects on Worker stacks
- *
- * @link https://www.php.net/manual/en/class.collectable.php
- */
-interface Collectable{
-	/**
-	 * Determine whether an object is ready to be destroyed
-	 *
-	 * @return bool Whether the referenced object can be destroyed
-	 */
-	public function isGarbage() : bool;
-}
-
-class Socket extends \Threaded{
-	public const AF_UNIX = 1;
-	public const AF_INET = 2;
-	public const AF_INET6 = 10;
-	public const SOCK_STREAM = 1;
-	public const SOCK_DGRAM = 2;
-	public const SOCK_RAW = 3;
-	public const SOCK_SEQPACKET = 5;
-	public const SOCK_RDM = 4;
-	public const SO_DEBUG = 1;
-	public const SO_REUSEADDR = 2;
-	public const SO_REUSEPORT = 15;
-	public const SO_KEEPALIVE = 9;
-	public const SO_DONTROUTE = 5;
-	public const SO_LINGER = 13;
-	public const SO_BROADCAST = 6;
-	public const SO_OOBINLINE = 10;
-	public const SO_SNDBUF = 7;
-	public const SO_RCVBUF = 8;
-	public const SO_SNDLOWAT = 19;
-	public const SO_RCVLOWAT = 18;
-	public const SO_SNDTIMEO = 21;
-	public const SO_RCVTIMEO = 20;
-	public const SO_TYPE = 3;
-	public const SO_ERROR = 4;
-	public const SO_BINDTODEVICE = 25;
-	public const SOMAXCONN = 128;
-	public const TCP_NODELAY = 1;
-	public const SOL_SOCKET = 1;
-	public const SOL_TCP = 6;
-	public const SOL_UDP = 17;
-	public const MSG_OOB = 1;
-	public const MSG_WAITALL = 256;
-	public const MSG_CTRUNC = 8;
-	public const MSG_TRUNC = 32;
-	public const MSG_PEEK = 2;
-	public const MSG_DONTROUTE = 4;
-	public const MSG_EOR = 128;
-	public const MSG_CONFIRM = 2048;
-	public const MSG_ERRQUEUE = 8192;
-	public const MSG_NOSIGNAL = 16384;
-	public const MSG_MORE = 32768;
-	public const MSG_WAITFORONE = 65536;
-	public const MSG_CMSG_CLOEXEC = 1073741824;
-	public const EPERM = 1;
-	public const ENOENT = 2;
-	public const EINTR = 4;
-	public const EIO = 5;
-	public const ENXIO = 6;
-	public const E2BIG = 7;
-	public const EBADF = 9;
-	public const EAGAIN = 11;
-	public const ENOMEM = 12;
-	public const EACCES = 13;
-	public const EFAULT = 14;
-	public const ENOTBLK = 15;
-	public const EBUSY = 16;
-	public const EEXIST = 17;
-	public const EXDEV = 18;
-	public const ENODEV = 19;
-	public const ENOTDIR = 20;
-	public const EISDIR = 21;
-	public const EINVAL = 22;
-	public const ENFILE = 23;
-	public const EMFILE = 24;
-	public const ENOTTY = 25;
-	public const ENOSPC = 28;
-	public const ESPIPE = 29;
-	public const EROFS = 30;
-	public const EMLINK = 31;
-	public const EPIPE = 32;
-	public const ENAMETOOLONG = 36;
-	public const ENOLCK = 37;
-	public const ENOSYS = 38;
-	public const ENOTEMPTY = 39;
-	public const ELOOP = 40;
-	public const EWOULDBLOCK = 11;
-	public const ENOMSG = 42;
-	public const EIDRM = 43;
-	public const ECHRNG = 44;
-	public const EL2NSYNC = 45;
-	public const EL3HLT = 46;
-	public const EL3RST = 47;
-	public const ELNRNG = 48;
-	public const EUNATCH = 49;
-	public const ENOCSI = 50;
-	public const EL2HLT = 51;
-	public const EBADE = 52;
-	public const EBADR = 53;
-	public const EXFULL = 54;
-	public const ENOANO = 55;
-	public const EBADRQC = 56;
-	public const EBADSLT = 57;
-	public const ENOSTR = 60;
-	public const ENODATA = 61;
-	public const ETIME = 62;
-	public const ENOSR = 63;
-	public const ENONET = 64;
-	public const EREMOTE = 66;
-	public const ENOLINK = 67;
-	public const EADV = 68;
-	public const ESRMNT = 69;
-	public const ECOMM = 70;
-	public const EPROTO = 71;
-	public const EMULTIHOP = 72;
-	public const EBADMSG = 74;
-	public const ENOTUNIQ = 76;
-	public const EBADFD = 77;
-	public const EREMCHG = 78;
-	public const ERESTART = 85;
-	public const ESTRPIPE = 86;
-	public const EUSERS = 87;
-	public const ENOTSOCK = 88;
-	public const EDESTADDRREQ = 89;
-	public const EMSGSIZE = 90;
-	public const EPROTOTYPE = 91;
-	public const ENOPROTOOPT = 92;
-	public const EPROTONOSUPPORT = 93;
-	public const ESOCKTNOSUPPORT = 94;
-	public const EOPNOTSUPP = 95;
-	public const EPFNOSUPPORT = 96;
-	public const EAFNOSUPPORT = 97;
-	public const EADDRINUSE = 98;
-	public const EADDRNOTAVAIL = 99;
-	public const ENETDOWN = 100;
-	public const ENETUNREACH = 101;
-	public const ENETRESET = 102;
-	public const ECONNABORTED = 103;
-	public const ECONNRESET = 104;
-	public const ENOBUFS = 105;
-	public const EISCONN = 106;
-	public const ENOTCONN = 107;
-	public const ESHUTDOWN = 108;
-	public const ETOOMANYREFS = 109;
-	public const ETIMEDOUT = 110;
-	public const ECONNREFUSED = 111;
-	public const EHOSTDOWN = 112;
-	public const EHOSTUNREACH = 113;
-	public const EALREADY = 114;
-	public const EINPROGRESS = 115;
-	public const EISNAM = 120;
-	public const EREMOTEIO = 121;
-	public const EDQUOT = 122;
-	public const ENOMEDIUM = 123;
-	public const EMEDIUMTYPE = 124;
-
-	public function __construct(int $domain, int $type, int $protocol){}
-
-	public function setOption(int $level, int $name, int $value) : bool{}
-
-	public function getOption(int $level, int $name) : int{}
-
-	public function bind(string $host, int $port = 0) : bool{}
-
-	public function listen(int $backlog = 0) : bool{}
-
-	public function accept($class = self::class){}
-
-	public function connect(string $host, int $port = 0) : bool{}
-
-	public static function select(array &$read, array &$write, array &$except, ?int $sec, int $usec = 0, int &$error = null){}
-
-	public function read(int $length, int $flags = 0){}
-
-	public function write(string $buffer, int $length = 0){}
-
-	public function send(string $buffer, int $length, int $flags){}
-
-	public function recvfrom(string &$buffer, int $length, int $flags, string &$name, int &$port = null){}
-
-	public function sendto(string $buffer, int $length, int $flags, string $addr, int $port = 0){}
-
-	public function setBlocking(bool $blocking) : bool{}
-
-	public function getPeerName(bool $port = true) : array{}
-
-	public function getSockName(bool $port = true) : array{}
-
-	public function close(){}
-
-	public function getLastError(bool $clear = false){}
-
-	public function clearError(){}
-}
+    }

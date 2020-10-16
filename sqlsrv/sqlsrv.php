@@ -1142,7 +1142,7 @@ function sqlsrv_configure($setting, $value){}
  * Additional Information at {@link http://msdn.microsoft.com/en-us/library/cc296152.aspx SQLSRV Driver API Reference}<br />
  * @link https://docs.microsoft.com/en-us/sql/connect/php/sqlsrv-get-config
  * @param string $setting The configuration setting for which the value is returned.
- * @return mixed The value of the setting specified by the $setting parameter. If an invalid setting is specified, false is returned and an error is added to the error collection.
+ * @return mixed|false The value of the setting specified by the $setting parameter. If an invalid setting is specified, false is returned and an error is added to the error collection.
  */
 function sqlsrv_get_config($setting){}
 
@@ -1725,6 +1725,7 @@ function SQLSRV_SQLTYPE_VARBINARY($byteCount){}
  *
  * @return int Value to use in any place that accepts a SQLSRV_SQLTYPE_* constant to represent the varchar data type.
  */
+
 function SQLSRV_SQLTYPE_VARCHAR($charCount) {}
 
 /**

@@ -8,6 +8,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use phpDocumentor\Reflection\Type;
 use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Stmt\Function_;
+use PhpParser\NodeAbstract;
 use ReflectionFunction;
 use stdClass;
 use StubTests\Parsers\DocFactoryProvider;
@@ -24,15 +25,17 @@ class PHPFunction extends BasePHPElement
 
     public ?Type $returnTag = null;
 
+    public ?NodeAbstract $returnType = null;
+
     /**
-     * @param ReflectionFunction $function
+     * @param ReflectionFunction $reflectionObject
      * @return $this
      */
-    public function readObjectFromReflection($function): self
+    public function readObjectFromReflection($reflectionObject): static
     {
-        $this->name = $function->name;
-        $this->is_deprecated = $function->isDeprecated();
-        foreach ($function->getParameters() as $parameter) {
+        $this->name = $reflectionObject->name;
+        $this->is_deprecated = $reflectionObject->isDeprecated();
+        foreach ($reflectionObject->getParameters() as $parameter) {
             $this->parameters[] = (new PHPParameter())->readObjectFromReflection($parameter);
         }
         return $this;
@@ -42,7 +45,7 @@ class PHPFunction extends BasePHPElement
      * @param Function_ $node
      * @return $this
      */
-    public function readObjectFromStubNode($node): self
+    public function readObjectFromStubNode($node): static
     {
         $functionName = $this->getFQN($node);
         $this->name = $functionName;
@@ -51,6 +54,7 @@ class PHPFunction extends BasePHPElement
             $this->parameters[] = (new PHPParameter())->readObjectFromStubNode($parameter);
         }
 
+        $this->returnType = $node->getReturnType();
         $this->collectTags($node);
         $this->checkDeprecationTag($node);
         $this->checkReturnTag($node);
@@ -88,30 +92,19 @@ class PHPFunction extends BasePHPElement
         }
     }
 
-    public function readMutedProblems($jsonData): void
+    public function readMutedProblems(stdClass|array $jsonData): void
     {
-        /**@var stdClass $function */
         foreach ($jsonData as $function) {
             if ($function->name === $this->name && !empty($function->problems)) {
-                /**@var stdClass $problem */
                 foreach ($function->problems as $problem) {
-                    switch ($problem) {
-                        case 'parameter mismatch':
-                            $this->mutedProblems[] = StubProblemType::FUNCTION_PARAMETER_MISMATCH;
-                            break;
-                        case 'missing function':
-                            $this->mutedProblems[] = StubProblemType::STUB_IS_MISSED;
-                            break;
-                        case 'deprecated function':
-                            $this->mutedProblems[] = StubProblemType::FUNCTION_IS_DEPRECATED;
-                            break;
-                        case 'absent in meta':
-                            $this->mutedProblems[] = StubProblemType::ABSENT_IN_META;
-                            break;
-                        default:
-                            $this->mutedProblems[] = -1;
-                            break;
-                    }
+                    $this->mutedProblems[] = match ($problem) {
+                        'parameter mismatch' => StubProblemType::FUNCTION_PARAMETER_MISMATCH,
+                        'missing function' => StubProblemType::STUB_IS_MISSED,
+                        'deprecated function' => StubProblemType::FUNCTION_IS_DEPRECATED,
+                        'absent in meta' => StubProblemType::ABSENT_IN_META,
+                        'has return typehint' => StubProblemType::FUNCTION_HAS_RETURN_TYPEHINT,
+                        default => -1
+                    };
                 }
                 return;
             }

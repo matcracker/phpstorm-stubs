@@ -265,10 +265,11 @@ class Phar extends RecursiveDirectoryIterator implements RecursiveIterator, Seek
 	 * (PHP &gt;= 5.3.0, PECL phar &gt;= 1.0.0)<br/>
 	 * Returns the number of entries (files) in the Phar archive
 	 * @link https://php.net/manual/en/phar.count.php
+	 * @param int $mode [optional]
 	 * @return int The number of files contained within this phar, or 0 (the number zero)
 	 * if none.
 	 */
-	public function count () {}
+	public function count ($mode = COUNT_NORMAL) {}
 
 	/**
 	 * (PHP &gt;= 5.3.0, PECL phar &gt;= 2.0.0)<br/>
@@ -320,10 +321,12 @@ class Phar extends RecursiveDirectoryIterator implements RecursiveIterator, Seek
 	 * (PHP &gt;= 5.3.0, PECL phar &gt;= 1.0.0)<br/>
 	 * Returns phar archive meta-data
 	 * @link https://php.net/manual/en/phar.getmetadata.php
+	 * @param array $unserialize_options [optional] if is set to anything other than the default,
+	 * the resulting metadata won't be cached and this won't return the value from the cache
 	 * @return mixed any PHP variable that can be serialized and is stored as meta-data for the Phar archive,
 	 * or <b>NULL</b> if no meta-data is stored.
 	 */
-	public function getMetadata () {}
+	public function getMetadata (array $unserialize_options = []) {}
 
 	/**
 	 * (PHP &gt;= 5.3.0, PECL phar &gt;= 1.0.0)<br/>
@@ -431,7 +434,7 @@ class Phar extends RecursiveDirectoryIterator implements RecursiveIterator, Seek
 	 * @param string $offset <p>
 	 * The filename (relative path) to look for in a Phar.
 	 * </p>
-	 * @return int A <b>PharFileInfo</b> object is returned that can be used to
+	 * @return PharFileInfo A <b>PharFileInfo</b> object is returned that can be used to
 	 * iterate over a file's contents or to retrieve information about the current file.
 	 */
 	public function offsetGet ($offset) {}
@@ -1089,10 +1092,12 @@ class PharFileInfo extends SplFileInfo  {
 	 * (PHP &gt;= 5.3.0, PECL phar &gt;= 1.0.0)<br/>
 	 * Returns file-specific meta-data saved with a file
 	 * @link https://php.net/manual/en/pharfileinfo.getmetadata.php
+	 * @param array $unserialize_options [optional] if is set to anything other than the default,
+	 * the resulting metadata won't be cached and this won't return the value from the cache
 	 * @return mixed any PHP variable that can be serialized and is stored as meta-data for the file,
 	 * or <b>NULL</b> if no meta-data is stored.
 	 */
-	public function getMetadata () {}
+	public function getMetadata (array $unserialize_options = []) {}
 
 	/**
 	 * (PHP &gt;= 5.3.0, PECL phar &gt;= 1.0.0)<br/>

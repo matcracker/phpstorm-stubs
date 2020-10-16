@@ -5,7 +5,7 @@ namespace {
     /**
      * Creates an array.
      * @link https://php.net/manual/en/function.array.php
-     * @param mixed $_ [optional] <p>
+     * @param mixed ...$_ [optional] <p>
      * Syntax "index => values", separated by commas, define index and values.
      * index may be of type string or integer. When index is omitted, an integer index is automatically generated,
      * starting at 0. If index is an integer, next generated index will be the biggest integer index + 1.
@@ -22,7 +22,7 @@ namespace {
      * Assigns a list of variables in one operation.
      * @link https://php.net/manual/en/function.list.php
      * @param mixed $var1 <p>A variable.</p>
-     * @param mixed $_ [optional] <p>Another variable ...</p>
+     * @param mixed ...$_ [optional] <p>Another variable ...</p>
      * @return array the assigned array.
      */
     function PS_UNRESERVE_PREFIX_list($var1, ...$_){};
@@ -100,7 +100,7 @@ namespace {
      * Evaluation goes from left to right and stops as soon as an unset variable is encountered.</p>
      * @link https://php.net/manual/en/function.isset.php
      * @param mixed $var <p>The variable to be checked.</p>
-     * @param mixed $_ [optional] <p>Another variable ...</p>
+     * @param mixed ...$_ [optional] <p>Another variable ...</p>
      * @return bool Returns <b>TRUE</b> if var exists and has value other than <b>NULL</b>, <b>FALSE</b> otherwise.
      */
     function PS_UNRESERVE_PREFIX_isset($var, ...$_){};
@@ -110,7 +110,7 @@ namespace {
      * <p>The behavior of <b>unset()</b> inside of a function can vary depending on what type of variable you are attempting to destroy.</p>
      * @link https://php.net/manual/en/function.unset.php
      * @param mixed $var <p>The variable to be unset.</p>
-     * @param mixed $_ [optional] <p>Another variable ...</p>
+     * @param mixed ...$_ [optional] <p>Another variable ...</p>
      * @return void
      */
     function PS_UNRESERVE_PREFIX_unset($var, ...$_){};
@@ -254,58 +254,58 @@ class object {
   /**
    * is triggered when invoking inaccessible methods in an object context.
    *
-   * @param $name string
-   * @param $arguments array
+   * @param string $name
+   * @param array $arguments
    * @return mixed
    * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.methods
    */
-  public function __call($name, $arguments) {}
+  public function __call(string $name, array $arguments) {}
 
   /**
    * is triggered when invoking inaccessible methods in a static context.
    *
-   * @param $name string
-   * @param $arguments array
+   * @param string $name
+   * @param array $arguments
    * @return mixed
    * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.methods
    */
-  public static function __callStatic($name, $arguments) {}
+  public static function __callStatic(string $name, array $arguments) {}
 
   /**
    * is utilized for reading data from inaccessible members.
    *
-   * @param $name string
+   * @param string $name
    * @return mixed
    * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
    */
-  public function __get($name) {}
+  public function __get(string $name) {}
 
   /**
    * run when writing data to inaccessible members.
    *
-   * @param $name string
-   * @param $value mixed
+   * @param string $name
+   * @param mixed $value
    * @return void
    * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
    */
-  public function __set($name, $value) {}
+  public function __set(string $name, $value): void {}
 
   /**
    * is triggered by calling isset() or empty() on inaccessible members.
    *
-   * @param $name string
+   * @param string $name
    * @return bool
    * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
    */
-  public function __isset($name) {}
+  public function __isset(string $name): bool {}
   /**
    * is invoked when unset() is used on inaccessible members.
    *
-   * @param $name string
+   * @param string $name
    * @return void
    * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
    */
-  public function __unset($name) {}
+  public function __unset(string $name): void {}
 
   /**
    * serialize() checks if your class has a function with the magic name __sleep.
@@ -318,7 +318,7 @@ class object {
    * @return string[]
    * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.sleep
    */
-  public function __sleep() {}
+  public function __sleep(): array {}
 
   /**
    * unserialize() checks for the presence of a function with the magic name __wakeup.
@@ -329,7 +329,7 @@ class object {
    * @return void
    * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.sleep
    */
-  public function __wakeup() {}
+  public function __wakeup(): void {}
 
   /**
    * The __toString method allows a class to decide how it will react when it is converted to a string.
@@ -337,7 +337,7 @@ class object {
    * @return string
    * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.tostring
    */
-  public function __toString() {}
+  public function __toString(): string {}
 
   /**
    * The __invoke method is called when a script tries to call an object as a function.
@@ -350,22 +350,21 @@ class object {
     /**
      * This method is called by var_dump() when dumping an object to get the properties that should be shown.
      * If the method isn't defined on an object, then all public, protected and private properties will be shown.
-     * @since 5.6
      *
-     * @return array
+     * @return array|null
      * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
      */
-    public function __debugInfo(){}
+    public function __debugInfo(): ?array {}
 
   /**
    * This static method is called for classes exported by var_export() since PHP 5.1.0.
    * The only parameter of this method is an array containing exported properties in the form array('property' => value, ...).
    *
-   * @param $an_array array
-   * @return mixed
+   * @param array $an_array
+   * @return object
    * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.set-state
    */
-  public static function __set_state($an_array) {}
+  public static function __set_state(array $an_array): object {}
 
   /**
    * When an object is cloned, PHP 5 will perform a shallow copy of all of the object's properties.
@@ -377,7 +376,7 @@ class object {
    * @return void
    * @link https://php.net/manual/en/language.oop5.cloning.php
    */
-  public function __clone() {}
+  public function __clone(): void {}
 
     /**
      * Returns array containing all the necessary state of the object.

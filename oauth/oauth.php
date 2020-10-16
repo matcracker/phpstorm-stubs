@@ -181,10 +181,11 @@ class OAuth {
      * Fetch a request token
      * @param string $request_token_url
      * @param string $callback_url
+     * @param string $http_method
      * @throws \OAuthException
      * @return array
      */
-    public function getRequestToken($request_token_url, $callback_url = null) { }
+    public function getRequestToken($request_token_url, $callback_url = null, $http_method = 'GET') { }
 
     /**
      * Set authorization type
@@ -209,6 +210,7 @@ class OAuth {
     public function setNonce($nonce) { }
 
     /**
+     *
      * @param int $reqengine
      * @return void
      */
@@ -244,7 +246,9 @@ class OAuth {
     public function setVersion($version) { }
 }
 
-
+/**
+ *
+ */
 class OAuthException extends Exception {
 
     /**

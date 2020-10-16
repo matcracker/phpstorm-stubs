@@ -4,34 +4,40 @@ declare(strict_types=1);
 namespace StubTests\Model;
 
 use PhpParser\Node\Stmt\Property;
+use ReflectionProperty;
 use stdClass;
 
 class PHPProperty extends BasePHPElement
 {
-    public string $parentName;
-    public string $type;
-    public string $access;
-    public bool $is_static;
+    public string $type = '';
+    public string $access = '';
+    public bool $is_static = false;
+
+    public function __construct(public ?string $parentName = null){
+    }
 
     /**
-     * @param \ReflectionProperty $property
+     * @param ReflectionProperty $reflectionObject
      * @return $this
      */
-    public function readObjectFromReflection($property): self
+    public function readObjectFromReflection($reflectionObject): static
     {
-        $this->name = $property->getName();
-        if ($property->isProtected()) {
+        $this->name = $reflectionObject->getName();
+        if ($reflectionObject->isProtected()) {
             $access = 'protected';
-        } elseif ($property->isPrivate()) {
+        } elseif ($reflectionObject->isPrivate()) {
             $access = 'private';
         } else {
             $access = 'public';
         }
         $this->access = $access;
-        $this->is_static = $property->isStatic();
+        $this->is_static = $reflectionObject->isStatic();
         $this->type = "";
-        if ($property->hasType()) {
-            $this->type = "" . $property->getType();
+        if ($reflectionObject->hasType()) {
+            $reflectionNamedType = $reflectionObject->getType();
+            if (isset($reflectionNamedType)){
+                $this->type = $reflectionNamedType->getName();
+            }
         }
         return $this;
     }
@@ -40,7 +46,7 @@ class PHPProperty extends BasePHPElement
      * @param Property $node
      * @return $this
      */
-    public function readObjectFromStubNode($node): self
+    public function readObjectFromStubNode($node): static
     {
         $this->name = $node->props[0]->name->name;
         $this->is_static = $node->isStatic();
@@ -54,28 +60,24 @@ class PHPProperty extends BasePHPElement
         $this->access = $access;
 
 
-        $this->type = $node->type ?? "";
+        $this->type = $node->type->name ?? "";
 
-        $this->parentName = $this->getFQN($node->getAttribute('parent'));
+        $parentNode = $node->getAttribute('parent');
+        if ($parentNode !== null){
+            $this->parentName = $this->getFQN($parentNode);
+        }
         return $this;
     }
 
-
-    public function readMutedProblems($jsonData): void
+    public function readMutedProblems(stdClass|array $jsonData): void
     {
-        /**@var stdClass $property */
         foreach ($jsonData as $property) {
             if ($property->name === $this->name && !empty($property->problems)) {
-                /**@var stdClass $problem */
                 foreach ($property->problems as $problem) {
-                    switch ($problem) {
-                        case 'missing property':
-                            $this->mutedProblems[] = StubProblemType::STUB_IS_MISSED;
-                            break;
-                        default:
-                            $this->mutedProblems[] = -1;
-                            break;
-                    }
+                    $this->mutedProblems[] = match ($problem) {
+                        'missing property' => StubProblemType::STUB_IS_MISSED,
+                        default => -1
+                    };
                 }
                 return;
             }

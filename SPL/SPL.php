@@ -421,8 +421,9 @@ class IteratorIterator implements OuterIterator {
      * Create an iterator from anything that is traversable
      * @link https://php.net/manual/en/iteratoriterator.construct.php
      * @param Traversable $iterator
+     * @param string $class_name [optional]
      */
-    public function __construct(Traversable $iterator) { }
+    public function __construct(Traversable $iterator, $class_name = '') { }
 
     /**
      * Get the inner iterator
@@ -694,7 +695,7 @@ class LimitIterator extends IteratorIterator {
  * This object supports cached iteration over another iterator.
  * @link https://php.net/manual/en/class.cachingiterator.php
  */
-class CachingIterator extends IteratorIterator implements ArrayAccess, Countable {
+class CachingIterator extends IteratorIterator implements ArrayAccess, Countable, Stringable {
 
     /**
      * String conversion flag (mutually exclusive): Uses the current element for the iterator's string conversion.
@@ -995,7 +996,7 @@ class AppendIterator extends IteratorIterator {
     /**
      * Gets the current value
      * @link https://php.net/manual/en/appenditerator.current.php
-     * @return mixed The current value if it is valid or &null; otherwise.
+     * @return mixed The current value if it is valid or null otherwise.
      */
     public function current() { }
 
@@ -1436,6 +1437,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param array|object $input The input parameter accepts an array or an Object.
      * @param int $flags Flags to control the behaviour of the ArrayObject object.
      * @param string $iterator_class Specify the class that will be used for iteration of the ArrayObject object. ArrayIterator is the default class used.
+     *
      */
     public function __construct($input = array(), $flags = 0, $iterator_class = "ArrayIterator") { }
 
@@ -1455,7 +1457,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param mixed $index <p>
      * The index with the value.
      * </p>
-     * @return mixed The value at the specified index or false.
+     * @return mixed|false The value at the specified index or false.
      */
     public function offsetGet($index) { }
 
@@ -1555,16 +1557,18 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Sort the entries by value
      * @link https://php.net/manual/en/arrayobject.asort.php
+     * @param int $sort_flags [optional]
      * @return void
      */
-    public function asort() { }
+    public function asort($sort_flags = SORT_REGULAR) { }
 
     /**
      * Sort the entries by key
      * @link https://php.net/manual/en/arrayobject.ksort.php
+     * @param int $sort_flags [optional]
      * @return void
      */
-    public function ksort() { }
+    public function ksort($sort_flags = SORT_REGULAR) { }
 
     /**
      * Sort the entries with a user-defined comparison function and maintain key association
@@ -1795,16 +1799,18 @@ class ArrayIterator implements SeekableIterator, ArrayAccess, Serializable, Coun
     /**
      * Sort array by values
      * @link https://php.net/manual/en/arrayiterator.asort.php
+     * @param int $sort_flags [optional]
      * @return void
      */
-    public function asort() { }
+    public function asort($sort_flags = SORT_REGULAR) { }
 
     /**
      * Sort array by keys
      * @link https://php.net/manual/en/arrayiterator.ksort.php
+     * @param int $sort_flags [optional]
      * @return void
      */
-    public function ksort() { }
+    public function ksort($sort_flags = SORT_REGULAR) { }
 
     /**
      * User defined sort

@@ -28,6 +28,7 @@ interface DateTimeInterface {
      * @return DateInterval
      * The https://secure.php.net/manual/en/class.dateinterval.php DateInterval} object representing the
      * difference between the two dates or <b>FALSE</b> on failure.
+     *
      */
     public function diff($datetime2, $absolute = false);
 
@@ -40,6 +41,7 @@ interface DateTimeInterface {
      * </p>
      * @return string
      * Returns the formatted date string on success or <b>FALSE</b> on failure.
+     *
      */
     public function format($format);
 
@@ -49,6 +51,7 @@ interface DateTimeInterface {
      * @return int
      * Returns the timezone offset in seconds from UTC on success
      * or <b>FALSE</b> on failure.
+     *
      */
     public function getOffset();
 
@@ -112,7 +115,7 @@ class DateTimeImmutable implements DateTimeInterface {
      * </p> <p></p></blockquote>
      * @throws Exception Emits Exception in case of an error.
      */
-    public function __construct($time = "now", $timezone = NULL) { }
+    public function __construct($time = "now", $timezone = null) { }
 
     /**
      * (PHP 5 &gt;=5.5.0)<br/>
@@ -159,6 +162,7 @@ class DateTimeImmutable implements DateTimeInterface {
      * @return static
      * Returns the {@link https://secure.php.net/manual/en/class.datetimeimmutable.php DateTimeImmutable} object for method chaining or <b>FALSE</b> on failure.
      */
+
     public function modify($modify) { }
 
     /**
@@ -180,6 +184,7 @@ class DateTimeImmutable implements DateTimeInterface {
      * @param int $day <p>Day of the date.</p>
      * @return static|false
      * Returns the {@link https://secure.php.net/manual/en/class.datetimeimmutable.php DateTimeImmutable} object for method chaining or <b>FALSE</b> on failure.
+     *
      */
     public function setDate($year, $month, $day) { }
 
@@ -264,6 +269,7 @@ class DateTimeImmutable implements DateTimeInterface {
      * </p>
      * @return string
      * Returns the formatted date string on success or <b>FALSE</b> on failure.
+     *
      */
     public function format($format) { }
 
@@ -273,6 +279,7 @@ class DateTimeImmutable implements DateTimeInterface {
      * @return int
      * Returns the timezone offset in seconds from UTC on success
      * or <b>FALSE</b> on failure.
+     *
      */
     public function getOffset() { }
 
@@ -301,6 +308,12 @@ class DateTimeImmutable implements DateTimeInterface {
      * @return void Initializes a DateTime object.
      */
     public function __wakeup() { }
+
+    /**
+     * @return DateTimeImmutable
+     * @since 8.0
+     */
+    public static function createFromInterface(DateTimeInterface $object){}
 }
 
 
@@ -358,7 +371,7 @@ class DateTime implements DateTimeInterface {
      * Alter the timestamp of a DateTime object by incrementing or decrementing
      * in a format accepted by strtotime().
      * @param string $modify A date/time string. Valid formats are explained in <a href="https://secure.php.net/manual/en/datetime.formats.php">Date and Time Formats</a>.
-     * @return static Returns the DateTime object for method chaining or FALSE on failure.
+     * @return static|false Returns the DateTime object for method chaining or FALSE on failure.
      * @link https://php.net/manual/en/datetime.modify.php
      */
     public function modify ($modify) {}
@@ -488,6 +501,12 @@ class DateTime implements DateTimeInterface {
      * @return DateTime <p>Returns a new instance of a DateTime object.</p>
      */
     public static function __set_state ($array) {}
+
+    /**
+     * @return DateTime
+     * @since 8.0
+     */
+    public static function createFromInterface(DateTimeInterface $object){}
 }
 
 /**
@@ -669,7 +688,7 @@ class DateInterval {
  * Representation of date period.
  * @link https://php.net/manual/en/class.dateperiod.php
  */
-class DatePeriod implements Traversable {
+class DatePeriod implements IteratorAggregate {
     const EXCLUDE_START_DATE = 1;
 
     /**
@@ -769,4 +788,9 @@ class DatePeriod implements Traversable {
      * @since 7.3.4
      */
     public function getRecurrences () {}
+
+    /**
+     * @since 8.0
+     */
+    public function getIterator(){}
 }

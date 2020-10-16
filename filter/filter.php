@@ -10,7 +10,7 @@
  * <b>INPUT_COOKIE</b>, <b>INPUT_SERVER</b>, or
  * <b>INPUT_ENV</b>.
  * </p>
- * @param string $variable_name <p>
+ * @param string $var_name <p>
  * Name of a variable to get.
  * </p>
  * @param int $filter [optional] <p>
@@ -26,12 +26,12 @@
  * If the flag <b>FILTER_NULL_ON_FAILURE</b> is used, it
  * returns <b>FALSE</b> if the variable is not set and <b>NULL</b> if the filter fails.
  */
-function filter_input ($type, $variable_name, $filter = FILTER_DEFAULT, $options = null) {}
+function filter_input ($type, $var_name, $filter = FILTER_DEFAULT, $options = null) {}
 
 /**
  * Filters a variable with a specified filter
  * @link https://php.net/manual/en/function.filter-var.php
- * @param mixed $variable <p>
+ * @param mixed $value <p>
  * Value to filter.
  * </p>
  * @param int $filter [optional] <p>
@@ -81,7 +81,7 @@ function filter_input ($type, $variable_name, $filter = FILTER_DEFAULT, $options
  * </p>
  * @return mixed the filtered data, or <b>FALSE</b> if the filter fails.
  */
-function filter_var ($variable, $filter = FILTER_DEFAULT, $options = null) {}
+function filter_var ($value, $filter = FILTER_DEFAULT, $options = null) {}
 
 /**
  * Gets external variables and optionally filters them
@@ -91,7 +91,7 @@ function filter_var ($variable, $filter = FILTER_DEFAULT, $options = null) {}
  * <b>INPUT_COOKIE</b>, <b>INPUT_SERVER</b>, or
  * <b>INPUT_ENV</b>.
  * </p>
- * @param mixed $definition [optional] <p>
+ * @param mixed $options [optional] <p>
  * An array defining the arguments. A valid key is a string
  * containing a variable name and a valid value is either a filter type, or an array
  * optionally specifying the filter, flags and options. If the value is an
@@ -114,15 +114,15 @@ function filter_var ($variable, $filter = FILTER_DEFAULT, $options = null) {}
  * is used, it returns <b>FALSE</b> if the variable is not set and <b>NULL</b> if the filter
  * fails.
  */
-function filter_input_array ($type, $definition = null, $add_empty = true) {}
+function filter_input_array ($type, $options = null, $add_empty = true) {}
 
 /**
  * Gets multiple variables and optionally filters them
  * @link https://php.net/manual/en/function.filter-var-array.php
- * @param array $data <p>
+ * @param array $array <p>
  * An array with string keys containing the data to filter.
  * </p>
- * @param mixed $definition [optional] <p>
+ * @param mixed $options [optional] <p>
  * An array defining the arguments. A valid key is a string
  * containing a variable name and a valid value is either a
  * filter type, or an
@@ -144,7 +144,7 @@ function filter_input_array ($type, $definition = null, $add_empty = true) {}
  * on failure. An array value will be <b>FALSE</b> if the filter fails, or <b>NULL</b> if
  * the variable is not set.
  */
-function filter_var_array (array $data, $definition = null, $add_empty = true) {}
+function filter_var_array (array $array, $options = null, $add_empty = true) {}
 
 /**
  * Returns a list of all supported filters
@@ -158,27 +158,27 @@ function filter_list () {}
 /**
  * Checks if variable of specified type exists
  * @link https://php.net/manual/en/function.filter-has-var.php
- * @param int $type <p>
+ * @param int $input_type <p>
  * One of <b>INPUT_GET</b>, <b>INPUT_POST</b>,
  * <b>INPUT_COOKIE</b>, <b>INPUT_SERVER</b>, or
  * <b>INPUT_ENV</b>.
  * </p>
- * @param string $variable_name <p>
+ * @param string $var_name <p>
  * Name of a variable to check.
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function filter_has_var ($type, $variable_name) {}
+function filter_has_var ($input_type, $var_name) {}
 
 /**
  * Returns the filter ID belonging to a named filter
  * @link https://php.net/manual/en/function.filter-id.php
- * @param string $filtername <p>
+ * @param string $name <p>
  * Name of a filter to get.
  * </p>
  * @return int|false ID of a filter on success or <b>FALSE</b> if filter doesn't exist.
  */
-function filter_id ($filtername) {}
+function filter_id ($name) {}
 
 
 /**
@@ -215,6 +215,7 @@ define ('INPUT_SERVER', 5);
  * SESSION variables.
  * (not implemented yet)
  * @link https://php.net/manual/en/filter.constants.php
+ * @removed 8.0
  */
 define ('INPUT_SESSION', 6);
 
@@ -222,6 +223,7 @@ define ('INPUT_SESSION', 6);
  * REQUEST variables.
  * (not implemented yet)
  * @link https://php.net/manual/en/filter.constants.php
+ * @removed 8.0
  */
 define ('INPUT_REQUEST', 99);
 
@@ -266,6 +268,11 @@ define ('FILTER_VALIDATE_INT', 257);
  * @link https://php.net/manual/en/filter.constants.php
  */
 define ('FILTER_VALIDATE_BOOLEAN', 258);
+/**
+ * ID of "boolean" filter.
+ * @link https://php.net/manual/en/filter.constants.php
+ */
+define ('FILTER_VALIDATE_BOOL', 258);
 
 /**
  * ID of "float" filter.
@@ -370,6 +377,7 @@ define ('FILTER_SANITIZE_NUMBER_FLOAT', 520);
  * ID of "magic_quotes" filter.
  * @link https://php.net/manual/en/filter.constants.php
  * @deprecated 7.4
+ * @removed 8.0
  */
 define ('FILTER_SANITIZE_MAGIC_QUOTES', 521);
 
@@ -457,6 +465,7 @@ define ('FILTER_FLAG_ALLOW_SCIENTIFIC', 16384);
  * Require scheme in "validate_url" filter.
  * @link https://php.net/manual/en/filter.constants.php
  * @deprecated 7.3
+ * @removed 8.0
  */
 define ('FILTER_FLAG_SCHEME_REQUIRED', 65536);
 
@@ -464,6 +473,7 @@ define ('FILTER_FLAG_SCHEME_REQUIRED', 65536);
  * Require host in "validate_url" filter.
  * @link https://php.net/manual/en/filter.constants.php
  * @deprecated 7.3
+ * @removed 8.0
  */
 define ('FILTER_FLAG_HOST_REQUIRED', 131072);
 

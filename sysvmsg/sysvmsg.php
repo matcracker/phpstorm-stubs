@@ -12,7 +12,7 @@
  * Queue permissions. Default to 0666. If the message queue already
  * exists, the <i>perms</i> will be ignored.
  * </p>
- * @return resource a resource handle that can be used to access the System V message queue.
+ * @return resource|SysvMessageQueue a resource handle that can be used to access the System V message queue.
  */
 function msg_get_queue ($key, $perms = 0666) {}
 
@@ -43,7 +43,7 @@ function msg_get_queue ($key, $perms = 0666) {}
  * indicating that you should try to send your message again a little
  * later on.
  * </p>
- * @param int $errorcode [optional]
+ * @param int &$errorcode [optional]
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  * </p>
  * <p>
@@ -70,7 +70,7 @@ function msg_send ($queue, $msgtype, $message, $serialize = true, $blocking = tr
  * by specifying <b>MSG_IPC_NOWAIT</b> in the
  * <i>flags</i> parameter.
  * </p>
- * @param int $msgtype <p>
+ * @param int &$msgtype <p>
  * The type of the message that was received will be stored in this
  * parameter.
  * </p>
@@ -80,7 +80,7 @@ function msg_send ($queue, $msgtype, $message, $serialize = true, $blocking = tr
  * than this size the function will fail (unless you set
  * <i>flags</i> as described below).
  * </p>
- * @param mixed $message <p>
+ * @param mixed &$message <p>
  * The received message will be stored in <i>message</i>,
  * unless there were errors receiving the message.
  * </p>
@@ -256,6 +256,11 @@ define ('MSG_EAGAIN', 11);
 define ('MSG_ENOMSG', 42);
 define ('MSG_NOERROR', 2);
 define ('MSG_EXCEPT', 4);
+
+/**
+ * @since 8.0
+ */
+final class SysvMessageQueue{}
 
 // End of sysvmsg v.
 ?>

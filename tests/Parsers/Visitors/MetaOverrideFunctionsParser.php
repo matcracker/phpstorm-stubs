@@ -27,10 +27,11 @@ class MetaOverrideFunctionsParser extends NodeVisitorAbstract
     }
 
     /**
+     * @param Node $node
      * @return void
      * @throws RuntimeException
      */
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): void
     {
         if ($node instanceof Node\Expr\FuncCall && (string)$node->name === self::OVERRIDE_FUNCTION) {
             $args = $node->args;

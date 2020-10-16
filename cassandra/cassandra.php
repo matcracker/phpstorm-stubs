@@ -25,6 +25,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 namespace {
 
     /**
@@ -471,6 +472,7 @@ namespace {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/
  */
+
 namespace Cassandra {
 
     /**
@@ -618,7 +620,7 @@ namespace Cassandra {
         /**
          * Close the session and all its connections.
          *
-         * @param double $timeout The amount of time in seconds to wait for the session to close.
+         * @param float $timeout The amount of time in seconds to wait for the session to close.
          *
          * @return null Nothing.
          * @throws \Cassandra\Exception
@@ -1195,7 +1197,7 @@ namespace Cassandra {
         /**
          * Waits for a given future resource to resolve and throws errors if any.
          *
-         * @param int|double|null $timeout A timeout in seconds
+         * @param int|float|null $timeout A timeout in seconds
          *
          * @return mixed a value that the future has been resolved with
          * @throws \Cassandra\Exception\TimeoutException
@@ -1983,7 +1985,7 @@ namespace Cassandra {
         /**
          * Creates a new 16-bit signed integer.
          *
-         * @param int|double|string $value The value as an integer, double or string
+         * @param int|float|string $value The value as an integer, double or string
          *
          * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.Smallint/#method-__construct
          */
@@ -2144,7 +2146,7 @@ namespace Cassandra {
         /**
          * Waits for a given future resource to resolve and throws errors if any.
          *
-         * @param int|double|null $timeout A timeout in seconds
+         * @param int|float|null $timeout A timeout in seconds
          *
          * @return \Cassandra\PreparedStatement A prepared statement
          * @throws \Cassandra\Exception\TimeoutException
@@ -2410,7 +2412,7 @@ namespace Cassandra {
         /**
          * Waits for a given future resource to resolve and throws errors if any.
          *
-         * @param int|double|null $timeout A timeout in seconds
+         * @param int|float|null $timeout A timeout in seconds
          *
          * @return \Cassandra\Rows|null The result set
          * @throws \Cassandra\Exception\TimeoutException
@@ -2888,7 +2890,7 @@ namespace Cassandra {
         /**
          * Waits for a given future resource to resolve and throws errors if any.
          *
-         * @param int|double|null $timeout A timeout in seconds
+         * @param int|float|null $timeout A timeout in seconds
          *
          * @return \Cassandra\Session A connected session
          * @throws \Cassandra\Exception\TimeoutException
@@ -3306,7 +3308,7 @@ namespace Cassandra {
         /**
          * Creates a new 8-bit signed integer.
          *
-         * @param int|double|string $value The value as an integer, double or string
+         * @param int|float|string $value The value as an integer, float or string
          *
          * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.Tinyint/#method-__construct
          */
@@ -3624,7 +3626,7 @@ namespace Cassandra {
         /**
          * Close the session and all its connections.
          *
-         * @param double $timeout The amount of time in seconds to wait for the session to close.
+         * @param float $timeout The amount of time in seconds to wait for the session to close.
          *
          * @return null Nothing.
          * @throws \Cassandra\Exception
@@ -4730,7 +4732,7 @@ namespace Cassandra {
         /**
          * Creates a new float.
          *
-         * @param double|int|string|\Cassandra\Float_ $value A float value as a string, number or Float
+         * @param float|int|string|\Cassandra\Float_ $value A float value as a string, number or Float
          *
          * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.Float/#method-__construct
          */
@@ -4912,9 +4914,9 @@ namespace Cassandra {
     {
 
         /**
-         * @param int|double|string|\Cassandra\Bigint $months Months attribute of the duration.
-         * @param int|double|string|\Cassandra\Bigint $days Days attribute of the duration.
-         * @param int|double|string|\Cassandra\Bigint $nanos Nanos attribute of the duration.
+         * @param int|float|string|\Cassandra\Bigint $months Months attribute of the duration.
+         * @param int|float|string|\Cassandra\Bigint $days Days attribute of the duration.
+         * @param int|float|string|\Cassandra\Bigint $nanos Nanos attribute of the duration.
          *
          * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.Duration/#method-__construct
          */
@@ -5894,7 +5896,7 @@ namespace Cassandra {
         /**
          * Waits for a given future resource to resolve and throws errors if any.
          *
-         * @param int|double|null $timeout A timeout in seconds
+         * @param int|float|null $timeout A timeout in seconds
          *
          * @return null Nothing
          * @throws \Cassandra\Exception\TimeoutException
@@ -6097,6 +6099,7 @@ namespace Cassandra {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/Cluster/
  */
+
 namespace Cassandra\Cluster {
 
     /**
@@ -6543,6 +6546,7 @@ namespace Cassandra\Cluster {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/TimestampGenerator/
  */
+
 namespace Cassandra\TimestampGenerator {
 
     /**
@@ -6574,6 +6578,7 @@ namespace Cassandra\TimestampGenerator {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/RetryPolicy/
  */
+
 namespace Cassandra\RetryPolicy {
 
     /**
@@ -6653,6 +6658,7 @@ namespace Cassandra\RetryPolicy {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/Type/
  */
+
 namespace Cassandra\Type {
 
     /**
@@ -7110,6 +7116,7 @@ namespace Cassandra\Type {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/SSLOptions/
  */
+
 namespace Cassandra\SSLOptions {
 
     /**
@@ -7200,6 +7207,7 @@ namespace Cassandra\SSLOptions {
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/Exception/
  */
+
 namespace Cassandra\Exception {
 
     /**

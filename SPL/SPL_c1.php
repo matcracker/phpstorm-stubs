@@ -7,7 +7,7 @@
  * information for an individual file.
  * @link https://php.net/manual/en/class.splfileinfo.php
  */
-class SplFileInfo  {
+class SplFileInfo implements Stringable {
 
         /**
          * Construct a new SplFileInfo object
@@ -569,6 +569,7 @@ class SplFileObject extends SplFileInfo implements RecursiveIterator, SeekableIt
          *
          * @throws RuntimeException When the filename cannot be opened
          * @throws LogicException When the filename is a directory
+         *
          */
         public function __construct ($file_name, $open_mode = 'r', $use_include_path = false, $context = null) {}
 
@@ -623,7 +624,7 @@ class SplFileObject extends SplFileInfo implements RecursiveIterator, SeekableIt
          * @param string $escape [optional] <p>
 	 * The escape character (one character only). Defaults as a backslash (\) or the value set using <b>SplFileObject::setCsvControl</b>.
          * </p>
-         * @return array an indexed array containing the fields read, or false on error.
+         * @return array|false an indexed array containing the fields read, or false on error.
          * </p>
          * <p>
          * A blank line in a CSV file will be returned as an array
@@ -677,7 +678,7 @@ class SplFileObject extends SplFileInfo implements RecursiveIterator, SeekableIt
          * @param int $operation <p>
 	 * <i>operation</i> is one of the following:
 	 * <b>LOCK_SH</b> to acquire a shared lock (reader).
-         * @param int $wouldblock [optional] <p>
+         * @param int &$wouldblock [optional] <p>
          * Set to true if the lock would block (EWOULDBLOCK errno condition).
          * </p>
 	 * @return bool true on success or false on failure.
@@ -744,6 +745,7 @@ class SplFileObject extends SplFileInfo implements RecursiveIterator, SeekableIt
          * @return string|false a string containing the next line of the file with HTML and PHP
          * code stripped, or false on error.
          * @deprecated 7.3
+         * @removed 8.0
          */
         public function fgetss ($allowable_tags = null) {}
 
@@ -753,7 +755,7 @@ class SplFileObject extends SplFileInfo implements RecursiveIterator, SeekableIt
          * @param string $format <p>
 	 * The specified format as described in the <b>sprintf</b> documentation.
          * </p>
-	 * @param mixed $_ [optional] <p>
+	 * @param mixed &$_ [optional] <p>
 	 * The optional assigned values.
 	 * </p>
 	 * @return array|int If only one parameter is passed to this method, the values parsed will be
@@ -1109,7 +1111,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
 
         /**
          * Unserializes the storage
-         * @link https://php.net/manual/ru/spldoublylinkedlist.serialize.php
+         * @link https://php.net/manual/en/spldoublylinkedlist.serialize.php
          * @param string $serialized The serialized string.
          * @return void
          * @since 5.4
@@ -1118,7 +1120,7 @@ class SplDoublyLinkedList implements Iterator, Countable, ArrayAccess, Serializa
 
          /**
          * Serializes the storage
-         * @link https://php.net/manual/ru/spldoublylinkedlist.unserialize.php
+         * @link https://php.net/manual/en/spldoublylinkedlist.unserialize.php
          * @return string The serialized string.
          * @since 5.4
          */
@@ -1456,7 +1458,7 @@ class SplPriorityQueue implements Iterator, Countable {
 
         /**
          * Construct a new SplPriorityQueue object
-         * @link https://www.php.net/manual/ru/splpriorityqueue.construct.php
+         * @link https://www.php.net/manual/en/splpriorityqueue.construct.php
          */
         public function __construct () {}
 
@@ -1599,7 +1601,7 @@ class SplPriorityQueue implements Iterator, Countable {
  * implementation.
  * @link https://php.net/manual/en/class.splfixedarray.php
  */
-class SplFixedArray implements Iterator, ArrayAccess, Countable {
+class SplFixedArray implements Iterator, ArrayAccess, Countable, IteratorAggregate {
 
         /**
          * Constructs a new fixed array
@@ -1735,7 +1737,7 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable {
     {
     }
 
-
+    public function getIterator() {}
 }
 
 /**
@@ -1885,9 +1887,10 @@ class SplObjectStorage implements Countable, Iterator, Serializable, ArrayAccess
         /**
          * Returns the number of objects in the storage
          * @link https://php.net/manual/en/splobjectstorage.count.php
+         * @param int $mode [optional]
          * @return int The number of objects in the storage.
          */
-        public function count () {}
+        public function count ($mode = COUNT_NORMAL) {}
 
         /**
          * Rewind the iterator to the first storage element

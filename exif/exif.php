@@ -5,12 +5,12 @@
 /**
  * Reads the EXIF headers from JPEG or TIFF
  * @link https://php.net/manual/en/function.exif-read-data.php
- * @param string|resource $stream <p>
+ * @param string|resource $filename <p>
  * The location of the image file. This cannot be an URL.
  * Since 7.2.0 this can either be a path to the file (stream wrappers are also supported as usual)
  * or a stream resource.
  * </p>
- * @param string $sections [optional] <p>
+ * @param string $sections_needed [optional] <p>
  * Is a comma separated list of sections that need to be present in file
  * to produce a result array. If none of the requested
  * sections could be found the return value is <b>FALSE</b>.
@@ -60,14 +60,14 @@
  * </td>
  * </tr>
  * </p>
- * @param bool $arrays [optional] <p>
+ * @param bool $sub_arrays [optional] <p>
  * Specifies whether or not each section becomes an array. The
  * <i>sections</i> COMPUTED,
  * THUMBNAIL, and COMMENT
  * always become arrays as they may contain values whose names conflict
  * with other sections.
  * </p>
- * @param bool $thumbnail [optional] <p>
+ * @param bool $read_thumbnail [optional] <p>
  * When set to <b>TRUE</b> the thumbnail itself is read. Otherwise, only the
  * tagged data is read.
  * </p>
@@ -76,7 +76,7 @@
  * those headers. If no data can be returned,
  * <b>exif_read_data</b> will return <b>FALSE</b>.
  */
-function exif_read_data ($stream, $sections = null, $arrays = false, $thumbnail = false) {}
+function exif_read_data ($filename, $sections_needed = null, $sub_arrays = false, $read_thumbnail = false) {}
 
 /**
  * Alias of <b>exif_read_data</b>
@@ -86,6 +86,7 @@ function exif_read_data ($stream, $sections = null, $arrays = false, $thumbnail 
  * @param $arrays [optional]
  * @param $thumbnail [optional]
  * @deprecated 7.2 Use {@see exif_read_data()} instead.
+ * @removed 8.0
  */
 function read_exif_data ($filename, $sections = null, $arrays = false, $thumbnail = false) {}
 
@@ -103,25 +104,25 @@ function exif_tagname ($index) {}
 /**
  * Retrieve the embedded thumbnail of a TIFF or JPEG image
  * @link https://php.net/manual/en/function.exif-thumbnail.php
- * @param string|resource $stream <p>
+ * @param string|resource $filename <p>
  * The location of the image file. This cannot be an URL.
  * Since 7.2.0 this can either be a path to the file (stream wrappers are also supported as usual)
  * or a stream resource.
  * </p>
- * @param int $width [optional] <p>
+ * @param int &$width [optional] <p>
  * The return width of the returned thumbnail.
  * </p>
- * @param int $height [optional] <p>
+ * @param int &$height [optional] <p>
  * The returned height of the returned thumbnail.
  * </p>
- * @param int $imagetype [optional] <p>
+ * @param int &$imagetype [optional] <p>
  * The returned image type of the returned thumbnail. This is either
  * TIFF or JPEG.
  * </p>
  * @return string|false the embedded thumbnail, or <b>FALSE</b> if the image contains no
  * thumbnail.
  */
-function exif_thumbnail ($stream, &$width = null, &$height = null, &$imagetype = null) {}
+function exif_thumbnail ($filename, &$width = null, &$height = null, &$imagetype = null) {}
 
 /**
  * Determine the type of an image

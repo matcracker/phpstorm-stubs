@@ -1,25 +1,33 @@
 <?php
 
+use JetBrains\PhpStorm\ArrayShape;
+
 /**
  * Get the last occurred error
  * @link https://php.net/manual/en/function.error-get-last.php
- * @return array an associative array describing the last error with keys "type",
- * "message", "file" and "line". Returns &null; if there hasn't been an error
+ * @return array|null an associative array describing the last error with keys "type",
+ * "message", "file" and "line". Returns null if there hasn't been an error
  * yet.
  */
+#[ArrayShape([
+    "type" => "int",
+    "message" => "string",
+    "file" => "string",
+    "line" => "int",
+])]
 function error_get_last () {}
 
 /**
  * Call a user function given by the first parameter
  * @link https://php.net/manual/en/function.call-user-func.php
- * @param callback $function <p>
+ * @param callback $callback <p>
  * The function to be called. Class methods may also be invoked
  * statically using this function by passing
  * array($classname, $methodname) to this parameter.
  * Additionally class methods of an object instance may be called by passing
  * array($objectinstance, $methodname) to this parameter.
  * </p>
- * @param mixed $parameter [optional] <p>
+ * @param mixed ...$args [optional] <p>
  * Zero or more parameters to be passed to the function.
  * </p>
  * <p>
@@ -28,42 +36,41 @@ function error_get_last () {}
  * call_user_func example and references
  * &example.outputs;
  * </p>
- * @return mixed the function result, or false on error.
+ * @return mixed|false the function result, or false on error.
  */
-function call_user_func ($function, ...$parameter) {}
+function call_user_func ($callback, ...$args) {}
 
 /**
  * Call a user function given with an array of parameters
  * @link https://php.net/manual/en/function.call-user-func-array.php
- * @param callback $function <p>
+ * @param callback $callback <p>
  * The function to be called.
  * </p>
- * @param array $param_arr <p>
+ * @param array $args <p>
  * The parameters to be passed to the function, as an indexed array.
  * </p>
- * @return mixed the function result, or false on error.
+ * @return mixed|false the function result, or false on error.
  */
-function call_user_func_array ($function, array $param_arr) {}
+function call_user_func_array ($callback, array $args) {}
 
 /**
  * Call a user method on an specific object
  * @link https://php.net/manual/en/function.call-user-method.php
  * @deprecated 5.3 use call_user_func() instead
  * @param string $method_name
- * @param object $obj
- * @param mixed $parameter [optional]
- * @param mixed $_ [optional]
+ * @param object &$obj
+ * @param mixed ...$parameter [optional]
  * @return mixed
  * @removed 7.0
  */
-function call_user_method ($method_name, &$obj, $parameter = null, $_ = null) {}
+function call_user_method ($method_name, &$obj, ...$parameter) {}
 
 /**
  * Call a user method given with an array of parameters
  * @link https://php.net/manual/en/function.call-user-method-array.php
  * @deprecated 5.3 use call_user_func_array() instead
  * @param string $method_name
- * @param object $obj
+ * @param object &$obj
  * @param array $params
  * @return mixed
  * @removed 7.0
@@ -73,30 +80,30 @@ function call_user_method_array ($method_name, &$obj, array $params) {}
 /**
  * Call a static method
  * @link https://php.net/manual/en/function.forward-static-call.php
- * @param callback $function <p>
+ * @param callback $callback <p>
  * The function or method to be called. This parameter may be an array,
  * with the name of the class, and the method, or a string, with a function
  * name.
  * </p>
- * @param mixed ...$parameters [optional] <p>
+ * @param mixed ...$args [optional] <p>
  * Zero or more parameters to be passed to the function.
  * </p>
- * @return mixed the function result, or false on error.
+ * @return mixed|false the function result, or false on error.
  */
-function forward_static_call ($function, ...$parameters) {}
+function forward_static_call ($callback, ...$args) {}
 
 /**
  * Call a static method and pass the arguments as array
  * @link https://php.net/manual/en/function.forward-static-call-array.php
- * @param callback $function <p>
- * The function or method to be called. This parameter may be an &array;,
- * with the name of the class, and the method, or a &string;, with a function
+ * @param callback|array|string $callback <p>
+ * The function or method to be called. This parameter may be an array,
+ * with the name of the class, and the method, or a string, with a function
  * name.
  * </p>
- * @param array $parameters
- * @return mixed the function result, or false on error.
+ * @param array $args
+ * @return mixed|false the function result, or false on error.
  */
-function forward_static_call_array ($function, array $parameters) {}
+function forward_static_call_array ($callback, array $args) {}
 
 /**
  * Generates a storable representation of a value
@@ -129,7 +136,7 @@ function serialize ($value) {}
 /**
  * Creates a PHP value from a stored representation
  * @link https://php.net/manual/en/function.unserialize.php
- * @param string $str <p>
+ * @param string $value <p>
  * The serialized string.
  * </p>
  * <p>
@@ -148,10 +155,11 @@ function serialize ($value) {}
  * should be instantiated, it'll be called. To disable this feature just
  * empty this setting.
  * </p>
- * @param mixed $options [optional]
+ * @param array $options [optional]
  * <p>Any options to be provided to unserialize(), as an associative array.</p>
  * <p>
- * Either an array of class names which should be accepted, FALSE to
+ * The 'allowed_classes' option key may be set to a value that is
+ * either an array of class names which should be accepted, FALSE to
  * accept no classes, or TRUE to accept all classes. If this option is defined
  * and unserialize() encounters an object of a class that isn't to be accepted,
  * then the object will be instantiated as __PHP_Incomplete_Class instead.
@@ -166,23 +174,23 @@ function serialize ($value) {}
  * In case the passed string is not unserializeable, false is returned and
  * E_NOTICE is issued.
  */
-function unserialize (string $str, array $options = []) {}
+function unserialize (string $value, array $options = []) {}
 
 /**
  * Dumps information about a variable
  * @link https://php.net/manual/en/function.var-dump.php
- * @param mixed $expression <p>
+ * @param mixed $value <p>
  * The variable you want to export.
  * </p>
- * @param mixed $_ [optional]
+ * @param mixed ...$values [optional]
  * @return void
  */
-function var_dump ($expression, $_ = null) {}
+function var_dump ($value, ...$values) {}
 
 /**
  * Outputs or returns a parsable string representation of a variable
  * @link https://php.net/manual/en/function.var-export.php
- * @param mixed $expression <p>
+ * @param mixed $value <p>
  * The variable you want to export.
  * </p>
  * @param bool $return [optional] <p>
@@ -192,24 +200,25 @@ function var_dump ($expression, $_ = null) {}
  * &note.uses-ob;
  * @return string|null the variable representation when the return
  * parameter is used and evaluates to true. Otherwise, this function will
- * return &null;.
+ * return null.
  */
-function var_export ($expression, $return = null) {}
+function var_export ($value, $return = null) {}
 
 /**
  * Dumps a string representation of an internal zend value to output
  * @link https://php.net/manual/en/function.debug-zval-dump.php
- * @param mixed ...$vars <p>
- * The variable being evaluated.
+ * @param mixed $value The variable being evaluated.
+ * @param mixed ...$values <p>
+ * The other variable being evaluated.
  * </p>
  * @return void
  */
-function debug_zval_dump (...$vars) {}
+function debug_zval_dump ($value, ...$values) {}
 
 /**
  * Prints human-readable information about a variable
  * @link https://php.net/manual/en/function.print-r.php
- * @param mixed $expression <p>
+ * @param mixed $value <p>
  * The expression to be printed.
  * </p>
  * @param bool $return [optional] <p>
@@ -223,7 +232,7 @@ function debug_zval_dump (...$vars) {}
  * will be presented in a format that shows keys and elements. Similar
  * notation is used for objects.
  */
-function print_r ($expression, $return = null) {}
+function print_r ($value, $return = null) {}
 
 /**
  * Returns the amount of memory allocated to PHP
@@ -235,7 +244,7 @@ function print_r ($expression, $return = null) {}
  * </p>
  * @return int the memory amount in bytes.
  */
-function memory_get_usage ($real_usage = null) {}
+function memory_get_usage ($real_usage = false) {}
 
 /**
  * Returns the peak of memory allocated by PHP
@@ -247,12 +256,12 @@ function memory_get_usage ($real_usage = null) {}
  * </p>
  * @return int the memory peak in bytes.
  */
-function memory_get_peak_usage ($real_usage = null) {}
+function memory_get_peak_usage ($real_usage = false) {}
 
 /**
  * Register a function for execution on shutdown
  * @link https://php.net/manual/en/function.register-shutdown-function.php
- * @param callback $function <p>
+ * @param callback $callback <p>
  * The shutdown function to register.
  * </p>
  * <p>
@@ -266,37 +275,37 @@ function memory_get_peak_usage ($real_usage = null) {}
  * thus, for example, its output will not be compressed if zlib.output_compression is
  * enabled.
  * </p>
- * @param mixed ...$parameters [optional] <p>
+ * @param mixed ...$args [optional] <p>
  * It is possible to pass parameters to the shutdown function by passing
  * additional parameters.
  * </p>
  * @return void
  */
-function register_shutdown_function ($function, ...$parameters) {}
+function register_shutdown_function ($callback, ...$args) {}
 
 /**
  * Register a function for execution on each tick
  * @link https://php.net/manual/en/function.register-tick-function.php
- * @param callback $function <p>
+ * @param callback $callback <p>
  * The function name as a string, or an array consisting of an object and
  * a method.
  * </p>
- * @param mixed ...$parameters [optional] <p>
+ * @param mixed ...$args [optional] <p>
  * </p>
  * @return bool true on success or false on failure.
  */
-function register_tick_function ($function, ...$parameters) {}
+function register_tick_function ($callback, ...$args) {}
 
 /**
  * De-register a function for execution on each tick
  * @link https://php.net/manual/en/function.unregister-tick-function.php
- * @param callable $function <p>
+ * @param callable $callback <p>
  * The function name as a string, or an array consisting of an object and
  * a method.
  * </p>
  * @return void
  */
-function unregister_tick_function ($function) {}
+function unregister_tick_function ($callback) {}
 
 /**
  * Syntax highlighting of a file
@@ -317,15 +326,16 @@ function highlight_file ($filename, $return = false) {}
 /**
  * &Alias; <function>highlight_file</function>
  * @link https://php.net/manual/en/function.show-source.php
- * @param $file_name
- * @param $return [optional]
+ * @param string $filename
+ * @param bool $return [optional]
+ * @return string|bool
  */
-function show_source ($file_name, $return = false) {}
+function show_source ($filename, $return = false) {}
 
 /**
  * Syntax highlighting of a string
  * @link https://php.net/manual/en/function.highlight-string.php
- * @param string $str <p>
+ * @param string $string <p>
  * The PHP code to be highlighted. This should include the opening tag.
  * </p>
  * @param bool $return [optional] <p>
@@ -336,17 +346,17 @@ function show_source ($file_name, $return = false) {}
  * code as a string instead of printing it out. Otherwise, it will return
  * true on success, false on failure.
  */
-function highlight_string ($str, $return = false) {}
+function highlight_string ($string, $return = false) {}
 
 /**
  * Get the system's high resolution time
  * @link https://secure.php.net/manual/en/function.hrtime.php
- * @param bool $get_as_number <p>Whether the high resolution time should be returned as array or number.<p>
+ * @param bool $as_number <p>Whether the high resolution time should be returned as array or number.<p>
  * @since 7.3
  * @return int[]|int|float Returns an array of integers in the form [seconds, nanoseconds], if the parameter get_as_number is false.
  * Otherwise the nanoseconds are returned as integer (64bit platforms) or float (32bit platforms).
  */
-function hrtime($get_as_number = FALSE) {}
+function hrtime($as_number = false) {}
 
 /**
  * Return source with stripped comments and whitespace
@@ -369,13 +379,13 @@ function php_strip_whitespace ($filename) {}
  * Gets the value of a configuration option
  * @link https://php.net/manual/en/function.ini-get.php
  * @link https://php.net/manual/en/ini.list.php
- * @param string $varname <p>
+ * @param string $name <p>
  * The configuration option name.
  * </p>
  * @return string the value of the configuration option as a string on success, or
  * an empty string on failure or for null values.
  */
-function ini_get ($varname) {}
+function ini_get ($name) {}
 
 /**
  * Gets all configuration options
@@ -416,39 +426,40 @@ function ini_get_all ($extension = null, $details = null) {}
  * Sets the value of a configuration option
  * @link https://php.net/manual/en/function.ini-set.php
  * @link https://php.net/manual/en/ini.list.php
- * @param string $varname <p>
+ * @param string $name <p>
  * </p>
  * <p>
  * Not all the available options can be changed using
  * ini_set. There is a list of all available options
  * in the appendix.
  * </p>
- * @param string $newvalue <p>
+ * @param string $value <p>
  * The new value for the option.
  * </p>
  * @return string|false the old value on success, false on failure.
  */
-function ini_set ($varname, $newvalue) {}
+function ini_set ($name, $value) {}
 
 /**
  * &Alias; <function>ini_set</function>
  * @link https://php.net/manual/en/function.ini-alter.php
  * @link https://php.net/manual/en/ini.list.php
- * @param $varname
- * @param $newvalue
+ * @param string $name
+ * @param string $value
+ * @return string|false
  */
-function ini_alter ($varname, $newvalue) {}
+function ini_alter ($name, $value) {}
 
 /**
  * Restores the value of a configuration option
  * @link https://php.net/manual/en/function.ini-restore.php
  * @link https://php.net/manual/en/ini.list.php
- * @param string $varname <p>
+ * @param string $name <p>
  * The configuration option name.
  * </p>
  * @return void
  */
-function ini_restore ($varname) {}
+function ini_restore ($name) {}
 
 /**
  * Gets the current include_path configuration option
@@ -460,19 +471,20 @@ function get_include_path () {}
 /**
  * Sets the include_path configuration option
  * @link https://php.net/manual/en/function.set-include-path.php
- * @param string $new_include_path <p>
+ * @param string $include_path <p>
  * The new value for the include_path
  * </p>
  * @return string|bool the old include_path on
  * success or false on failure.
  */
-function set_include_path ($new_include_path) {}
+function set_include_path ($include_path) {}
 
 /**
  * Restores the value of the include_path configuration option
  * @link https://php.net/manual/en/function.restore-include-path.php
  * @return void
  * @deprecated 7.4
+ * @removed 8.0
  */
 function restore_include_path () {}
 
@@ -488,7 +500,7 @@ function restore_include_path () {}
  * Assuming the name is 'cookiename', this
  * value is retrieved through $_COOKIE['cookiename']
  * </p>
- * @param int $expire [optional] <p>
+ * @param int $expires_or_options [optional] <p>
  * The time the cookie expires. This is a Unix timestamp so is
  * in number of seconds since the epoch. In other words, you'll
  * most likely set this with the time function
@@ -551,7 +563,7 @@ function restore_include_path () {}
  * setcookie successfully runs, it will return true.
  * This does not indicate whether the user accepted the cookie.
  */
-function setcookie ($name, $value = "", $expire = 0, $path = "", $domain = "", $secure = false, $httponly = false) {}
+function setcookie ($name, $value = "", $expires_or_options = 0, $path = "", $domain = "", $secure = false, $httponly = false) {}
 
 /**
  * Send a cookie
@@ -581,14 +593,14 @@ function setcookie($name, $value = '', array $options = []) {}
  * @link https://php.net/manual/en/function.setrawcookie.php
  * @param string $name
  * @param string $value [optional]
- * @param int $expire [optional]
+ * @param int $expires_or_options [optional]
  * @param string $path [optional]
  * @param string $domain [optional]
  * @param bool $secure [optional]
  * @param bool $httponly [optional]
  * @return bool true on success or false on failure.
  */
-function setrawcookie ($name, $value = '', $expire = 0, $path = "", $domain = "", $secure = false, $httponly = false) {}
+function setrawcookie ($name, $value = '', $expires_or_options = 0, $path = "", $domain = "", $secure = false, $httponly = false) {}
 
 /**
  * Send a cookie without urlencoding the cookie value
@@ -615,7 +627,7 @@ function setrawcookie ($name, $value = '', array $options = []) {}
 /**
  * Send a raw HTTP header
  * @link https://php.net/manual/en/function.header.php
- * @param string $string <p>
+ * @param string $header <p>
  * The header string.
  * </p>
  * <p>
@@ -641,12 +653,12 @@ function setrawcookie ($name, $value = '', array $options = []) {}
  * but if you pass in false as the second argument you can force
  * multiple headers of the same type. For example:
  * </p>
- * @param int $http_response_code [optional] <p>
+ * @param int $response_code [optional] <p>
  * Forces the HTTP response code to the specified value.
  * </p>
  * @return void
  */
-function header ($string, $replace = true, $http_response_code = null) {}
+function header ($header, $replace = true, $response_code = null) {}
 
 /**
  * Remove previously set headers
@@ -662,20 +674,20 @@ function header_remove ($name = null) {}
 /**
  * Checks if or where headers have been sent
  * @link https://php.net/manual/en/function.headers-sent.php
- * @param string $file [optional] <p>
+ * @param string &$filename [optional] <p>
  * If the optional file and
  * line parameters are set,
  * headers_sent will put the PHP source file name
  * and line number where output started in the file
  * and line variables.
  * </p>
- * @param int $line [optional] <p>
+ * @param int &$line [optional] <p>
  * The line number where the output started.
  * </p>
  * @return bool headers_sent will return false if no HTTP headers
  * have already been sent or true otherwise.
  */
-function headers_sent (&$file = null, &$line = null) {}
+function headers_sent (&$filename = null, &$line = null) {}
 
 /**
  * Returns a list of response headers sent (or ready to send)
@@ -683,6 +695,21 @@ function headers_sent (&$file = null, &$line = null) {}
  * @return array a numerically indexed array of headers.
  */
 function headers_list () {}
+
+/**
+ * Fetches all HTTP request headers from the current request
+ * @link https://php.net/manual/en/function.apache-request-headers.php
+ * @return array|false An associative array of all the HTTP headers in the current request, or <b>FALSE</b on failure.
+ */
+function apache_request_headers () {}
+
+/**
+ * Fetches all HTTP headers from the current request.
+ * This function is an alias for apache_request_headers(). Please read the apache_request_headers() documentation for more information on how this function works.
+ * @link https://php.net/manual/en/function.getallheaders.php
+ * @return array|false An associative array of all the HTTP headers in the current request, or <b>FALSE</b> on failure.
+ */
+function getallheaders () {}
 
 /**
  * Check whether client disconnected
@@ -703,14 +730,14 @@ function connection_status () {}
 /**
  * Set whether a client disconnect should abort script execution
  * @link https://php.net/manual/en/function.ignore-user-abort.php
- * @param string $value [optional] <p>
+ * @param string $enable [optional] <p>
  * If set, this function will set the ignore_user_abort ini setting
  * to the given value. If not, this function will
  * only return the previous setting without changing it.
  * </p>
  * @return int the previous setting, as an integer.
  */
-function ignore_user_abort ($value = null) {}
+function ignore_user_abort ($enable = null) {}
 
 /**
  * Parse a configuration file
@@ -745,7 +772,7 @@ function parse_ini_file ($filename, $process_sections = false, $scanner_mode = I
 /**
  * Parse a configuration string
  * @link https://php.net/manual/en/function.parse-ini-string.php
- * @param string $ini <p>
+ * @param string $ini_string <p>
  * The contents of the ini file being parsed.
  * </p>
  * @param bool $process_sections [optional] <p>
@@ -762,7 +789,7 @@ function parse_ini_file ($filename, $process_sections = false, $scanner_mode = I
  * @return array|false The settings are returned as an associative array on success,
  * and false on failure.
  */
-function parse_ini_string ($ini, $process_sections = false, $scanner_mode = INI_SCANNER_NORMAL) {}
+function parse_ini_string ($ini_string, $process_sections = false, $scanner_mode = INI_SCANNER_NORMAL) {}
 
 /**
  * Tells whether the file was uploaded via HTTP POST
@@ -777,10 +804,10 @@ function is_uploaded_file ($filename) {}
 /**
  * Moves an uploaded file to a new location
  * @link https://php.net/manual/en/function.move-uploaded-file.php
- * @param string $filename <p>
+ * @param string $from <p>
  * The filename of the uploaded file.
  * </p>
- * @param string $destination <p>
+ * @param string $to <p>
  * The destination of the moved file.
  * </p>
  * @return bool If filename is not a valid upload file,
@@ -794,9 +821,10 @@ function is_uploaded_file ($filename) {}
  * move_uploaded_file will return
  * false. Additionally, a warning will be issued.
  */
-function move_uploaded_file ($filename, $destination) {}
+function move_uploaded_file ($from, $to) {}
 
 /**
+ * @return array|false
  * @since 7.3
  */
 function net_get_interfaces() {}
@@ -804,13 +832,13 @@ function net_get_interfaces() {}
 /**
  * Get the Internet host name corresponding to a given IP address
  * @link https://php.net/manual/en/function.gethostbyaddr.php
- * @param string $ip_address <p>
+ * @param string $ip <p>
  * The host IP address.
  * </p>
  * @return string the host name or the unmodified ip_address
  * on failure.
  */
-function gethostbyaddr ($ip_address) {}
+function gethostbyaddr ($ip) {}
 
 /**
  * Get the IPv4 address corresponding to a given Internet host name
@@ -830,7 +858,7 @@ function gethostbyname ($hostname) {}
  * @param string $hostname <p>
  * The host name.
  * </p>
- * @return array an array of IPv4 addresses or false if
+ * @return array|false an array of IPv4 addresses or false if
  * hostname could not be resolved.
  */
 function gethostbynamel ($hostname) {}
@@ -846,22 +874,22 @@ function gethostname () {}
 /**
  * &Alias; <function>checkdnsrr</function>
  * @link https://php.net/manual/en/function.dns-check-record.php
- * @param $host <p>
+ * @param string $hostname <p>
  * <b>host</b> may either be the IP address in
  * dotted-quad notation or the host name.
  * </p>
- * @param $type [optional] <p>
+ * @param string $type [optional] <p>
  * <b>type</b> may be any one of: A, MX, NS, SOA,
  * PTR, CNAME, AAAA, A6, SRV, NAPTR, TXT or ANY.
  * </p>
  * @return bool Returns <b>TRUE</b> if any records are found; returns <b>FALSE</b> if no records were found or if an error occurred.
  */
-function dns_check_record ($host, $type = 'MX') {}
+function dns_check_record ($hostname, $type = 'MX') {}
 
 /**
  * Check DNS records corresponding to a given Internet host name or IP address
  * @link https://php.net/manual/en/function.checkdnsrr.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * host may either be the IP address in
  * dotted-quad notation or the host name.
  * </p>
@@ -872,16 +900,17 @@ function dns_check_record ($host, $type = 'MX') {}
  * @return bool true if any records are found; returns false if no records
  * were found or if an error occurred.
  */
-function checkdnsrr ($host, $type = null) {}
+function checkdnsrr ($hostname, $type = null) {}
 
 /**
  * &Alias; <function>getmxrr</function>
  * @link https://php.net/manual/en/function.dns-get-mx.php
- * @param $hostname
- * @param $mxhosts
- * @param $weight [optional]
+ * @param string $hostname
+ * @param array &$hosts
+ * @param array &$weights [optional]
+ * @return bool
  */
-function dns_get_mx ($hostname, array &$mxhosts, array &$weight = null) {}
+function dns_get_mx ($hostname, array &$hosts, array &$weights = null) {}
 
 /**
  * Get MX records corresponding to a given Internet host name
@@ -889,18 +918,18 @@ function dns_get_mx ($hostname, array &$mxhosts, array &$weight = null) {}
  * @param string $hostname <p>
  * The Internet host name.
  * </p>
- * @param array $mxhosts <p>
+ * @param array &$hosts <p>
  * A list of the MX records found is placed into the array
  * mxhosts.
  * </p>
- * @param array $weight [optional] <p>
+ * @param array &$weights [optional] <p>
  * If the weight array is given, it will be filled
  * with the weight information gathered.
  * </p>
  * @return bool true if any records are found; returns false if no records
  * were found or if an error occurred.
  */
-function getmxrr ($hostname, array &$mxhosts, array &$weight = null) {}
+function getmxrr ($hostname, array &$hosts, array &$weights = null) {}
 
 /**
  * Fetch DNS Resource Records associated with a hostname
@@ -937,11 +966,11 @@ function getmxrr ($hostname, array &$mxhosts, array &$weight = null) {}
  * always return every record, the slower DNS_ALL
  * will collect all records more reliably.
  * </p>
- * @param array $authns [optional] <p>
+ * @param array &$authoritative_name_servers [optional] <p>
  * Passed by reference and, if given, will be populated with Resource
  * Records for the Authoritative Name Servers.
  * </p>
- * @param array $addtl [optional] <p>
+ * @param array &$additional_records [optional] <p>
  * Passed by reference and, if given, will be populated with any
  * Additional Records.
  * </p>
@@ -1109,4 +1138,4 @@ function getmxrr ($hostname, array &$mxhosts, array &$weight = null) {}
  * </tr>
  * </table>
  */
-function dns_get_record ($hostname, $type = DNS_ANY, array &$authns = null, array &$addtl = null, $raw = false) {}
+function dns_get_record ($hostname, $type = DNS_ANY, array &$authoritative_name_servers = null, array &$additional_records = null, $raw = false) {}

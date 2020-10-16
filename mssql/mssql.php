@@ -53,7 +53,7 @@ function mssql_connect ($servername = null, $username = null, $password = null, 
  * mssql_pconnect was called before with the same
  * parameters.
  * </p>
- * @return resource a positive MS SQL persistent link identifier on success, or
+ * @return resource|false a positive MS SQL persistent link identifier on success, or
  * false on error.
  * @removed 7.0
  */
@@ -125,7 +125,7 @@ function mssql_select_db ($database_name, $link_identifier = null) {}
  * @param int $batch_size [optional] <p>
  * The number of records to batch in the buffer.
  * </p>
- * @return mixed a MS SQL result resource on success, true if no rows were
+ * @return resource|bool a MS SQL result resource on success, true if no rows were
  * returned, or false on error.
  * @removed 7.0
  */
@@ -447,7 +447,7 @@ function mssql_min_message_severity ($severity) {}
  * A MS SQL link identifier, returned by
  * mssql_connect.
  * </p>
- * @return resource a resource identifier "statement", used in subsequent calls to
+ * @return resource|false a resource identifier "statement", used in subsequent calls to
  * mssql_bind and mssql_execute,
  * or false on errors.
  * @removed 7.0
@@ -469,7 +469,7 @@ function mssql_init ($sp_name, $link_identifier = null) {}
  * T-SQL syntax. See the explanation included in
  * mssql_execute.
  * </p>
- * @param mixed $var <p>
+ * @param mixed &$var <p>
  * The PHP variable you'll bind the MSSQL parameter to. It is passed by
  * reference, to retrieve OUTPUT and RETVAL values after
  * the procedure execution.

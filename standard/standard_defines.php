@@ -165,7 +165,7 @@ define ('INFO_GENERAL', 1);
 define ('INFO_CREDITS', 2);
 
 /**
- * Current Local and Master values for PHP directives. See
+ * Current Local and Main values for PHP directives. See
  * also ini_get.
  * @link https://php.net/manual/en/info.constants.php
  */
@@ -289,6 +289,7 @@ define ('PATHINFO_EXTENSION', 4);
  * @link https://php.net/manual/en/filesystem.constants.php
  */
 define ('PATHINFO_FILENAME', 8);
+define ('PATHINFO_ALL', 15);
 define ('CHAR_MAX', 127);
 define ('LC_CTYPE', 0);
 define ('LC_NUMERIC', 1);
@@ -748,8 +749,8 @@ define ('RADIXCHAR', 65536);
 define ('THOUSEP', 65537);
 define ('YESEXPR', 327680);
 define ('NOEXPR', 327681);
-define ('YESSTR', 54);
-define ('NOSTR', 55);
+define ('YESSTR', 327682);
+define ('NOSTR', 327683);
 define ('CODESET', 14);
 define ('CRYPT_SALT_LENGTH', 123);
 define ('CRYPT_STD_DES', 1);
@@ -766,8 +767,8 @@ define ('GLOB_NOSORT', 4);
 define ('GLOB_NOCHECK', 16);
 define ('GLOB_NOESCAPE', 64);
 define ('GLOB_ERR', 1);
-define ('GLOB_ONLYDIR', 8192);
-define ('GLOB_AVAILABLE_FLAGS', 9303);
+define ('GLOB_ONLYDIR', 1073741824);
+define ('GLOB_AVAILABLE_FLAGS', 1073741911);
 define ('EXTR_OVERWRITE', 0);
 define ('EXTR_SKIP', 1);
 define ('EXTR_PREFIX_SAME', 2);
@@ -840,7 +841,7 @@ define ('ASSERT_CALLBACK', 2);
 define ('ASSERT_BAIL', 3);
 define ('ASSERT_WARNING', 4);
 define ('ASSERT_QUIET_EVAL', 5);
-define ('ASSERT_EXCEPTION', 6);
+define ('ASSERT_EXCEPTION', 5);
 
 /**
  * Flag indicating if the stream used the include path.
@@ -1116,7 +1117,7 @@ define('PHP_QUERY_RFC3986', 2);
 
 /**
  * Specifies where the manpages were installed into.
- * @since PHP 5.3.7
+ * @since 5.3.7
  * @link https://php.net/manual/en/reserved.constants.php
  */
 define('PHP_MANDIR', '/usr/local/php/php/man');

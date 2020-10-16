@@ -515,7 +515,7 @@ namespace Couchbase {
          * @see https://developer.couchbase.com/documentation/server/5.0/rest-api/rbac.html
          *   More details
          */
-        public function role($role, $bucket = NULL) {}
+        public function role($role, $bucket = null) {}
     }
 
     /**
@@ -1276,7 +1276,7 @@ namespace Couchbase {
          * @see https://github.com/couchbaselabs/sdk-rfcs/blob/master/rfc/0034-health-check.md
          *   SDK RFC #34, which describes the feature and report layout.
          */
-        public function ping($services = 0, $reportId = NULL) {}
+        public function ping($services = 0, $reportId = null) {}
 
         /**
          * Collect and return information about state of internal network connections.
@@ -1287,7 +1287,7 @@ namespace Couchbase {
          * @see https://github.com/couchbaselabs/sdk-rfcs/blob/master/rfc/0034-health-check.md
          *   SDK RFC #34, which describes the feature and report layout.
          */
-        public function diag($reportId = NULL) {}
+        public function diag($reportId = null) {}
 
         /**
          * Encrypt fields inside specified document.
@@ -1444,6 +1444,8 @@ namespace Couchbase {
      *
      * This authenticator uses separate credentials for Cluster management interface
      * as well as for each bucket.
+     *
+     *
      *
      * @see \Couchbase\Cluster::authenticate()
      * @see \Couchbase\Authenticator
@@ -1942,6 +1944,7 @@ namespace Couchbase {
          * @param bool $crossBucket if query includes joins for multiple buckets (default is false)
          * @return N1qlQuery
          *
+         *
          * @see \Couchbase\Authenticator
          * @see \Couchbase\ClassicAuthenticator
          */
@@ -1957,6 +1960,7 @@ namespace Couchbase {
          *
          * @param array $params
          * @return N1qlQuery
+         *
          */
         public function positionalParams($params) {}
 
@@ -1970,6 +1974,7 @@ namespace Couchbase {
          *
          * @param array $params
          * @return N1qlQuery
+         *
          */
         public function namedParams($params) {}
 
@@ -2003,6 +2008,7 @@ namespace Couchbase {
          * @return N1qlQuery
          *
          * @see \Couchbase\MutationState
+         *
          */
         public function consistentWith($state) {}
 
@@ -2192,6 +2198,7 @@ namespace Couchbase {
         /**
          * Perform several lookup operations inside a single existing JSON document, using a specific timeout
          * @return DocumentFragment
+         *
          */
         public function execute() {}
     }
@@ -2425,6 +2432,7 @@ namespace Couchbase {
         /**
          * Perform several mutation operations inside a single existing JSON document.
          * @return DocumentFragment
+         *
          */
         public function execute() {}
     }
@@ -3597,6 +3605,7 @@ namespace Couchbase {
          *
          * @param string $statement statement string
          * @return AnalyticsQuery
+         *
          */
         public static function fromString($statement) {}
     }

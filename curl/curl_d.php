@@ -658,7 +658,6 @@ define ('CURLOPT_CONNECTTIMEOUT_MS', 156);
  * Alternate certificates to verify against can be specified with the <b>CURLOPT_CAINFO</b> option or
  * a certificate directory can be specified with the <b>CURLOPT_CAPATH</b> option.
  * @link https://www.php.net/manual/en/function.curl-setopt.php
- * @since 7.1
  */
 define ('CURLOPT_SSL_VERIFYPEER', 64);
 /**
@@ -1145,7 +1144,7 @@ define ('CURL_VERSION_LIBZ', 8);
  * Will be the most recent age value for the libcurl.
  * @link https://php.net/manual/en/curl.constants.php
  */
-define ('CURLVERSION_NOW', 4);
+define ('CURLVERSION_NOW', 5);
 /**
  * All fine. Proceed as usual.
  * @link https://php.net/manual/en/curl.constants.php
@@ -1735,7 +1734,7 @@ define ('CURLOPT_FTP_SKIP_PASV_IP', 137);
  * <b>TRUE</b> to disable support for the @ prefix for uploading files in <b>CURLOPT_POSTFIELDS</b>,
  * which means that values starting with @ can be safely passed as fields.
  * @link https://www.php.net/manual/en/function.curl-setopt.php
- * @since 5.5.0
+ * @since 5.5
  * @deprecated 7.0 Use <b>CURLFile</b> for uploads instead.
  */
 define ('CURLOPT_SAFE_UPLOAD', -1);
@@ -2978,7 +2977,7 @@ define("CURLE_SSL_PINNEDPUBKEYNOTMATCH",90);
 /**
  * @link https://php.net/manual/en/curl.constants.php
  */
-define("CURLINFO_LASTONE",56);
+define("CURLINFO_LASTONE",57);
 /**
  * An easy handle already added to a multi handle was attempted to get added a second time.
  * @link https://www.php.net/manual/en/function.curl-multi-exec.php

@@ -3,6 +3,7 @@
  * Stubs for stomp
  * https://pecl.php.net/package/stomp
  */
+
 class Stomp
 {
 
@@ -19,7 +20,7 @@ class Stomp
     /**
      * Get the current stomp session ID
      *
-     * @return string stomp session ID if it exists, or FALSE otherwise
+     * @return string|false stomp session ID if it exists, or FALSE otherwise
      */
     public function getSessionId() {}
 
@@ -69,7 +70,7 @@ class Stomp
      * Read the next frame
      *
      * @param string $className name of the class to instantiate.
-     * @return object on success, or FALSE on failure
+     * @return object|false on success, or FALSE on failure
      */
     public function readFrame($className = 'stompFrame') {}
 
@@ -109,7 +110,7 @@ class Stomp
     /**
      * Get the last stomp error
      *
-     * @return string Error message, or FALSE if no error
+     * @return string|false Error message, or FALSE if no error
      */
     public function error() {}
 
@@ -136,7 +137,7 @@ class StompFrame
 
     /**
      * Frame Command
-     * @var String
+     * @var string
      */
     public $command;
 
@@ -148,7 +149,7 @@ class StompFrame
 
     /**
      * Frame body
-     * @var String
+     * @var string
      */
     public $body;
 }
@@ -178,7 +179,7 @@ function stomp_version() {}
  * @param string $username The username
  * @param string $password The password
  * @param array  $headers additional headers (example: receipt).
- * @return resource stomp connection identifier on success, or FALSE on failure
+ * @return resource|false stomp connection identifier on success, or FALSE on failure
  */
 function stomp_connect($broker = null, $username = null, $password = null, array $headers = array()) {}
 
@@ -186,7 +187,7 @@ function stomp_connect($broker = null, $username = null, $password = null, array
  * Get the current stomp session ID
  *
  * @param resource $link identifier returned by stomp_connect
- * @return string stomp session ID if it exists, or FALSE otherwise
+ * @return string|false stomp session ID if it exists, or FALSE otherwise
  */
 function stomp_get_session_id($link) {}
 
@@ -241,7 +242,7 @@ function stomp_has_frame($link) {}
  * Read the next frame
  *
  * @param resource $link identifier returned by stomp_connect
- * @return array on success, or FALSE on failure
+ * @return array|false on success, or FALSE on failure
  */
 function stomp_read_frame($link) {}
 
@@ -286,7 +287,7 @@ function stomp_ack($link, $msg, array $headers = array()) {}
  * Get the last stomp error
  *
  * @param resource $link identifier returned by stomp_connect
- * @return string Error message, or FALSE if no error
+ * @return string|false Error message, or FALSE if no error
  */
 function stomp_error($link) {}
 

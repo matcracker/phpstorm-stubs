@@ -11,7 +11,7 @@ class Stack
      * @var bool Whether the stack is empty, readonly.
      * @property-read
      */
-    public $empty = TRUE;
+    public $empty = true;
 
     /**
      * @var int Stack size, readonly.
@@ -37,7 +37,7 @@ class Stack
      * Push an item into the stack
      *
      * @link https://php.net/manual/en/parle-stack.push.php
-     * @param $item mixed Variable to be pushed.
+     * @param mixed $item Variable to be pushed.
      * @return void
      */
     public function push($item) {}

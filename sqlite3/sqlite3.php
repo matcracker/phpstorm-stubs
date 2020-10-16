@@ -1,12 +1,51 @@
 <?php
 
 // Start of sqlite3 v.0.7-dev
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * A class that interfaces SQLite 3 databases.
  * @link https://php.net/manual/en/class.sqlite3.php
  */
 class SQLite3  {
+
+	const OK = 'OK';
+	const DENY = 'DENY';
+	const IGNORE = 'IGNORE';
+	const CREATE_INDEX = 'CREATE_INDEX';
+	const CREATE_TABLE = 'CREATE_TABLE';
+	const CREATE_TEMP_INDEX = 'CREATE_TEMP_INDEX';
+	const CREATE_TEMP_TABLE = 'CREATE_TEMP_TABLE';
+	const CREATE_TEMP_TRIGGER = 'CREATE_TEMP_TRIGGER';
+	const CREATE_TEMP_VIEW = 'CREATE_TEMP_VIEW';
+	const CREATE_TRIGGER = 'CREATE_TRIGGER';
+	const CREATE_VIEW = 'CREATE_VIEW';
+	const DELETE = 'DELETE';
+	const DROP_INDEX = 'DROP_INDEX';
+	const DROP_TABLE = 'DROP_TABLE';
+	const DROP_TEMP_INDEX = 'DROP_TEMP_INDEX';
+	const DROP_TEMP_TABLE = 'DROP_TEMP_TABLE';
+	const DROP_TEMP_TRIGGER = 'DROP_TEMP_TRIGGER';
+	const DROP_TEMP_VIEW = 'DROP_TEMP_VIEW';
+	const DROP_TRIGGER = 'DROP_TRIGGER';
+	const DROP_VIEW = 'DROP_VIEW';
+	const INSERT = 'INSERT';
+	const PRAGMA = 'PRAGMA';
+	const READ = 'READ';
+	const SELECT = 'SELECT';
+	const TRANSACTION = 'TRANSACTION';
+	const UPDATE = 'UPDATE';
+	const ATTACH = 'ATTACH';
+	const DETACH = 'DETACH';
+	const ALTER_TABLE = 'ALTER_TABLE';
+	const REINDEX = 'REINDEX';
+	const ANALYZE = 'ANALYZE';
+	const CREATE_VTABLE = 'CREATE_VTABLE';
+	const DROP_VTABLE = 'DROP_VTABLE';
+	const FUNCTION = 'FUNCTION';
+	const SAVEPOINT = 'SAVEPOINT';
+	const COPY = 'COPY';
+	const RECURSIVE = 'RECURSIVE';
 
 	/**
 	 * Opens an SQLite database
@@ -53,6 +92,7 @@ class SQLite3  {
 	 * @return array an associative array with the keys "versionString" and
 	 * "versionNumber".
 	 */
+	#[ArrayShape(["versionString" => "string", "versionNumber" => "int"])]
 	public static function version () {}
 
 	/**
@@ -290,6 +330,12 @@ class SQLite3  {
 	 */
 	public function backup($destination_db, $source_dbname, $destination_dbname){}
 
+	/**
+	 * @return bool
+	 * @since 8.0
+	 */
+	function setAuthorizer(?callable $callback) {}
+
 }
 
 /**
@@ -342,7 +388,7 @@ class SQLite3Stmt  {
 	 * An string identifying the statement variable to which the
 	 * parameter should be bound.
 	 * </p>
-	 * @param mixed $param <p>
+	 * @param mixed &$param <p>
 	 * The parameter to bind to a statement variable.
 	 * </p>
 	 * @param int $type [optional] <p>
@@ -382,9 +428,10 @@ class SQLite3Stmt  {
 	public function readOnly () {}
 
 	/**
-	 * @param $sqlite3
+	 * @param SQLite3 $sqlite3
+	 * @param string $sql
 	 */
-	private function __construct ($sqlite3) {}
+	private function __construct ($sqlite3, $sql) {}
 
 	/**
 	 * Retrieves the SQL of the prepared statement. If expanded is FALSE, the unmodified SQL is retrieved.
