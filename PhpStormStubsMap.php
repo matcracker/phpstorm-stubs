@@ -682,7 +682,6 @@ const CLASSES = array (
   'SoapParam' => 'soap/soap.php',
   'SoapServer' => 'soap/soap.php',
   'SoapVar' => 'soap/soap.php',
-  'Socket' => 'pthreads/pthreads.php',
   'SodiumException' => 'sodium/sodium.php',
   'SolrClient' => 'solr/SolrClient.php',
   'SolrClientException' => 'solr/Exceptions/SolrClientException.php',
