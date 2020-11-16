@@ -1,6 +1,7 @@
 <?php
 
 // Start of hash v.1.0
+use JetBrains\PhpStorm\Pure;
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
@@ -20,6 +21,7 @@
  * unless <i>raw_output</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
  */
+#[Pure]
 function hash ($algo, $data, $binary = false) {}
 
 /**
@@ -30,6 +32,7 @@ function hash ($algo, $data, $binary = false) {}
  * @return bool <p>Returns <b>TRUE</b> when the two strings are equal, <b>FALSE</b> otherwise.</p>
  * @since 5.6
  */
+#[Pure]
 function hash_equals($known_string, $user_string) {}
 
 /**
@@ -50,6 +53,7 @@ function hash_equals($known_string, $user_string) {}
  * unless <i>raw_output</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
  */
+#[Pure]
 function hash_file ($algo, $filename, $binary = false) {}
 
 /**
@@ -74,6 +78,7 @@ function hash_file ($algo, $filename, $binary = false) {}
  * unless <i>raw_output</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
  */
+#[Pure]
 function hash_hmac ($algo, $data, $key, $binary = false) {}
 
 /**
@@ -98,6 +103,7 @@ function hash_hmac ($algo, $data, $key, $binary = false) {}
  * unless <i>raw_output</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
  */
+#[Pure]
 function hash_hmac_file ($algo, $data, $key, $binary = false) {}
 
 /**
@@ -118,18 +124,19 @@ function hash_hmac_file ($algo, $data, $key, $binary = false) {}
  * a shared secret key to be used with the HMAC hashing method must be supplied in this
  * parameter.
  * </p>
- * @return resource a Hashing Context resource for use with <b>hash_update</b>,
+ * @return HashContext|resource a Hashing Context resource for use with <b>hash_update</b>,
  * <b>hash_update_stream</b>, <b>hash_update_file</b>,
  * and <b>hash_final</b>.
  */
+#[Pure]
 function hash_init ($algo, $flags = 0, $key = null) {}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
  * Pump data into an active hashing context
  * @link https://php.net/manual/en/function.hash-update.php
- * @param resource $context <p>
- * Hashing context returned by <b>hash_init</b>.
+ * @param HashContext|resource $context <p>
+ * Hashing context returned by {@see hash_init}.
  * </p>
  * @param string $data <p>
  * Message to be included in the hash digest.
@@ -142,8 +149,8 @@ function hash_update ($context, $data) {}
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
  * Pump data into an active hashing context from an open stream
  * @link https://php.net/manual/en/function.hash-update-stream.php
- * @param resource $context <p>
- * Hashing context returned by <b>hash_init</b>.
+ * @param HashContext|resource $context <p>
+ * Hashing context returned by {@see hash_init}.
  * </p>
  * @param resource $stream <p>
  * Open file handle as returned by any stream creation function.
@@ -177,8 +184,8 @@ function hash_update_file ($context, $filename, $stream_context = null) {}
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
  * Finalize an incremental hash and return resulting digest
  * @link https://php.net/manual/en/function.hash-final.php
- * @param resource $context <p>
- * Hashing context returned by <b>hash_init</b>.
+ * @param HashContext|resource $context <p>
+ * Hashing context returned by {@see hash_init}.
  * </p>
  * @param bool $binary [optional] <p>
  * When set to <b>TRUE</b>, outputs raw binary data.
@@ -193,11 +200,12 @@ function hash_final ($context, $binary = false) {}
 /**
  * Copy hashing context
  * @link https://php.net/manual/en/function.hash-copy.php
- * @param resource $context <p>
- * Hashing context returned by <b>hash_init</b>.
+ * @param HashContext|resource $context <p>
+ * Hashing context returned by {@see hash_init}.
  * </p>
- * @return resource a copy of Hashing Context resource.
+ * @return HashContext|resource a copy of Hashing Context resource.
  */
+#[Pure]
 function hash_copy ($context) {}
 
 /**
@@ -207,10 +215,12 @@ function hash_copy ($context) {}
  * @return array a numerically indexed array containing the list of supported
  * hashing algorithms.
  */
+#[Pure]
 function hash_algos () {}
 
 
 /**
+ * Generate a hkdf key derivation of a supplied key input
  * @param string $algo Name of selected hashing algorithm (i.e. "sha256", "sha512", "haval160,4", etc..)
  * See {@see hash_algos()} for a list of supported algorithms.
  * <blockquote>
@@ -229,13 +239,16 @@ function hash_algos () {}
  * Generate a HKDF key derivation of a supplied key input
  * @link https://php.net/manual/en/function.hash-hkdf.php
  */
+#[Pure]
 function hash_hkdf(string $algo , string $key, int $length = 0, string $info = '', string $salt = '') {}
 
 /**
+ * Return a list of registered hashing algorithms suitable for hash_hmac
  * @since 7.2
  * Return a list of registered hashing algorithms suitable for hash_hmac
  * @return string[] Returns a numerically indexed array containing the list of supported hashing algorithms suitable for {@see hash_hmac()}.
  */
+#[Pure]
 function hash_hmac_algos() {}
 
 /**
@@ -267,6 +280,7 @@ function hash_hmac_algos() {}
  * binary representation of the derived key is returned.
  * @since 5.5
  */
+#[Pure]
 function hash_pbkdf2 ($algo, $password, $salt, $iterations, $length = 0, $binary = false) {}
 
 /**
@@ -291,6 +305,7 @@ function hash_pbkdf2 ($algo, $password, $salt, $iterations, $length = 0, $binary
  * </p>
  * @return string|false the generated key as a string, or <b>FALSE</b> on error.
  */
+#[Pure]
 function mhash_keygen_s2k ($algo, $password, $salt, $length) {}
 
 /**
@@ -302,6 +317,7 @@ function mhash_keygen_s2k ($algo, $password, $salt, $length) {}
  * @return int|false the size in bytes or <b>FALSE</b>, if the <i>hash</i>
  * does not exist.
  */
+#[Pure]
 function mhash_get_block_size ($algo) {}
 
 /**
@@ -312,6 +328,7 @@ function mhash_get_block_size ($algo) {}
  * </p>
  * @return string|false the name of the hash or <b>FALSE</b>, if the hash does not exist.
  */
+#[Pure]
 function mhash_get_hash_name ($algo) {}
 
 /**
@@ -320,6 +337,7 @@ function mhash_get_hash_name ($algo) {}
  * @return int the highest available hash ID. Hashes are numbered from 0 to this
  * hash ID.
  */
+#[Pure]
 function mhash_count () {}
 
 /**
@@ -340,6 +358,7 @@ function mhash_count () {}
  * @return string the resulting hash (also called digest) or HMAC as a string, or
  * <b>FALSE</b> on error.
  */
+#[Pure]
 function mhash ($algo, $data, $key = null) {}
 
 

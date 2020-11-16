@@ -4,18 +4,69 @@
  * @since 5.5
  */
 interface DateTimeInterface {
+    /**
+     * @since 7.2
+     */
     const ATOM = 'Y-m-d\TH:i:sP';
+    
+    /**
+     * @since 7.2
+     */
     const COOKIE = 'l, d-M-Y H:i:s T';
+    
+    /**
+     * @since 7.2
+     */
     const ISO8601 = 'Y-m-d\TH:i:sO';
+    
+    /**
+     * @since 7.2
+     */
     const RFC822 = 'D, d M y H:i:s O';
+    
+    /**
+     * @since 7.2
+     */
     const RFC850 = 'l, d-M-y H:i:s T';
+    
+    /**
+     * @since 7.2
+     */
     const RFC1036 = 'D, d M y H:i:s O';
+    
+    /**
+     * @since 7.2
+     */
     const RFC1123 = 'D, d M Y H:i:s O';
+    
+    /**
+     * @since 7.2
+     */
     const RFC2822 = 'D, d M Y H:i:s O';
+    
+    /**
+     * @since 7.2
+     */
     const RFC3339 = 'Y-m-d\TH:i:sP';
+    
+    /**
+     * @since 7.2
+     */
     const RFC3339_EXTENDED = 'Y-m-d\TH:i:s.vP';
+    
+    /**
+     * @since 7.2
+     */
     const RFC7231 = 'D, d M Y H:i:s \G\M\T';
+    
+    /**
+     * @since 7.2
+     */
     const RSS = 'D, d M Y H:i:s O';
+    
+    /**
+     * @since 7.2
+     */
     const W3C = 'Y-m-d\TH:i:sP';
 
     /* Methods */
@@ -323,6 +374,71 @@ class DateTimeImmutable implements DateTimeInterface {
  */
 class DateTime implements DateTimeInterface {
     /**
+     * @removed 7.2
+     */
+    const ATOM = 'Y-m-d\TH:i:sP';
+    
+    /**
+     * @removed 7.2
+     */
+    const COOKIE = 'l, d-M-Y H:i:s T';
+    
+    /**
+     * @removed 7.2
+     */
+    const ISO8601 = 'Y-m-d\TH:i:sO';
+    
+    /**
+     * @removed 7.2
+     */
+    const RFC822 = 'D, d M y H:i:s O';
+    
+    /**
+     * @removed 7.2
+     */
+    const RFC850 = 'l, d-M-y H:i:s T';
+    
+    /**
+     * @removed 7.2
+     */
+    const RFC1036 = 'D, d M y H:i:s O';
+    
+    /**
+     * @removed 7.2
+     */
+    const RFC1123 = 'D, d M Y H:i:s O';
+    
+    /**
+     * @removed 7.2
+     */
+    const RFC2822 = 'D, d M Y H:i:s O';
+    
+    /**
+     * @removed 7.2
+     */
+    const RFC3339 = 'Y-m-d\TH:i:sP';
+    
+    /**
+     * @removed 7.2
+     */
+    const RFC3339_EXTENDED = 'Y-m-d\TH:i:s.vP';
+    
+    /**
+     * @removed 7.2
+     */
+    const RFC7231 = 'D, d M Y H:i:s \G\M\T';
+    
+    /**
+     * @removed 7.2
+     */
+    const RSS = 'D, d M Y H:i:s O';
+    
+    /**
+     * @removed 7.2
+     */
+    const W3C = 'Y-m-d\TH:i:sP';
+    
+    /**
      * (PHP 5 &gt;=5.2.0)<br/>
      * @link https://php.net/manual/en/datetime.construct.php
      * @param string $time [optional]
@@ -350,7 +466,7 @@ class DateTime implements DateTimeInterface {
      * </p> <p></p></blockquote>
      * @throws Exception Emits Exception in case of an error.
      */
-    public function __construct ($time='now', DateTimeZone $timezone=null) {}
+    public function __construct ($time = 'now', DateTimeZone $timezone = null) {}
 
     /**
      * @return void
@@ -430,7 +546,7 @@ class DateTime implements DateTimeInterface {
      * @return static|false
      * @link https://php.net/manual/en/datetime.settime.php
      */
-    public function setTime ($hour, $minute, $second=0, $microseconds=0) {}
+    public function setTime ($hour, $minute, $second = 0, $microseconds = 0) {}
 
     /**
      * Sets the current date of the DateTime object to a different date.
@@ -450,7 +566,7 @@ class DateTime implements DateTimeInterface {
      * @return static
      * @link https://php.net/manual/en/datetime.setisodate.php
      */
-    public function setISODate ($year, $week, $day=1) {}
+    public function setISODate ($year, $week, $day = 1) {}
 
     /**
      * Sets the date and time based on a Unix timestamp.
@@ -485,7 +601,7 @@ class DateTime implements DateTimeInterface {
      * @return DateTime|false
      * @link https://php.net/manual/en/datetime.createfromformat.php
      */
-    public static function createFromFormat ($format, $time, DateTimeZone $timezone=null) {}
+    public static function createFromFormat ($format, $time, DateTimeZone $timezone = null) {}
 
     /**
      * Returns an array of warnings and errors found while parsing a date/time string
@@ -582,7 +698,7 @@ class DateTimeZone {
      * @return array
      * @link https://php.net/manual/en/datetimezone.listidentifiers.php
      */
-    public static function listIdentifiers ($what=DateTimeZone::ALL, $country=null) {}
+    public static function listIdentifiers ($what = DateTimeZone::ALL, $country = null) {}
 
     /**
      * @link https://php.net/manual/en/datetime.wakeup.php
@@ -665,7 +781,7 @@ class DateInterval {
 
     /**
      * Formats the interval
-     * @param $format
+     * @param string $format
      * @return string
      * @link https://php.net/manual/en/dateinterval.format.php
      */
@@ -734,7 +850,7 @@ class DatePeriod implements IteratorAggregate {
      * @param int $options Can be set to DatePeriod::EXCLUDE_START_DATE.
      * @link https://php.net/manual/en/dateperiod.construct.php
      */
-    public function __construct (DateTimeInterface $start, DateInterval $interval, DateTimeInterface $end, $options=0) {}
+    public function __construct (DateTimeInterface $start, DateInterval $interval, DateTimeInterface $end, $options = 0) {}
 
     /**
      * @param DateTimeInterface $start
@@ -743,14 +859,14 @@ class DatePeriod implements IteratorAggregate {
      * @param int $options Can be set to DatePeriod::EXCLUDE_START_DATE.
      * @link https://php.net/manual/en/dateperiod.construct.php
      */
-    public function __construct (DateTimeInterface $start, DateInterval $interval, $recurrences, $options=0) {}
+    public function __construct (DateTimeInterface $start, DateInterval $interval, $recurrences, $options = 0) {}
 
     /**
      * @param string $isostr String containing the ISO interval.
      * @param int $options Can be set to DatePeriod::EXCLUDE_START_DATE.
      * @link https://php.net/manual/en/dateperiod.construct.php
      */
-    public function __construct ($isostr, $options=0) {}
+    public function __construct ($isostr, $options = 0) {}
 
     /**
      * Gets the interval
@@ -790,6 +906,7 @@ class DatePeriod implements IteratorAggregate {
     public function getRecurrences () {}
 
     /**
+     * @return DateTimeInterface[]
      * @since 8.0
      */
     public function getIterator(){}

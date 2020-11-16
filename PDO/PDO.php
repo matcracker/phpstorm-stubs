@@ -2,6 +2,9 @@
 
 // Start of PDO v.1.0.4dev
 use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use JetBrains\PhpStorm\Pure;
+use JetBrains\PhpStorm\Deprecated;
 
 /**
  * Represents an error raised by PDO. You should not throw a
@@ -742,9 +745,7 @@ class PDO  {
 	 */
 	const MYSQL_ATTR_SSL_VERIFY_SERVER_CERT = 1016;
 
-	/**
-	 * @deprecated 5.6 Use PDO::ATTR_EMULATE_PREPARES instead.
-	 */
+	#[Deprecated("Use PDO::ATTR_EMULATE_PREPARES instead")]
 	const PGSQL_ASSOC = 1;
 	const PGSQL_ATTR_DISABLE_NATIVE_PREPARED_STATEMENT = 1000;
 
@@ -872,7 +873,7 @@ class PDO  {
 	 * Some drivers have driver specific options that may be set at
 	 * prepare-time.
 	 * </p>
-	 * @return PDOStatement|bool If the database server successfully prepares the statement,
+	 * @return PDOStatement|false If the database server successfully prepares the statement,
 	 * <b>PDO::prepare</b> returns a
 	 * <b>PDOStatement</b> object.
 	 * If the database server cannot successfully prepare the statement,
@@ -977,6 +978,7 @@ class PDO  {
 	 */
 	public function exec ($statement) {}
 
+	#[PhpStormStubsElementAvailable(to: '7.4')]
 	/**
 	 * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.2.0)<br/>
 	 * Executes an SQL statement, returning a result set as a PDOStatement object
@@ -1002,6 +1004,30 @@ class PDO  {
 	 * @see PDOStatement::setFetchMode For a full description of the second and following parameters.
 	 */
 	public function query ($statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, $arg3 = null, array $ctorargs = array()) {}
+
+	#[PhpStormStubsElementAvailable('8.0')]
+	/**
+	 * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.2.0)<br/>
+	 * Executes an SQL statement, returning a result set as a PDOStatement object
+	 * @link https://php.net/manual/en/pdo.query.php
+	 * @param string $statement <p>
+	 * The SQL statement to prepare and execute.
+	 * </p>
+	 * <p>
+	 * Data inside the query should be properly escaped.
+	 * </p>
+	 * @param int $mode <p>
+	 * The fetch mode must be one of the PDO::FETCH_* constants.
+	 * </p>
+	 * @param mixed $fetch_mode_args <p>
+	 * Arguments of custom class constructor when the <i>mode</i>
+	 * parameter is set to <b>PDO::FETCH_CLASS</b>.
+	 * </p>
+	 * @return PDOStatement|false <b>PDO::query</b> returns a PDOStatement object, or <b>FALSE</b>
+	 * on failure.
+	 * @see PDOStatement::setFetchMode For a full description of the second and following parameters.
+	 */
+	public function query ($statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, ...$fetch_mode_args) {}
 
 	/**
 	 * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.1.0)<br/>
@@ -1546,6 +1572,7 @@ class PDOStatement implements IteratorAggregate
 	 */
 	public function getColumnMeta ($column) {}
 
+	#[PhpStormStubsElementAvailable(to: '7.4')]
 	/**
 	 * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.2.0)<br/>
 	 * Set the default fetch mode for this statement
@@ -1560,6 +1587,22 @@ class PDOStatement implements IteratorAggregate
 	 * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
 	 */
 	public function setFetchMode ($mode, $className = null, array $params = array()) {}
+
+	#[PhpStormStubsElementAvailable('8.0')]
+	/**
+	 * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.2.0)<br/>
+	 * Set the default fetch mode for this statement
+	 * @link https://php.net/manual/en/pdostatement.setfetchmode.php
+	 * @param int $mode <p>
+	 * The fetch mode must be one of the PDO::FETCH_* constants.
+	 * </p>
+	 * @param string|object $classNameObject [optional] <p>
+	 * Class name or object
+	 * </p>
+	 * @param mixed ...$params <p> Constructor arguments. </p>
+	 * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
+	 */
+	public function setFetchMode ($mode, $className = null, ...$params) {}
 
 	/**
 	 * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.2.0)<br/>
@@ -1605,6 +1648,7 @@ final class PDORow  {
  * @return array <b>PDO::getAvailableDrivers</b> returns an array of PDO driver names. If
  * no drivers are available, it returns an empty array.
  */
+#[Pure]
 function pdo_drivers () {}
 
 // End of PDO v.1.0.4dev

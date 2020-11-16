@@ -1,16 +1,29 @@
 <?php
 
+use JetBrains\PhpStorm\Deprecated;
+use JetBrains\PhpStorm\Immutable;
+use JetBrains\PhpStorm\Pure;
+
 /**
  * The ReflectionClassConstant class reports information about a class constant.
- *
- * @property-read string $name Constant name, same as calling the {@see ReflectionClassConstant::getName()} method
- * @property-read string $class Fully qualified class name where this constant was defined
  *
  * @link https://www.php.net/manual/en/class.reflectionclassconstant.php
  * @since 7.1
  */
 class ReflectionClassConstant implements Reflector
 {
+    /**
+     * @var string Constant name, same as calling the {@see ReflectionClassConstant::getName()} method
+     */
+    #[Immutable]
+    public $name;
+
+    /**
+     * @var string Fully qualified class name where this constant was defined
+     */
+    #[Immutable]
+    public $class;
+
     /**
      * Indicates that the constant is public.
      *
@@ -52,9 +65,9 @@ class ReflectionClassConstant implements Reflector
      * to {@see false} (the default) will do the opposite.
      * @return string|null
      * @since 7.1
-     * @deprecated 7.4
      * @removed 8.0
      */
+    #[Deprecated(since: '7.4')]
     public static function export($class, $name, $return = false)
     {
     }
@@ -66,7 +79,8 @@ class ReflectionClassConstant implements Reflector
      * @link https://php.net/manual/en/reflectionclassconstant.getdeclaringclass.php
      * @since 7.1
      */
-    public function getDeclaringClass()
+    #[Pure]
+	public function getDeclaringClass()
     {
     }
 
@@ -77,7 +91,8 @@ class ReflectionClassConstant implements Reflector
      * @link https://php.net/manual/en/reflectionclassconstant.getdoccomment.php
      * @since 7.1
      */
-    public function getDocComment()
+    #[Pure]
+	public function getDocComment()
     {
     }
 
@@ -89,7 +104,8 @@ class ReflectionClassConstant implements Reflector
      * @link https://php.net/manual/en/reflectionclassconstant.getmodifiers.php
      * @since 7.1
      */
-    public function getModifiers()
+    #[Pure]
+	public function getModifiers()
     {
     }
 
@@ -100,7 +116,8 @@ class ReflectionClassConstant implements Reflector
      * @return string Returns the constant's name.
      * @since 7.1
      */
-    public function getName()
+    #[Pure]
+	public function getName()
     {
     }
 
@@ -111,7 +128,8 @@ class ReflectionClassConstant implements Reflector
      * @return mixed The value of the class constant.
      * @since 7.1
      */
-    public function getValue()
+    #[Pure]
+	public function getValue()
     {
     }
 
@@ -122,7 +140,8 @@ class ReflectionClassConstant implements Reflector
      * @return bool
      * @since 7.1
      */
-    public function isPrivate()
+    #[Pure]
+	public function isPrivate()
     {
     }
 
@@ -133,7 +152,8 @@ class ReflectionClassConstant implements Reflector
      * @return bool
      * @since 7.1
      */
-    public function isProtected()
+    #[Pure]
+	public function isProtected()
     {
     }
 
@@ -144,7 +164,8 @@ class ReflectionClassConstant implements Reflector
      * @return bool
      * @since 7.1
      */
-    public function isPublic()
+    #[Pure]
+	public function isPublic()
     {
     }
 
@@ -167,7 +188,8 @@ class ReflectionClassConstant implements Reflector
      * @return ReflectionAttribute[]
      * @since 8.0
      */
-    public function getAttributes($name = null, $flags = 0)
+    #[Pure]
+	public function getAttributes($name = null, $flags = 0)
     {
     }
 

@@ -1,6 +1,8 @@
 <?php
 
 use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use JetBrains\PhpStorm\Pure;
 
 class CURLFile {
     public $name;
@@ -24,6 +26,7 @@ class CURLFile {
      * @return string Returns file name.
      * @since 5.5
      */
+    #[Pure]
     public function getFilename() {
     }
 
@@ -33,6 +36,7 @@ class CURLFile {
      * @return string Returns MIME type.
      * @since 5.5
      */
+    #[Pure]
     public function getMimeType() {
     }
 
@@ -42,6 +46,7 @@ class CURLFile {
      * @return string Returns file name for POST.
      * @since 5.5
      */
+    #[Pure]
     public function getPostFilename() {
     }
 
@@ -71,6 +76,8 @@ class CURLFile {
     public function __wakeup() {
     }
 }
+
+#[PhpStormStubsElementAvailable('8.0')]
 /**
  * Initialize a cURL session
  * @link https://php.net/manual/en/function.curl-init.php
@@ -79,7 +86,20 @@ class CURLFile {
  * to its value. You can manually set this using the
  * curl_setopt function.
  * </p>
- * @return resource|false|CurlHandle a cURL handle on success, false on errors.
+ * @return false|CurlHandle a cURL handle on success, false on errors.
+ */
+function curl_init ($url = null) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
+/**
+ * Initialize a cURL session
+ * @link https://php.net/manual/en/function.curl-init.php
+ * @param string $url [optional] <p>
+ * If provided, the CURLOPT_URL option will be set
+ * to its value. You can manually set this using the
+ * curl_setopt function.
+ * </p>
+ * @return resource|false a cURL handle on success, false on errors.
  */
 function curl_init ($url = null) {}
 
@@ -89,6 +109,7 @@ function curl_init ($url = null) {}
  * @param resource $handle
  * @return resource a new cURL handle.
  */
+#[Pure]
 function curl_copy_handle ($handle) {}
 
 /**
@@ -148,6 +169,7 @@ function curl_copy_handle ($handle) {}
     "features" => "int",
     "protocols" => "array",
 ])]
+#[Pure]
 function curl_version ($age = null) {}
 
 /**
@@ -2146,11 +2168,22 @@ function curl_setopt_array ($handle, array $options) {}
  */
 function curl_share_close ($share_handle) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
 /**
  * (PHP 5 &gt;=5.5.0)<br/>
  * Initialize a cURL share handle
  * @link https://secure.php.net/manual/en/function.curl-share-init.php
- * @return resource|CurlShareHandle Returns resource of type "cURL Share Handle".
+ * @return CurlShareHandle Returns resource of type "cURL Share Handle".
+ * @since 5.5
+ */
+function curl_share_init () {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
+/**
+ * (PHP 5 &gt;=5.5.0)<br/>
+ * Initialize a cURL share handle
+ * @link https://secure.php.net/manual/en/function.curl-share-init.php
+ * @return resource Returns resource of type "cURL Share Handle".
  * @since 5.5
  */
 function curl_share_init () {}
@@ -2246,6 +2279,7 @@ function curl_share_setopt ($share_handle, $option, $value ) {}
  * @return string|null Returns error description or <b>NULL</b> for invalid error code.
  * @since 5.5
  */
+#[Pure]
 function curl_strerror ($error_code) {}
 
 /**
@@ -2260,6 +2294,7 @@ function curl_strerror ($error_code) {}
  * @return string|false Returns decoded string or FALSE on failure.
  * @since 5.5
  */
+#[Pure]
 function  curl_unescape ($handle, $string)  {}
 /**
  * Perform a cURL session
@@ -2301,6 +2336,7 @@ function curl_exec ($handle) {}
  * "starttransfer_time"
  * "redirect_time"
  */
+#[Pure]
 function curl_getinfo ($handle, $option = null) {}
 
 /**
@@ -2310,6 +2346,7 @@ function curl_getinfo ($handle, $option = null) {}
  * @return string the error message or '' (the empty string) if no
  * error occurred.
  */
+#[Pure]
 function curl_error ($handle) {}
 
 /**
@@ -2319,6 +2356,7 @@ function curl_error ($handle) {}
  * @return int the error number or 0 (zero) if no error
  * occurred.
  */
+#[Pure]
 function curl_errno ($handle) {}
 
 /**
@@ -2332,6 +2370,7 @@ function curl_errno ($handle) {}
  * @return string|false Returns escaped string or FALSE on failure.
  * @since 5.5
  */
+#[Pure]
 function curl_escape($handle, $string) {}
 
 /**
@@ -2345,6 +2384,7 @@ function curl_escape($handle, $string) {}
  * Returns a {@link https://secure.php.net/manual/en/class.curlfile.php CURLFile} object.
  * @since 5.5
  */
+#[Pure]
 function curl_file_create($filename, $mime_type = '', $posted_filename = '') {}
 
 /**
@@ -2355,10 +2395,19 @@ function curl_file_create($filename, $mime_type = '', $posted_filename = '') {}
  */
 function curl_close ($handle) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
 /**
  * Returns a new cURL multi handle
  * @link https://php.net/manual/en/function.curl-multi-init.php
- * @return resource|false|CurlMultiHandle a cURL multi handle resource on success, false on failure.
+ * @return false|CurlMultiHandle a cURL multi handle resource on success, false on failure.
+ */
+function curl_multi_init () {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
+/**
+ * Returns a new cURL multi handle
+ * @link https://php.net/manual/en/function.curl-multi-init.php
+ * @return resource|false a cURL multi handle resource on success, false on failure.
  */
 function curl_multi_init () {}
 
@@ -2503,6 +2552,7 @@ function curl_multi_exec ($multi_handle, &$still_running) {}
  * @param resource $multi_handle
  * @return string Return the content of a cURL handle if CURLOPT_RETURNTRANSFER is set.
  */
+#[Pure]
 function curl_multi_getcontent ($multi_handle) {}
 
 /**
@@ -2514,6 +2564,7 @@ function curl_multi_getcontent ($multi_handle) {}
  * </p>
  * @return array|false On success, returns an associative array for the message, false on failure.
  */
+#[Pure]
 function curl_multi_info_read ($multi_handle, &$queued_messages = null) {}
 
 /**
@@ -2525,37 +2576,61 @@ function curl_multi_info_read ($multi_handle, &$queued_messages = null) {}
 function curl_multi_close ($multi_handle) {}
 
 /**
+ * Return the last multi curl error number
  * @param resource $multi_handle
  * @return int
  * @since 7.1
  */
+#[Pure]
 function curl_multi_errno($multi_handle) {}
 
 /**
+ * Return the last share curl error number
  * @param resource $share_handle
  * @return int
  * @since 7.1
  */
+#[Pure]
 function curl_share_errno($share_handle) {}
 
 /**
+ * Return string describing the given error code
  * @param int $error_code
  * @return string
  * @since 7.1
  */
+#[Pure]
 function curl_share_strerror($error_code){}
 
 /**
  * @since 8.0
  */
-final class CurlHandle{}
+final class CurlHandle{
+    /**
+     * Cannot directly construct CurlHandle, use curl_init() instead
+     * @see curl_init()
+     */
+    private function __construct(){}
+}
 
 /**
  * @since 8.0
  */
-final class CurlMultiHandle{}
+final class CurlMultiHandle{
+    /**
+     * Cannot directly construct CurlMultiHandle, use curl_multi_init() instead
+     * @see curl_multi_init()
+     */
+    private function __construct(){}
+}
 
 /**
  * @since 8.0
  */
-final class CurlShareHandle{}
+final class CurlShareHandle{
+    /**
+     * Cannot directly construct CurlShareHandle, use curl_share_init() instead
+     * @see  curl_share_init()
+     */
+    private function __construct(){}
+}

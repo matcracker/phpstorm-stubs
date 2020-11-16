@@ -1,7 +1,9 @@
 <?php
 
 // Start of sockets v.
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 
+#[PhpStormStubsElementAvailable('8.0')]
 /**
  * (PHP 7 &gt;= 7.2.0)<br/>
  * Get array with contents of getaddrinfo about the given hostname.
@@ -15,13 +17,45 @@
  * @param array $hints [optional] <p>
  * Hints provide criteria for selecting addresses returned. You may specify the hints as defined by getadrinfo.
  * </p>
- * @return array of AddrInfo resource handles that can be used with the other socket_addrinfo functions.
+ * @return resource of AddrInfo resource handles that can be used with the other socket_addrinfo functions.
  * @since 7.2
  */
 function socket_addrinfo_lookup($host, $service, $hints) {}
 
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * (PHP 7 &gt;= 7.2.0)<br/>
+ * Get array with contents of getaddrinfo about the given hostname.
+ * @link https://www.php.net/manual/en/function.socket-addrinfo-lookup.php
+ * @param string $host <p>
+ * Hostname to search.
+ * </p>
+ * @param string $service [optional] <p>
+ * The service to connect to. If service is a name, it is translated to the corresponding port number.
+ * </p>
+ * @param array $hints [optional] <p>
+ * Hints provide criteria for selecting addresses returned. You may specify the hints as defined by getadrinfo.
+ * </p>
+ * @return AddressInfo[] of AddrInfo resource handles that can be used with the other socket_addrinfo functions.
+ * @since 7.2
+ */
+function socket_addrinfo_lookup($host, $service, $hints) {}
+
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * Create a Socket resource, and connect it to the provided AddrInfo resource.<br/>
+ * The return value of this function may be used with the rest of the socket functions.
+ * @link https://www.php.net/manual/en/function.socket-addrinfo-connect.php
+ * @param AddressInfo $addr <p>
+ * Resource created from {@see socket_addrinfo_lookup()}
+ * </p>
+ * @return Socket|null Socket resource on success or NULL on failure.
+ * @since 7.2
+ */
+function socket_addrinfo_connect($addr) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
+/**
  * Create a Socket resource, and connect it to the provided AddrInfo resource.<br/>
  * The return value of this function may be used with the rest of the socket functions.
  * @link https://www.php.net/manual/en/function.socket-addrinfo-connect.php
@@ -33,6 +67,21 @@ function socket_addrinfo_lookup($host, $service, $hints) {}
  */
 function socket_addrinfo_connect($addr) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * (PHP 7 &gt;= 7.2.0)<br/>
+ * Create a Socket resource, and bind it to the provided AddrInfo resource.<br/>
+ * The return value of this function may be used with {@see socket_listen()}.
+ * @link https://www.php.net/manual/en/function.socket-addrinfo-bind.php
+ * @param AddressInfo $addr <p>
+ * Resource created from {@see socket_addrinfo_lookup()}
+ * </p>
+ * @return Socket|null Socket resource on success or NULL on failure.
+ * @since 7.2
+ */
+function socket_addrinfo_bind($addr) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * (PHP 7 &gt;= 7.2.0)<br/>
  * Create a Socket resource, and bind it to the provided AddrInfo resource.<br/>
@@ -50,7 +99,7 @@ function socket_addrinfo_bind($addr) {}
  * (PHP 7 &gt;= 7.2.0)<br/>
  * Get information about addrinfo
  * @link https://www.php.net/manual/en/function.socket-addrinfo-explain.php
- * @param resource $addr <p>
+ * @param resource|AddressInfo $addr <p>
  * Resource created from {@see socket_addrinfo_lookup()}
  * </p>
  * @return array containing the fields in the addrinfo structure.
@@ -108,6 +157,146 @@ function socket_addrinfo_explain($addr) {}
  */
 function socket_select (array &$read, array &$write, array &$except, $tv_sec, $tv_usec = 0) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * Create a socket (endpoint for communication)
+ * @link https://php.net/manual/en/function.socket-create.php
+ * @param int $domain <p>
+ * The <i>domain</i> parameter specifies the protocol
+ * family to be used by the socket.
+ * </p>
+ * <table>
+ * Available address/protocol families
+ * <tr valign="top">
+ * <td>Domain</td>
+ * <td>Description</td>
+ * </tr>
+ * <tr valign="top">
+ * <td><b>AF_INET</b></td>
+ * <td>
+ * IPv4 Internet based protocols. TCP and UDP are common protocols of
+ * this protocol family.
+ * </td>
+ * </tr>
+ * <tr valign="top">
+ * <td><b>AF_INET6</b></td>
+ * <td>
+ * IPv6 Internet based protocols. TCP and UDP are common protocols of
+ * this protocol family.
+ * </td>
+ * </tr>
+ * <tr valign="top">
+ * <td><b>AF_UNIX</b></td>
+ * <td>
+ * Local communication protocol family. High efficiency and low
+ * overhead make it a great form of IPC (Interprocess Communication).
+ * </td>
+ * </tr>
+ * </table>
+ * @param int $type <p>
+ * The <i>type</i> parameter selects the type of communication
+ * to be used by the socket.
+ * </p>
+ * <table>
+ * Available socket types
+ * <tr valign="top">
+ * <td>Type</td>
+ * <td>Description</td>
+ * </tr>
+ * <tr valign="top">
+ * <td><b>SOCK_STREAM</b></td>
+ * <td>
+ * Provides sequenced, reliable, full-duplex, connection-based byte streams.
+ * An out-of-band data transmission mechanism may be supported.
+ * The TCP protocol is based on this socket type.
+ * </td>
+ * </tr>
+ * <tr valign="top">
+ * <td><b>SOCK_DGRAM</b></td>
+ * <td>
+ * Supports datagrams (connectionless, unreliable messages of a fixed maximum length).
+ * The UDP protocol is based on this socket type.
+ * </td>
+ * </tr>
+ * <tr valign="top">
+ * <td><b>SOCK_SEQPACKET</b></td>
+ * <td>
+ * Provides a sequenced, reliable, two-way connection-based data transmission path for
+ * datagrams of fixed maximum length; a consumer is required to read an
+ * entire packet with each read call.
+ * </td>
+ * </tr>
+ * <tr valign="top">
+ * <td><b>SOCK_RAW</b></td>
+ * <td>
+ * Provides raw network protocol access. This special type of socket
+ * can be used to manually construct any type of protocol. A common use
+ * for this socket type is to perform ICMP requests (like ping).
+ * </td>
+ * </tr>
+ * <tr valign="top">
+ * <td><b>SOCK_RDM</b></td>
+ * <td>
+ * Provides a reliable datagram layer that does not guarantee ordering.
+ * This is most likely not implemented on your operating system.
+ * </td>
+ * </tr>
+ * </table>
+ * @param int $protocol <p>
+ * The <i>protocol</i> parameter sets the specific
+ * protocol within the specified <i>domain</i> to be used
+ * when communicating on the returned socket. The proper value can be
+ * retrieved by name by using <b>getprotobyname</b>. If
+ * the desired protocol is TCP, or UDP the corresponding constants
+ * <b>SOL_TCP</b>, and <b>SOL_UDP</b>
+ * can also be used.
+ * </p>
+ * <table>
+ * Common protocols
+ * <tr valign="top">
+ * <td>Name</td>
+ * <td>Description</td>
+ * </tr>
+ * <tr valign="top">
+ * <td>icmp</td>
+ * <td>
+ * The Internet Control Message Protocol is used primarily by gateways
+ * and hosts to report errors in datagram communication. The "ping"
+ * command (present in most modern operating systems) is an example
+ * application of ICMP.
+ * </td>
+ * </tr>
+ * <tr valign="top">
+ * <td>udp</td>
+ * <td>
+ * The User Datagram Protocol is a connectionless, unreliable,
+ * protocol with fixed record lengths. Due to these aspects, UDP
+ * requires a minimum amount of protocol overhead.
+ * </td>
+ * </tr>
+ * <tr valign="top">
+ * <td>tcp</td>
+ * <td>
+ * The Transmission Control Protocol is a reliable, connection based,
+ * stream oriented, full duplex protocol. TCP guarantees that all data packets
+ * will be received in the order in which they were sent. If any packet is somehow
+ * lost during communication, TCP will automatically retransmit the packet until
+ * the destination host acknowledges that packet. For reliability and performance
+ * reasons, the TCP implementation itself decides the appropriate octet boundaries
+ * of the underlying datagram communication layer. Therefore, TCP applications must
+ * allow for the possibility of partial record transmission.
+ * </td>
+ * </tr>
+ * </table>
+ * @return Socket|false <b>socket_create</b> returns a socket resource on success,
+ * or <b>FALSE</b> on error. The actual error code can be retrieved by calling
+ * <b>socket_last_error</b>. This error code may be passed to
+ * <b>socket_strerror</b> to get a textual explanation of the
+ * error.
+ */
+function socket_create ($domain, $type, $protocol) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * Create a socket (endpoint for communication)
  * @link https://php.net/manual/en/function.socket-create.php
@@ -246,6 +435,14 @@ function socket_select (array &$read, array &$write, array &$except, $tv_sec, $t
  */
 function socket_create ($domain, $type, $protocol) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * @param Socket $socket
+ * @return Socket|false
+ */
+function socket_export_stream($socket) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * @param resource $socket
  * @return resource|false
@@ -265,7 +462,7 @@ function socket_export_stream($socket) {}
  * <i>backlog</i> parameter, see
  * <b>socket_listen</b> for more information.
  * </p>
- * @return resource|false <b>socket_create_listen</b> returns a new socket resource
+ * @return Socket|false <b>socket_create_listen</b> returns a new socket resource
  * on success or <b>FALSE</b> on error. The error code can be retrieved with
  * <b>socket_last_error</b>. This code may be passed to
  * <b>socket_strerror</b> to get a textual explanation of the
@@ -306,6 +503,23 @@ function socket_create_listen ($port, $backlog = 128) {}
  */
 function socket_create_pair ($domain, $type, $protocol, array &$fd) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * Accepts a connection on a socket
+ * @link https://php.net/manual/en/function.socket-accept.php
+ * @param Socket $socket <p>
+ * A valid socket resource created with <b>socket_create</b>.
+ * </p>
+ * @return Socket|false a new socket resource on success, or <b>FALSE</b> on error. The actual
+ * error code can be retrieved by calling
+ * <b>socket_last_error</b>. This error code may be passed to
+ * <b>socket_strerror</b> to get a textual explanation of the
+ * error.
+ */
+function socket_accept ($socket) {}
+
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * Accepts a connection on a socket
  * @link https://php.net/manual/en/function.socket-accept.php
@@ -320,6 +534,19 @@ function socket_create_pair ($domain, $type, $protocol, array &$fd) {}
  */
 function socket_accept ($socket) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * Sets nonblocking mode for file descriptor fd
+ * @link https://php.net/manual/en/function.socket-set-nonblock.php
+ * @param Socket $socket <p>
+ * A valid socket resource created with <b>socket_create</b>
+ * or <b>socket_accept</b>.
+ * </p>
+ * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
+ */
+function socket_set_nonblock ($socket) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * Sets nonblocking mode for file descriptor fd
  * @link https://php.net/manual/en/function.socket-set-nonblock.php
@@ -331,6 +558,19 @@ function socket_accept ($socket) {}
  */
 function socket_set_nonblock ($socket) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * Sets blocking mode on a socket resource
+ * @link https://php.net/manual/en/function.socket-set-block.php
+ * @param Socket $socket <p>
+ * A valid socket resource created with <b>socket_create</b>
+ * or <b>socket_accept</b>.
+ * </p>
+ * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
+ */
+function socket_set_block ($socket) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * Sets blocking mode on a socket resource
  * @link https://php.net/manual/en/function.socket-set-block.php
@@ -342,6 +582,37 @@ function socket_set_nonblock ($socket) {}
  */
 function socket_set_block ($socket) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * Listens for a connection on a socket
+ * @link https://php.net/manual/en/function.socket-listen.php
+ * @param Socket $socket <p>
+ * A valid socket resource created with <b>socket_create</b>.
+ * </p>
+ * @param int $backlog [optional] <p>
+ * A maximum of <i>backlog</i> incoming connections will be
+ * queued for processing. If a connection request arrives with the queue
+ * full the client may receive an error with an indication of
+ * ECONNREFUSED, or, if the underlying protocol supports
+ * retransmission, the request may be ignored so that retries may succeed.
+ * </p>
+ * <p>
+ * The maximum number passed to the <i>backlog</i>
+ * parameter highly depends on the underlying platform. On Linux, it is
+ * silently truncated to <b>SOMAXCONN</b>. On win32, if
+ * passed <b>SOMAXCONN</b>, the underlying service provider
+ * responsible for the socket will set the backlog to a maximum
+ * reasonable value. There is no standard provision to
+ * find out the actual backlog value on this platform.
+ * </p>
+ * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure. The error code can be retrieved with
+ * <b>socket_last_error</b>. This code may be passed to
+ * <b>socket_strerror</b> to get a textual explanation of the
+ * error.
+ */
+function socket_listen ($socket, $backlog = 0) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * Listens for a connection on a socket
  * @link https://php.net/manual/en/function.socket-listen.php
@@ -371,6 +642,19 @@ function socket_set_block ($socket) {}
  */
 function socket_listen ($socket, $backlog = 0) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * Closes a socket resource
+ * @link https://php.net/manual/en/function.socket-close.php
+ * @param Socket $socket <p>
+ * A valid socket resource created with <b>socket_create</b>
+ * or <b>socket_accept</b>.
+ * </p>
+ * @return void No value is returned.
+ */
+function socket_close ($socket) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * Closes a socket resource
  * @link https://php.net/manual/en/function.socket-close.php
@@ -382,6 +666,35 @@ function socket_listen ($socket, $backlog = 0) {}
  */
 function socket_close ($socket) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * Write to a socket
+ * @link https://php.net/manual/en/function.socket-write.php
+ * @param Socket $socket
+ * @param string $buffer <p>
+ * The buffer to be written.
+ * </p>
+ * @param int $length [optional] <p>
+ * The optional parameter <i>length</i> can specify an
+ * alternate length of bytes written to the socket. If this length is
+ * greater than the buffer length, it is silently truncated to the length
+ * of the buffer.
+ * </p>
+ * @return int|false the number of bytes successfully written to the socket or <b>FALSE</b> on failure.
+ * The error code can be retrieved with
+ * <b>socket_last_error</b>. This code may be passed to
+ * <b>socket_strerror</b> to get a textual explanation of the
+ * error.
+ * </p>
+ * <p>
+ * It is perfectly valid for <b>socket_write</b> to
+ * return zero which means no bytes have been written. Be sure to use the
+ * === operator to check for <b>FALSE</b> in case of an
+ * error.
+ */
+function socket_write ($socket, $buffer, $length = 0) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * Write to a socket
  * @link https://php.net/manual/en/function.socket-write.php
@@ -409,6 +722,39 @@ function socket_close ($socket) {}
  */
 function socket_write ($socket, $buffer, $length = 0) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * Reads a maximum of length bytes from a socket
+ * @link https://php.net/manual/en/function.socket-read.php
+ * @param Socket $socket <p>
+ * A valid socket resource created with <b>socket_create</b>
+ * or <b>socket_accept</b>.
+ * </p>
+ * @param int $length <p>
+ * The maximum number of bytes read is specified by the
+ * <i>length</i> parameter. Otherwise you can use
+ * <b>&#92;r</b>, <b>&#92;n</b>,
+ * or <b>&#92;0</b> to end reading (depending on the <i>type</i>
+ * parameter, see below).
+ * </p>
+ * @param int $type [optional] <p>
+ * Optional <i>type</i> parameter is a named constant:
+ * <b>PHP_BINARY_READ</b> (Default) - use the system
+ * recv() function. Safe for reading binary data.
+ * @return string|false <b>socket_read</b> returns the data as a string on success,
+ * or <b>FALSE</b> on error (including if the remote host has closed the
+ * connection). The error code can be retrieved with
+ * <b>socket_last_error</b>. This code may be passed to
+ * <b>socket_strerror</b> to get a textual representation of
+ * the error.
+ * </p>
+ * <p>
+ * <b>socket_read</b> returns a zero length string ("")
+ * when there is no more data to read.
+ */
+function socket_read ($socket, $length, $type = PHP_BINARY_READ) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * Reads a maximum of length bytes from a socket
  * @link https://php.net/manual/en/function.socket-read.php
@@ -443,7 +789,7 @@ function socket_read ($socket, $length, $type = PHP_BINARY_READ) {}
 /**
  * Queries the local side of the given socket which may either result in host/port or in a Unix filesystem path, dependent on its type
  * @link https://php.net/manual/en/function.socket-getsockname.php
- * @param resource $socket <p>
+ * @param resource|Socket $socket <p>
  * A valid socket resource created with <b>socket_create</b>
  * or <b>socket_accept</b>.
  * </p>
@@ -474,7 +820,7 @@ function socket_getsockname ($socket, &$addr, &$port = null) {}
 /**
  * Queries the remote side of the given socket which may either result in host/port or in a Unix filesystem path, dependent on its type
  * @link https://php.net/manual/en/function.socket-getpeername.php
- * @param resource $socket <p>
+ * @param resource|Socket $socket <p>
  * A valid socket resource created with <b>socket_create</b>
  * or <b>socket_accept</b>.
  * </p>
@@ -507,7 +853,7 @@ function socket_getpeername ($socket, &$address, &$port = null) {}
 /**
  * Initiates a connection on a socket
  * @link https://php.net/manual/en/function.socket-connect.php
- * @param resource $socket
+ * @param resource|Socket $socket
  * @param string $address <p>
  * The <i>address</i> parameter is either an IPv4 address
  * in dotted-quad notation (e.g. 127.0.0.1) if
@@ -549,7 +895,7 @@ function socket_strerror ($errno) {}
 /**
  * Binds a name to a socket
  * @link https://php.net/manual/en/function.socket-bind.php
- * @param resource $socket <p>
+ * @param resource|Socket $socket <p>
  * A valid socket resource created with <b>socket_create</b>.
  * </p>
  * @param string $address <p>
@@ -579,7 +925,7 @@ function socket_bind ($socket, $address, $port = 0) {}
 /**
  * Receives data from a connected socket
  * @link https://php.net/manual/en/function.socket-recv.php
- * @param resource $socket <p>
+ * @param resource|Socket $socket <p>
  * The <i>socket</i> must be a socket resource previously
  * created by socket_create().
  * </p>
@@ -643,7 +989,7 @@ function socket_recv ($socket, &$buf, $len, $flags) {}
 /**
  * Sends data to a connected socket
  * @link https://php.net/manual/en/function.socket-send.php
- * @param resource $socket <p>
+ * @param resource|Socket $socket <p>
  * A valid socket resource created with <b>socket_create</b>
  * or <b>socket_accept</b>.
  * </p>
@@ -696,7 +1042,7 @@ function socket_send ($socket, $buf, $len, $flags) {}
  * (PHP 5 &gt;=5.5.0)<br/>
  * Send a message
  * @link https://secure.php.net/manual/en/function.socket-sendmsg.php
- * @param resource $socket
+ * @param resource|Socket $socket
  * @param array $message
  * @param int $flags
  * @return int|false
@@ -707,7 +1053,7 @@ function socket_sendmsg ($socket, array $message, $flags ) {}
 /**
  * Receives data from a socket whether or not it is connection-oriented
  * @link https://php.net/manual/en/function.socket-recvfrom.php
- * @param resource $socket <p>
+ * @param resource|Socket $socket <p>
  * The <i>socket</i> must be a socket resource previously
  * created by socket_create().
  * </p>
@@ -781,8 +1127,8 @@ function socket_recvfrom ($socket, &$buf, $len, $flags, &$name, &$port = null) {
 /**
  * Read a message
  * @link https://secure.php.net/manual/en/function.socket-recvmsg.php
- * @param resource $socket
- * @param string $message
+ * @param resource|Socket $socket
+ * @param array $message
  * @param int $flags [optional]
  * @return int|false
  * @since 5.5
@@ -792,7 +1138,7 @@ function socket_recvmsg ($socket , $message, $flags) {}
 /**
  * Sends a message to a socket, whether it is connected or not
  * @link https://php.net/manual/en/function.socket-sendto.php
- * @param resource $socket <p>
+ * @param resource|Socket $socket <p>
  * A valid socket resource created using <b>socket_create</b>.
  * </p>
  * @param string $buf <p>
@@ -851,7 +1197,7 @@ function socket_sendto ($socket, $buf, $len, $flags, $addr, $port = 0) {}
 /**
  * Gets socket options for the socket
  * @link https://php.net/manual/en/function.socket-get-option.php
- * @param resource $socket <p>
+ * @param resource|Socket $socket <p>
  * A valid socket resource created with <b>socket_create</b>
  * or <b>socket_accept</b>.
  * </p>
@@ -1217,7 +1563,7 @@ function socket_get_option ($socket, $level, $optname) {}
 /**
  * Sets socket options for the socket
  * @link https://php.net/manual/en/function.socket-set-option.php
- * @param resource $socket <p>
+ * @param resource|Socket $socket <p>
  * A valid socket resource created with <b>socket_create</b>
  * or <b>socket_accept</b>.
  * </p>
@@ -1244,7 +1590,7 @@ function socket_set_option ($socket, $level, $optname, $optval) {}
 /**
  * Shuts down a socket for receiving, sending, or both
  * @link https://php.net/manual/en/function.socket-shutdown.php
- * @param resource $socket <p>
+ * @param resource|Socket $socket <p>
  * A valid socket resource created with <b>socket_create</b>.
  * </p>
  * @param int $how [optional] <p>
@@ -1278,7 +1624,7 @@ function socket_shutdown ($socket, $how = 2) {}
 /**
  * Returns the last error on the socket
  * @link https://php.net/manual/en/function.socket-last-error.php
- * @param resource $socket [optional] <p>
+ * @param resource|Socket $socket [optional] <p>
  * A valid socket resource created with <b>socket_create</b>.
  * </p>
  * @return int This function returns a socket error code.
@@ -1288,17 +1634,30 @@ function socket_last_error ($socket = null) {}
 /**
  * Clears the error on the socket or the last error code
  * @link https://php.net/manual/en/function.socket-clear-error.php
- * @param resource $socket [optional] <p>
+ * @param resource|Socket $socket [optional] <p>
  * A valid socket resource created with <b>socket_create</b>.
  * </p>
  * @return void No value is returned.
  */
 function socket_clear_error ($socket = null) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
 /**
  * Import a stream
  * @link https://php.net/manual/en/function.socket-import-stream.php
- * @param resource $stream <p>
+ * @param resource|Socket $stream <p>
+ * The stream resource to import.
+ * </p>
+ * @return Socket|false|null <b>FALSE</b> or <b>NULL</b> on failure.
+ * @since 5.4
+ */
+function socket_import_stream ($stream) {}
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
+/**
+ * Import a stream
+ * @link https://php.net/manual/en/function.socket-import-stream.php
+ * @param resource|Socket $stream <p>
  * The stream resource to import.
  * </p>
  * @return resource|false|null <b>FALSE</b> or <b>NULL</b> on failure.
@@ -1318,6 +1677,7 @@ function socket_import_stream ($stream) {}
 function socket_cmsg_space ($level, $type, $n = 0) {}
 
 /**
+ * Alias of {@see socket_get_option}
  * @param $socket
  * @param $level
  * @param $optname
@@ -1325,6 +1685,7 @@ function socket_cmsg_space ($level, $type, $n = 0) {}
 function socket_getopt ($socket, $level, $optname) {}
 
 /**
+ * Alias of {@see socket_set_option}
  * @param $socket
  * @param $level
  * @param $optname
@@ -1337,7 +1698,7 @@ function socket_setopt ($socket, $level, $optname, $optval) {}
  *
  * @link https://www.php.net/manual/en/function.socket-wsaprotocol-info-export.php
  *
- * @param resource $socket
+ * @param resource|Socket $socket
  * @param int $target_pid
  * @return string|false
  *
@@ -1345,6 +1706,21 @@ function socket_setopt ($socket, $level, $optname, $optval) {}
  */
 function socket_wsaprotocol_info_export($socket, $target_pid) {}
 
+#[PhpStormStubsElementAvailable('8.0')]
+/**
+ * Imports a Socket from another Process
+ *
+ * @link https://www.php.net/manual/en/function.socket-wsaprotocol-info-import.php
+ *
+ * @param string $info_id
+ * @return Socket|false
+ *
+ * @since 7.3
+ */
+function socket_wsaprotocol_info_import($info_id) {}
+
+
+#[PhpStormStubsElementAvailable(to: '7.4')]
 /**
  * Imports a Socket from another Process
  *
@@ -2155,3 +2531,25 @@ define ('AI_CANONNAME', 2);
 define ('AI_NUMERICHOST', 4);
 define ('AI_ADDRCONFIG', 1024);
 define ('AI_NUMERICSERV', 8);
+
+/**
+ * @since 8.0
+ */
+final class Socket {
+    /**
+     * Cannot directly construct Socket, use socket_create() instead
+     * @see socket_create()
+     */
+    private function __construct(){}
+}
+
+/**
+ * @since 8.0
+ */
+final class AddressInfo {
+    /**
+     * Cannot directly construct AddressInfo, use socket_addrinfo_lookup() instead
+     * @see socket_addrinfo_lookup()
+     */
+    private function __construct(){}
+}

@@ -1,13 +1,20 @@
 <?php
 
+use JetBrains\PhpStorm\Immutable;
+use JetBrains\PhpStorm\Pure;
+
 /**
- * @property-read string $name Name of the extension, same as calling the {@see ReflectionZendExtension::getName()} method
- *
  * @link https://secure.php.net/manual/en/class.reflectionzendextension.php
  * @since 5.4
  */
 class ReflectionZendExtension implements Reflector
 {
+    /**
+     * @var string Name of the extension, same as calling the {@see ReflectionZendExtension::getName()} method
+     */
+    #[Immutable]
+    public $name;
+
     /**
      * Constructs a ReflectionZendExtension object
      *
@@ -53,7 +60,8 @@ class ReflectionZendExtension implements Reflector
      * @return string
      * @since 5.4
      */
-    public function getName()
+    #[Pure]
+	public function getName()
     {
     }
 
@@ -64,7 +72,8 @@ class ReflectionZendExtension implements Reflector
      * @return string
      * @since 5.4
      */
-    public function getVersion()
+    #[Pure]
+	public function getVersion()
     {
     }
 
@@ -75,7 +84,8 @@ class ReflectionZendExtension implements Reflector
      * @return string
      * @since 5.4
      */
-    public function getAuthor()
+    #[Pure]
+	public function getAuthor()
     {
     }
 
@@ -86,7 +96,8 @@ class ReflectionZendExtension implements Reflector
      * @return string
      * @since 5.4
      */
-    public function getURL()
+    #[Pure]
+	public function getURL()
     {
     }
 
@@ -97,7 +108,8 @@ class ReflectionZendExtension implements Reflector
      * @return string
      * @since 5.4
      */
-    public function getCopyright()
+    #[Pure]
+	public function getCopyright()
     {
     }
 

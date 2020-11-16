@@ -1,5 +1,8 @@
 <?php
 
+use JetBrains\PhpStorm\Deprecated;
+use JetBrains\PhpStorm\Pure;
+
 
 /**
  * Generate a system log message
@@ -75,8 +78,8 @@ function closelog () {}
 function header_register_callback ( callable $callback ) {}
 
 /**
- * PHP > 5.4.0<br/>
  * Get the size of an image from a string.
+ * @since 5.4
  * @link https://secure.php.net/manual/en/function.getimagesizefromstring.php
  * @param string $string The image data, as a string.
  * @param array &$image_info This optional parameter allows you to extract<br>
@@ -95,8 +98,8 @@ function header_register_callback ( callable $callback ) {}
 function getimagesizefromstring ($string , array &$image_info = null) {}
 
 /**
- * PHP > 5.4.0<br/>
  * Set the stream chunk size.
+ * @since 5.4
  * @link https://secure.php.net/manual/en/function.stream-set-chunk-size.php
  * @param resource $stream The target stream.
  * @param int $size The desired new chunk size.
@@ -108,10 +111,10 @@ function stream_set_chunk_size ($stream , $size) {}
 /**
  * Initializes all syslog related variables
  * @link https://php.net/manual/en/function.define-syslog-variables.php
- * @deprecated 5.3
  * @return void
  * @removed 5.4
  */
+#[Deprecated(since: '5.3')]
 function define_syslog_variables () {}
 
 /**
@@ -133,6 +136,7 @@ function lcg_value () {}
  * </p>
  * @return string|false the metaphone key as a string, or FALSE on failure
  */
+#[Pure]
 function metaphone ($string, $max_phonemes = 0) {}
 
 /**
@@ -347,12 +351,12 @@ function ob_get_contents () {}
 /**
  * Turn implicit flush on/off
  * @link https://php.net/manual/en/function.ob-implicit-flush.php
- * @param int $enable [optional] <p>
- * 1 to turn implicit flushing on, 0 otherwise.
+ * @param bool $enable [optional] <p>
+ * true to turn implicit flushing on, false otherwise.
  * </p>
  * @return void
  */
-function ob_implicit_flush ($enable = 1) {}
+function ob_implicit_flush (bool $enable = true) {}
 
 /**
  * List all output handlers in use
@@ -627,12 +631,13 @@ function array_walk_recursive (array &$array, $callback, $arg = null) {}
  * but it may also return 0 for a variable that has been initialized with an
  * empty array. Use isset to test if a variable is set.
  */
+#[Pure]
 function count ($value, $mode = COUNT_NORMAL) {}
 
 /**
  * Set the internal pointer of an array to its last element
  * @link https://php.net/manual/en/function.end.php
- * @param array &$array <p>
+ * @param ArrayAccess|array &$array <p>
  * The array. This array is passed by reference because it is modified by
  * the function. This means you must pass it a real variable and not
  * a function returning an array because only actual variables may be
@@ -641,12 +646,12 @@ function count ($value, $mode = COUNT_NORMAL) {}
  * @return mixed|false the value of the last element or false for empty array.
  * @meta
  */
-function end (array &$array) {}
+function end (&$array) {}
 
 /**
  * Rewind the internal array pointer
  * @link https://php.net/manual/en/function.prev.php
- * @param array &$array <p>
+ * @param ArrayAccess|array &$array <p>
  * The input array.
  * </p>
  * @return mixed the array value in the previous place that's pointed to by
@@ -654,36 +659,36 @@ function end (array &$array) {}
  * elements.
  * @meta
  */
-function prev (array &$array) {}
+function prev (&$array) {}
 
 /**
  * Advance the internal array pointer of an array
  * @link https://php.net/manual/en/function.next.php
- * @param array &$array <p>
+ * @param ArrayAccess|array &$array <p>
  * The array being affected.
  * </p>
  * @return mixed the array value in the next place that's pointed to by the
  * internal array pointer, or false if there are no more elements.
  * @meta
  */
-function next (array &$array) {}
+function next (&$array) {}
 
 /**
  * Set the internal pointer of an array to its first element
  * @link https://php.net/manual/en/function.reset.php
- * @param array &$array <p>
+ * @param ArrayAccess|array &$array <p>
  * The input array.
  * </p>
  * @return mixed|false the value of the first array element, or false if the array is
  * empty.
  * @meta
  */
-function reset (array &$array) {}
+function reset (&$array) {}
 
 /**
  * Return the current element in an array
  * @link https://php.net/manual/en/function.current.php
- * @param array $array <p>
+ * @param ArrayAccess|array $array <p>
  * The array.
  * </p>
  * @return mixed The current function simply returns the
@@ -693,12 +698,13 @@ function reset (array &$array) {}
  * empty, current returns false.
  * @meta
  */
-function current (array $array) {}
+#[Pure]
+function current ($array) {}
 
 /**
  * Fetch a key from an array
  * @link https://php.net/manual/en/function.key.php
- * @param array $array <p>
+ * @param ArrayAccess|array $array <p>
  * The array.
  * </p>
  * @return int|string|null The key function simply returns the
@@ -707,7 +713,8 @@ function current (array $array) {}
  * internal pointer points beyond the end of the elements list or the array is
  * empty, key returns null.
  */
-function key (array $array) {}
+#[Pure]
+function key ($array) {}
 
 /**
  * Find lowest value
@@ -717,6 +724,7 @@ function key (array $array) {}
  * @return mixed min returns the numerically lowest of the
  * parameter values.
  */
+#[Pure]
 function min ($value, ...$values) {}
 
 /**
@@ -727,6 +735,7 @@ function min ($value, ...$values) {}
  * @return mixed max returns the numerically highest of the
  * parameter values, either within a arg array or two arguments.
  */
+#[Pure]
 function max ($value, ...$values) {}
 
 /**
@@ -751,10 +760,11 @@ function max ($value, ...$values) {}
  * @return bool true if needle is found in the array,
  * false otherwise.
  */
+#[Pure]
 function in_array ($needle, array $haystack, $strict = false) {}
 
 /**
- * Searches the array for a given value and returns the corresponding key if successful
+ * Searches the array for a given value and returns the first corresponding key if successful
  * @link https://php.net/manual/en/function.array-search.php
  * @param mixed $needle <p>
  * The searched value.
@@ -781,6 +791,7 @@ function in_array ($needle, array $haystack, $strict = false) {}
  * all matching values, use array_keys with the optional
  * search_value parameter instead.
  */
+#[Pure]
 function array_search ($needle, array $haystack, $strict = null) {}
 
 /**
@@ -824,6 +835,7 @@ function extract (array $array, $flags = null, $prefix = null) {}
  * @param mixed ...$var_names [optional]
  * @return array the output array with all the variables added to it.
  */
+#[Pure]
 function compact ($var_name, ...$var_names) {}
 
 /**
@@ -841,6 +853,7 @@ function compact ($var_name, ...$var_names) {}
  * </p>
  * @return array the filled array
  */
+#[Pure]
 function array_fill ($start_index, $count, $value) {}
 
 /**
@@ -855,6 +868,7 @@ function array_fill ($start_index, $count, $value) {}
  * </p>
  * @return array the filled array
  */
+#[Pure]
 function array_fill_keys (array $keys, $value) {}
 
 /**
@@ -875,6 +889,7 @@ function array_fill_keys (array $keys, $value) {}
  * @return array an array of elements from start to
  * end, inclusive.
  */
+#[Pure]
 function range ($start, $end, $step = 1) {}
 
 /**
@@ -1022,6 +1037,7 @@ function array_splice (array &$array, $offset, $length = null, $replacement = nu
  * @return array the slice.
  * @meta
  */
+#[Pure]
 function array_slice (array $array, $offset, $length = null, $preserve_keys = false) {}
 
 /**
@@ -1032,4 +1048,5 @@ function array_slice (array $array, $offset, $length = null, $preserve_keys = fa
  * </p>
  * @return array the resulting array.
  */
+#[Pure]
 function array_merge (array ...$arrays) {}

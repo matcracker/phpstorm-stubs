@@ -1,4 +1,7 @@
 <?php
+
+use JetBrains\PhpStorm\Deprecated;
+
 class PDFlib
 {
 	/**
@@ -22,9 +25,9 @@ class PDFlib
 	 * @return bool
 	 *
 	 * @link https://secure.php.net/manual/en/function.pdf-add-launchlink.php
-	 *
-	 * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_action() with type=Launch and PDF_create_annotation() with type=Link instead.
+	 * @see PDF_create_action()
 	 */
+	#[Deprecated(" This function is deprecated since PDFlib version 6, use PDF_create_action() with type=Launch and PDF_create_annotation() with type=Link instead.")]
 	function add_launchlink($llx, $lly, $urx, $ury, $filename){}
 
 	/**
@@ -40,9 +43,9 @@ class PDFlib
 	 * @return bool
 	 *
 	 * @link https://secure.php.net/manual/en/function.pdf-add-locallink.php
-	 *
-	 * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_action() with type=GoTo and PDF_create_annotation() with type=Link instead.
+     * @see PDF_create_action()
 	 */
+	#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_create_action() with type=GoTo and PDF_create_annotation() with type=Link instead.')]
 	function add_locallink($lowerleftx, $lowerlefty, $upperrightx, $upperrighty, $page, $dest){}
 
 	/**
@@ -72,9 +75,9 @@ class PDFlib
 	 * @return bool
 	 *
 	 * @link https://secure.php.net/manual/en/function.pdf-add-note.php
-	 *
-	 * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_annotation() with type=Text instead.
+     * @see PDF_create_annotation()
 	 */
+	#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_create_annotation() with type=Text instead.')]
 	function add_note($llx, $lly, $urx, $ury, $contents, $title, $icon, $open){}
 
 	/**
@@ -91,9 +94,9 @@ class PDFlib
 	 * @return bool
 	 *
 	 * @link https://secure.php.net/manual/en/function.pdf-add-pdflink.php
-	 *
-	 * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_action() with type=GoToR and PDF_create_annotation() with type=Link instead.
+     * @see PDF_create_action
 	 */
+	#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_create_action() with type=GoToR and PDF_create_annotation() with type=Link instead.')]
 	function add_pdflink($bottom_left_x, $bottom_left_y, $up_right_x, $up_right_y, $filename, $page, $dest){}
 
 	/**
@@ -146,10 +149,10 @@ class PDFlib
 	 *
 	 * @return bool
 	 *
-	 * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_action() with type=URI and PDF_create_annotation() with type=Link instead.
-	 *
 	 * @link https://secure.php.net/manual/en/function.pdf-add-weblink.php
+     * @see PDF_create_action()
 	 */
+	#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_create_action() with type=URI and PDF_create_annotation() with type=Link instead.')]
 	function add_weblink($lowerleftx, $lowerlefty, $upperrightx, $upperrighty, $url){}
 
 	/**
@@ -197,10 +200,10 @@ class PDFlib
 	 *
 	 * @return bool
 	 *
-	 * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_annotation() with type=FileAttachment instead.
-	 *
 	 * @link https://secure.php.net/manual/en/function.pdf-attach-file.php
+     * @see PDF_create_annotation()
 	 */
+	#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_create_annotation() with type=FileAttachment instead.')]
 	function attach_file($llx, $lly, $urx, $ury, $filename, $description, $author, $mimetype, $icon){}
 
 	/**
@@ -297,8 +300,9 @@ class PDFlib
 	 *
 	 * @link https://secure.php.net/manual/en/function.pdf-begin-page.php
 	 *
-	 * @deprecated This function is deprecated since PDFlib version 6, use PDF_begin_page_ext() instead.
+     * @see PDF_begin_page_ext()
 	 */
+	#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_begin_page_ext() instead.')]
 	function begin_page($width, $height){}
 
 	/**
@@ -337,8 +341,9 @@ class PDFlib
 	 *
 	 * @link https://secure.php.net/manual/en/function.pdf-begin-template.php
 	 *
-	 * @deprecated This function is deprecated since PDFlib version 7, use PDF_begin_template_ext() instead.
+     * @see PDF_begin_template_ext
 	 */
+	#[Deprecated('This function is deprecated since PDFlib version 7, use PDF_begin_template_ext() instead.')]
 	function begin_template($width, $height){}
 
 	/**
@@ -387,8 +392,9 @@ class PDFlib
 	 *
 	 * @link https://secure.php.net/manual/en/function.pdf-close-pdi.php
 	 *
-	 * @deprecated This function is deprecated since PDFlib version 7, use PDF_close_pdi_document() instead.
+     * @see PDF_close_pdi_document()
 	 */
+	#[Deprecated('This function is deprecated since PDFlib version 7, use PDF_close_pdi_document() instead.')]
 	function close_pdi($doc){}
 
 	/**
@@ -397,8 +403,9 @@ class PDFlib
 	 *
 	 * @link https://secure.php.net/manual/en/function.pdf-close.php
 	 *
-	 * @deprecated This function is deprecated since PDFlib version 6, use PDF_end_document() instead.
+     * @see PDF_end_document
 	 */
+	#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_end_document() instead.')]
 	function close(){}
 
 	/**
@@ -1678,8 +1685,8 @@ class PDFlib
 
 /**
  * Activates a previously created structure element or other content item.
- * @param $pdf
- * @param $id
+ * @param resource $pdfdoc
+ * @param int $id
  *
  * @return bool
  *
@@ -1688,7 +1695,7 @@ class PDFlib
 function PDF_activate_item($pdf, $id){}
 
 /**
- * Adds a link to a web resource.
+ * Add launch annotation for current page [deprecated].
  * @param resource $pdf
  * @param float $llx
  * @param float $lly
@@ -1699,9 +1706,9 @@ function PDF_activate_item($pdf, $id){}
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-add-launchlink.php
- *
- * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_action() with type=Launch and PDF_create_annotation() with type=Link instead.
+ * @see PDF_create_action
  */
+#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_create_action() with type=Launch and PDF_create_annotation() with type=Link instead.')]
 function PDF_add_launchlink($pdf, $llx, $lly, $urx, $ury, $filename){}
 
 /**
@@ -1718,9 +1725,9 @@ function PDF_add_launchlink($pdf, $llx, $lly, $urx, $ury, $filename){}
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-add-locallink.php
- *
- * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_action() with type=GoTo and PDF_create_annotation() with type=Link instead.
+ * @see PDF_create_action
  */
+#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_create_action() with type=GoTo and PDF_create_annotation() with type=Link instead.')]
 function PDF_add_locallink($pdf, $lowerleftx, $lowerlefty, $upperrightx, $upperrighty, $page, $dest){}
 
 /**
@@ -1752,9 +1759,9 @@ function PDF_add_nameddest($pdf, $name, $optlist){}
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-add-note.php
- *
- * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_annotation() with type=Text instead.
+ * @see PDF_create_annotation
  */
+#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_create_annotation() with type=Text instead.')]
 function PDF_add_note($pdf, $llx, $lly, $urx, $ury, $contents, $title, $icon, $open){}
 
 /**
@@ -1772,9 +1779,9 @@ function PDF_add_note($pdf, $llx, $lly, $urx, $ury, $contents, $title, $icon, $o
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-add-pdflink.php
- *
- * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_action() with type=GoToR and PDF_create_annotation() with type=Link instead.
+ * @see PDF_create_action
  */
+#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_create_action() with type=GoToR and PDF_create_annotation() with type=Link instead.')]
 function PDF_add_pdflink($pdf, $bottom_left_x, $bottom_left_y, $up_right_x, $up_right_y, $filename, $page, $dest){}
 
 /**
@@ -1831,10 +1838,10 @@ function PDF_add_thumbnail($pdf, $image){}
  *
  * @return bool
  *
- * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_action() with type=URI and PDF_create_annotation() with type=Link instead.
- *
  * @link https://secure.php.net/manual/en/function.pdf-add-weblink.php
+ * @see PDF_create_action
  */
+#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_create_action() with type=URI and PDF_create_annotation() with type=Link instead.')]
 function PDF_add_weblink($pdf, $lowerleftx, $lowerlefty, $upperrightx, $upperrighty, $url){}
 
 /**
@@ -1885,10 +1892,10 @@ function PDF_arcn($pdf, $x, $y, $r, $alpha, $beta){}
  *
  * @return bool
  *
- * @deprecated This function is deprecated since PDFlib version 6, use PDF_create_annotation() with type=FileAttachment instead.
- *
  * @link https://secure.php.net/manual/en/function.pdf-attach-file.php
+ * @see PDF_create_annotation
  */
+#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_create_annotation() with type=FileAttachment instead.')]
 function PDF_attach_file($pdf, $llx, $lly, $urx, $ury, $filename, $description, $author, $mimetype, $icon){}
 
 /**
@@ -1991,9 +1998,9 @@ function PDF_begin_page_ext($pdf, $width, $height, $optlist){}
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-begin-page.php
- *
- * @deprecated This function is deprecated since PDFlib version 6, use PDF_begin_page_ext() instead.
+ * @see PDF_begin_page_ext
  */
+#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_begin_page_ext() instead.')]
 function PDF_begin_page($pdf, $width, $height){}
 
 /**
@@ -2027,6 +2034,7 @@ function PDF_begin_pattern($pdf, $width, $height, $xstep, $ystep, $painttype){}
 function PDF_begin_template_ext($pdf, $width, $height, $optlist){}
 
 /**
+ * Start template definition [deprecated]
  * @param resource $pdf
  * @param float $width
  * @param float $height
@@ -2034,12 +2042,13 @@ function PDF_begin_template_ext($pdf, $width, $height, $optlist){}
  * @return int
  *
  * @link https://secure.php.net/manual/en/function.pdf-begin-template.php
- *
- * @deprecated This function is deprecated since PDFlib version 7, use PDF_begin_template_ext() instead.
+ * @see PDF_begin_template_ext
  */
+#[Deprecated('This function is deprecated since PDFlib version 7, use PDF_begin_template_ext() instead.')]
 function PDF_begin_template($pdf, $width, $height){}
 
 /**
+ * Draw a circle
  * @param resource $pdf
  * @param float $x
  * @param float $y
@@ -2052,6 +2061,7 @@ function PDF_begin_template($pdf, $width, $height){}
 function PDF_circle($pdf, $x, $y, $r){}
 
 /**
+ * Clip to current path
  * @param resource $pdf
  *
  * @return bool
@@ -2061,6 +2071,7 @@ function PDF_circle($pdf, $x, $y, $r){}
 function PDF_clip($pdf){}
 
 /**
+ * Close image
  * @param resource $pdf
  * @param int $image
  *
@@ -2083,29 +2094,33 @@ function PDF_close_image($pdf, $image){}
 function PDF_close_pdi_page($pdf, $page){}
 
 /**
+ * Close the input pdf document [deprecated]
  * @param resource $pdf
  * @param int $doc
  *
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-close-pdi.php
- *
- * @deprecated This function is deprecated since PDFlib version 7, use PDF_close_pdi_document() instead.
+ * @see PDF_close_pdi_document
  */
+#[Deprecated('This function is deprecated since PDFlib version 7, use PDF_close_pdi_document() instead.')]
 function PDF_close_pdi($pdf, $doc){}
 
 /**
+ * Close pdf resource [deprecated]
  * @param resource $pdf
  *
  * @return bool
  *
  * @link https://secure.php.net/manual/en/function.pdf-close.php
  *
- * @deprecated This function is deprecated since PDFlib version 6, use PDF_end_document() instead.
+ * @see PDF_end_document
  */
+#[Deprecated('This function is deprecated since PDFlib version 6, use PDF_end_document() instead.')]
 function PDF_close($pdf){}
 
 /**
+ * Close, fill and stroke current path
  * @param resource $pdf
  *
  * @return bool
@@ -2115,6 +2130,7 @@ function PDF_close($pdf){}
 function PDF_closepath_fill_stroke($pdf){}
 
 /**
+ * Close and stroke path
  * @param resource $pdf
  *
  * @return bool
@@ -2124,6 +2140,7 @@ function PDF_closepath_fill_stroke($pdf){}
 function PDF_closepath_stroke($pdf){}
 
 /**
+ * Close current path
  * @param resource $pdf
  *
  * @return bool
@@ -2133,6 +2150,7 @@ function PDF_closepath_stroke($pdf){}
 function PDF_closepath($pdf){}
 
 /**
+ * Concatenate a matrix to the ctm
  * @param resource $pdf
  * @param float $a
  * @param float $b
@@ -2148,6 +2166,7 @@ function PDF_closepath($pdf){}
 function PDF_concat($pdf, $a, $b, $c, $d, $e, $f){}
 
 /**
+ * Output text in next line
  * @param resource $pdf
  * @param string $text
  *
@@ -2158,6 +2177,7 @@ function PDF_concat($pdf, $a, $b, $c, $d, $e, $f){}
 function PDF_continue_text($pdf, $text){}
 
 /**
+ * Create 3d view
  * @param resource $pdf
  * @param string $username
  * @param string $optlist
@@ -2169,6 +2189,7 @@ function PDF_continue_text($pdf, $text){}
 function PDF_create_3dview($pdf, $username, $optlist){}
 
 /**
+ * Create action for objects or events
  * @param resource $pdf
  * @param string $type
  * @param string $optlist
@@ -2180,6 +2201,7 @@ function PDF_create_3dview($pdf, $username, $optlist){}
 function PDF_create_action($pdf, $type, $optlist){}
 
 /**
+ * Create rectangular annotation
  * @param resource $pdf
  * @param float $llx
  * @param float $lly
@@ -2195,6 +2217,7 @@ function PDF_create_action($pdf, $type, $optlist){}
 function PDF_create_annotation($pdf, $llx, $lly, $urx, $ury, $type, $optlist){}
 
 /**
+ * Create bookmar
  * @param resource $pdf
  * @param string $text
  * @param string $optlist
@@ -2206,6 +2229,7 @@ function PDF_create_annotation($pdf, $llx, $lly, $urx, $ury, $type, $optlist){}
 function PDF_create_bookmark($pdf, $text, $optlist){}
 
 /**
+ * Create form field
  * @param resource $pdf
  * @param float $llx
  * @param float $lly
@@ -2222,6 +2246,7 @@ function PDF_create_bookmark($pdf, $text, $optlist){}
 function PDF_create_field($pdf, $llx, $lly, $urx, $ury, $name, $type, $optlist){}
 
 /**
+ * Create form field group
  * @param resource $pdf
  * @param string $name
  * @param string $optlist
@@ -2233,6 +2258,7 @@ function PDF_create_field($pdf, $llx, $lly, $urx, $ury, $name, $type, $optlist){
 function PDF_create_fieldgroup($pdf, $name, $optlist){}
 
 /**
+ * Create graphics state object
  * @param resource $pdf
  * @param string $optlist
  *
@@ -2243,6 +2269,7 @@ function PDF_create_fieldgroup($pdf, $name, $optlist){}
 function PDF_create_gstate($pdf, $optlist){}
 
 /**
+ * Create pdflib virtual file
  * @param resource $pdf
  * @param string $filename
  * @param string $data
@@ -2255,6 +2282,7 @@ function PDF_create_gstate($pdf, $optlist){}
 function PDF_create_pvf($pdf, $filename, $data, $optlist){}
 
 /**
+ * Create textflow object
  * @param resource $pdf
  * @param string $text
  * @param string $optlist
@@ -2266,6 +2294,7 @@ function PDF_create_pvf($pdf, $filename, $data, $optlist){}
 function PDF_create_textflow($pdf, $text, $optlist){}
 
 /**
+ * Draw bezier curve
  * @param resource $pdf
  * @param float $x1
  * @param float $y1
@@ -2281,6 +2310,7 @@ function PDF_create_textflow($pdf, $text, $optlist){}
 function PDF_curveto($pdf, $x1, $y1, $x2, $y2, $x3, $y3){}
 
 /**
+ * Create layer definition
  * @param resource $pdf
  * @param string $name
  * @param string $optlist
@@ -2292,6 +2322,7 @@ function PDF_curveto($pdf, $x1, $y1, $x2, $y2, $x3, $y3){}
 function PDF_define_layer($pdf, $name, $optlist){}
 
 /**
+ * Delete pdflib virtual file
  * @param resource $pdf
  * @param string $filename
  *

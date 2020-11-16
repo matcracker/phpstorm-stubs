@@ -1,15 +1,23 @@
 <?php
 
+use JetBrains\PhpStorm\Deprecated;
+use JetBrains\PhpStorm\Immutable;
+use JetBrains\PhpStorm\Pure;
+
 /**
  * The <b>ReflectionParameter</b> class retrieves
  * information about function's or method's parameters.
- *
- * @property-read string $name Name of the parameter, same as calling the {@see ReflectionParameter::getName()} method
  *
  * @link https://php.net/manual/en/class.reflectionparameter.php
  */
 class ReflectionParameter implements Reflector
 {
+    /**
+     * @var string Name of the parameter, same as calling the {@see ReflectionParameter::getName()} method
+     */
+    #[Immutable]
+    public $name;
+
     /**
      * Construct
      *
@@ -33,9 +41,9 @@ class ReflectionParameter implements Reflector
      * as opposed to emitting it. Setting to {@see false} (the default) will do the
      * opposite.
      * @return string|null The exported reflection.
-     * @deprecated 7.4
      * @removed 8.0
      */
+    #[Deprecated(since: '7.4')]
     public static function export($function, $parameter, $return = false)
     {
     }
@@ -56,7 +64,8 @@ class ReflectionParameter implements Reflector
      * @link https://php.net/manual/en/reflectionparameter.getname.php
      * @return string The name of the reflected parameter.
      */
-    public function getName()
+    #[Pure]
+	public function getName()
     {
     }
 
@@ -66,7 +75,8 @@ class ReflectionParameter implements Reflector
      * @link https://php.net/manual/en/reflectionparameter.ispassedbyreference.php
      * @return bool {@see true} if the parameter is passed in by reference, otherwise {@see false}
      */
-    public function isPassedByReference()
+    #[Pure]
+	public function isPassedByReference()
     {
     }
 
@@ -89,7 +99,8 @@ class ReflectionParameter implements Reflector
      * @return ReflectionFunctionAbstract A {@see ReflectionFunctionAbstract} object.
      * @since 5.2.3
      */
-    public function getDeclaringFunction()
+    #[Pure]
+	public function getDeclaringFunction()
     {
     }
 
@@ -100,7 +111,8 @@ class ReflectionParameter implements Reflector
      * @return ReflectionClass|null A {@see ReflectionClass} object or {@see null} if
      * called on function.
      */
-    public function getDeclaringClass()
+    #[Pure]
+	public function getDeclaringClass()
     {
     }
 
@@ -109,9 +121,11 @@ class ReflectionParameter implements Reflector
      *
      * @link https://php.net/manual/en/reflectionparameter.getclass.php
      * @return ReflectionClass|null A {@see ReflectionClass} object.
-     * @deprecated 8.0 Use {@link ReflectionParameter::getType()} and the ReflectionType APIs should be usedinstead.
+     * @see ReflectionParameter::getType()
      */
-    public function getClass()
+    #[Deprecated(reason: "Use ReflectionParameter::getType() and the ReflectionType APIs should be used instead.", since: "8.0")]
+    #[Pure]
+	public function getClass()
     {
     }
 
@@ -134,7 +148,8 @@ class ReflectionParameter implements Reflector
      * parameter type is specified, {@see null} otherwise.
      * @since 7.0
      */
-    public function getType()
+    #[Pure]
+	public function getType()
     {
     }
 
@@ -143,9 +158,11 @@ class ReflectionParameter implements Reflector
      *
      * @link https://php.net/manual/en/reflectionparameter.isarray.php
      * @return bool {@see true} if an array is expected, {@see false} otherwise.
-     * @deprecated 8.0 Use {@link ReflectionParameter::getType()} and the ReflectionType APIs should be usedinstead.
+     * @see ReflectionParameter::getType()
      */
-    public function isArray()
+    #[Deprecated(reason: "Use ReflectionParameter::getType() and the ReflectionType APIs should be used instead.", since: "8.0")]
+    #[Pure]
+	public function isArray()
     {
     }
 
@@ -156,9 +173,11 @@ class ReflectionParameter implements Reflector
      * @return bool|null Returns {@see true} if the parameter is callable, {@see false}
      * if it is not or {@see null} on failure.
      * @since 5.4
-     * @deprecated 8.0 Use {@link ReflectionParameter::getType()} and the ReflectionType APIs should be usedinstead.
+     * @see ReflectionParameter::getType()
      */
-    public function isCallable()
+    #[Deprecated(reason: "Use ReflectionParameter::getType() and the ReflectionType APIs should be used instead.", since: "8.0")]
+    #[Pure]
+	public function isCallable()
     {
     }
 
@@ -180,7 +199,8 @@ class ReflectionParameter implements Reflector
      * @return int The position of the parameter, left to right, starting at position #0.
      * @since 5.2.3
      */
-    public function getPosition()
+    #[Pure]
+	public function getPosition()
     {
     }
 
@@ -191,7 +211,8 @@ class ReflectionParameter implements Reflector
      * @return bool Returns {@see true} if the parameter is optional, otherwise {@see false}
      * @since 5.0.3
      */
-    public function isOptional()
+    #[Pure]
+	public function isOptional()
     {
     }
 
@@ -202,7 +223,8 @@ class ReflectionParameter implements Reflector
      * @return bool Returns {@see true} if a default value is available, otherwise {@see false}
      * @since 5.0.3
      */
-    public function isDefaultValueAvailable()
+    #[Pure]
+	public function isDefaultValueAvailable()
     {
     }
 
@@ -214,7 +236,8 @@ class ReflectionParameter implements Reflector
      * @throws \ReflectionException if the parameter is not optional
      * @since 5.0.3
      */
-    public function getDefaultValue()
+    #[Pure]
+	public function getDefaultValue()
     {
     }
 
@@ -225,7 +248,8 @@ class ReflectionParameter implements Reflector
      * @return bool Returns {@see true} if the default value is constant, and {@see false} otherwise.
      * @since 5.4.6
      */
-    public function isDefaultValueConstant()
+    #[Pure]
+	public function isDefaultValueConstant()
     {
     }
 
@@ -237,7 +261,8 @@ class ReflectionParameter implements Reflector
      * @throws \ReflectionException if the parameter is not optional
      * @since 5.4.6
      */
-    public function getDefaultValueConstantName()
+    #[Pure]
+	public function getDefaultValueConstantName()
     {
     }
 
@@ -248,7 +273,8 @@ class ReflectionParameter implements Reflector
      * @return bool Returns {@see true} if the function is variadic, otherwise {@see false}
      * @since 5.6
      */
-    public function isVariadic()
+    #[Pure]
+	public function isVariadic()
     {
     }
 
@@ -258,7 +284,8 @@ class ReflectionParameter implements Reflector
      * @return bool Returns {@see true} if the parameter promoted or {@see false} instead
      * @since 8.0
      */
-    public function isPromoted()
+    #[Pure]
+	public function isPromoted()
     {
     }
 
@@ -270,7 +297,8 @@ class ReflectionParameter implements Reflector
      * @return ReflectionAttribute[]
      * @since 8.0
      */
-    public function getAttributes($name = null, $flags = 0)
+    #[Pure]
+	public function getAttributes($name = null, $flags = 0)
     {
     }
 

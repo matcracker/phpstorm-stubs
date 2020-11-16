@@ -1,6 +1,7 @@
 <?php
 
 // Start of ldap v.
+use JetBrains\PhpStorm\Deprecated;
 
 /**
  * PASSWD extended operation helper
@@ -24,7 +25,7 @@ function ldap_exop_passwd ($ldap , $user = "" , $old_password = "" , $new_passwo
  * @return int|false From RFC: The responseTtl field is the time in seconds which the server chooses to have as the time-to-live field for that entry. It must not be any smaller than that which the client requested, and it may be larger. However, to allow servers to maintain a relatively accurate directory, and to prevent clients from abusing the dynamic extensions, servers are permitted to shorten a client-requested time-to-live value, down to a minimum of 86400 seconds (one day). FALSE will be returned on error.
  * @since 7.3
  */
-function ldap_exop_refresh ($ldap, $dn ,$ttl) {}
+function ldap_exop_refresh ($ldap, $dn, $ttl) {}
 
 /**
  * WHOAMI extended operation helper
@@ -793,10 +794,10 @@ function ldap_compare ($ldap, $dn, $attribute, $value, $controls = []) {}
  * @param string $sortfilter <p>
  * The attribute to use as a key in the sort.
  * </p>
- * @deprecated 7.0
  * @removed 8.0
  * @return bool
  */
+#[Deprecated(since: "7.0")]
 function ldap_sort ($ldap, $result, $sortfilter) {}
 
 /**
@@ -1101,9 +1102,9 @@ function ldap_set_rebind_proc ($ldap, callable $callback) {}
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  * @since 5.4
- * @deprecated 7.4
  * @removed 8.0
  */
+#[Deprecated(since: "7.4")]
 function ldap_control_paged_result ($ldap, $pagesize, $iscritical = false, $cookie = "") {}
 
 /**
@@ -1121,9 +1122,9 @@ function ldap_control_paged_result ($ldap, $pagesize, $iscritical = false, $cook
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  * @since 5.4
- * @deprecated 7.4
- * @removed 8.0
+ * @removed 8.0
  */
+#[Deprecated(since: "7.4")]
 function ldap_control_paged_result_response ($ldap, $result, &$cookie = null, &$estimated = null) {}
 
 /**
@@ -1145,7 +1146,7 @@ function ldap_escape ($value, $ignore = "", $flags = 0) {}
  * An LDAP link identifier, returned by
  * {@see ldap_connect()}.
  * </p>
- * @param $dn <p>The distinguished name of an LDAP entity.</p>
+ * @param  string $dn <p>The distinguished name of an LDAP entity.</p>
  * @param $modifications_info <p>An array that specifies the modifications to make. Each entry in this
  * array is an associative array with two or three keys:
  * <em>attrib</em> maps to the name of the attribute to modify,
@@ -1216,7 +1217,7 @@ function ldap_escape ($value, $ignore = "", $flags = 0) {}
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  * @since 5.4
  */
-function ldap_modify_batch ($ldap , $dn , $modifications_info, $controls = []) {}
+function ldap_modify_batch ($ldap , string $dn , $modifications_info, $controls = []) {}
 
 /**
  * @param resource $ldap
