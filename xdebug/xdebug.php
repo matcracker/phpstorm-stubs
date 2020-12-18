@@ -9,34 +9,34 @@ function xdebug_info() {}
  * Returns an array of ALL valid ini options with values and is not the same as ini_get_all() which returns only
  * registered ini options. Only useful for devs to debug php.ini scanner/parser!
  */
-function config_get_hash(){}
+function config_get_hash(): array {}
 
 /**
  * Returns the stack depth level.
  * The main body of a script is level 0 and each include and/or function call adds one to the stack depth level.
  * @return int
  */
-function xdebug_get_stack_depth () {}
+function xdebug_get_stack_depth(): int {}
 
 /**
  * Returns an array which resembles the stack trace up to this point.
  * @return array
  */
-function xdebug_get_function_stack () {}
+function xdebug_get_function_stack(): array {}
 
 /**
  * Displays the current function stack, in a similar way as what Xdebug would display in an error situation.
  * @param string $message
  * @param int $options    A bit mask of the following constants: XDEBUG_STACK_NO_DESC
- * @return array
+ * @return void
  */
-function xdebug_print_function_stack ($message = '', $options = 0) {}
+function xdebug_print_function_stack (string $message = '', int $options = 0) {}
 
 /**
  * Returns an array where each element is a variable name which is defined in the current scope.
  * @return array
  */
-function xdebug_get_declared_vars () {}
+function xdebug_get_declared_vars (): array {}
 
 /**
  * This function returns the filename from where the current function/method was executed from, or NULL
@@ -44,7 +44,7 @@ function xdebug_get_declared_vars () {}
  * @param int $depth
  * @return mixed
  */
-function xdebug_call_file ($depth = 2) {}
+function xdebug_call_file (int $depth = 2) {}
 
 /**
  *  This function returns the name of the class that defined the current method, NULL if the stack frame does not exist,
@@ -52,7 +52,7 @@ function xdebug_call_file ($depth = 2) {}
  * @param int $depth
  * @return mixed
  */
-function xdebug_call_class ($depth = 2) {}
+function xdebug_call_class (int $depth = 2) {}
 
 /**
  * This function returns the name of the current function/method, NULL if the stack frame does not exist, or FALSE
@@ -60,7 +60,7 @@ function xdebug_call_class ($depth = 2) {}
  * @param int $depth
  * @return mixed
  */
-function xdebug_call_function ($depth = 2) {}
+function xdebug_call_function (int $depth = 2) {}
 
 /**
  * This function returns the line number from where the current function/method was called from, or NULL
@@ -68,17 +68,17 @@ function xdebug_call_function ($depth = 2) {}
  * @param int $depth
  * @return mixed
  */
-function xdebug_call_line ($depth = 2) {}
+function xdebug_call_line (int $depth = 2) {}
 
 /**
  * This function starts the monitoring of functions that were given in a list as argument to this function.
  * Function monitoring allows you to find out where in your code the functions that you provided as argument are called from.
  * This can be used to track where old, or, discouraged functions are used.
  * The defined functions are case sensitive, and a dynamic call to a static method will not be caught.
- * @param string[] $list_of_functions_to_monitor
+ * @param string[] $listOfFunctionsToMonitor
  * @return void
  */
-function xdebug_start_function_monitor ( array $list_of_functions_to_monitor ) {}
+function xdebug_start_function_monitor ( array $listOfFunctionsToMonitor ) {}
 
 /**
  * This function stops the function monitor.
@@ -91,14 +91,15 @@ function xdebug_stop_function_monitor () {}
  * Returns a structure which contains information about where the monitored functions were executed in your script.
  * @return array
  */
-function xdebug_get_monitored_functions () {}
+function xdebug_get_monitored_functions(): array {}
 
 /**
  * This function displays structured information about one or more expressions that includes its type and value.
  * Arrays are explored recursively with values.
+ * @param mixed $var
  * @return void
  */
-function xdebug_var_dump ($var) {}
+function xdebug_var_dump (mixed ...$variable) {}
 
 /**
  * This function displays structured information about one or more variables that includes its type, value and refcount information.
@@ -109,10 +110,10 @@ function xdebug_var_dump ($var) {}
  * accesses all the properties directly without having to deal with actually passing a variable to a function.
  * The result is that the information that this function returns is much more accurate than PHP's own function
  * for showing zval information.
- * @param string $varName
+ * @param string ...$varname
  * @return void
  */
-function xdebug_debug_zval ($varName) {}
+function xdebug_debug_zval (string ...$varname) {}
 
 /**
  * This function displays structured information about one or more variables that includes its type,
@@ -120,10 +121,10 @@ function xdebug_debug_zval ($varName) {}
  * Arrays are explored recursively with values.
  * The difference with xdebug_debug_zval() is that the information is not displayed through a web server API layer,
  * but directly shown on stdout (so that when you run it with apache in single process mode it ends up on the console).
- * @param string $varName
+ * @param string ...$varname
  * @return void
  */
-function xdebug_debug_zval_stdout ($varName) {}
+function xdebug_debug_zval_stdout (string ...$varname) {}
 
 /**
  * Enable showing stack traces on error conditions.
@@ -168,17 +169,17 @@ function xdebug_stop_error_collection () {}
  * This function returns all errors from the collection buffer that contains all errors that were stored there when error collection was started with xdebug_start_error_collection().
  * By default this function will not clear the error collection buffer. If you pass true as argument to this function then the buffer will be cleared as well.
  * This function returns a string containing all collected errors formatted as an "Xdebug table".
- * @param bool $clean
+ * @param bool $emptyList
  * @return string
  */
-function xdebug_get_collected_errors ($clean = false) {}
+function xdebug_get_collected_errors(bool $emptyList = false): array {}
 
 /**
  * This function makes the debugger break on the specific line as if a normal file/line breakpoint was set on this line.
  *
  * @return bool
  */
-function xdebug_break () {}
+function xdebug_break (): bool {}
 
 /**
  * Start tracing function calls from this point to the file in the trace_file parameter.
@@ -186,32 +187,32 @@ function xdebug_break () {}
  * In case a file name is given as first parameter, the name is relative to the current working directory.
  * This current working directory might be different than you expect it to be, so please use an absolute path in case you specify a file name.
  * Use the PHP function getcwd() to figure out what the current working directory is.
- * @param $trace_file
- * @param $options
- * @return void
+ * @param string|null $traceFile
+ * @param int $options
+ * @return string
  */
-function xdebug_start_trace ($trace_file, $options = 0) {}
+function xdebug_start_trace(?string $traceFile, int $options = 0): string {}
 
 /**
  * Stop tracing function calls and closes the trace file.
  *
- * @return void
+ * @return string
  */
-function xdebug_stop_trace () {}
+function xdebug_stop_trace(): string {}
 
 /**
  * Returns the name of the file which is used to trace the output of this script too.
  * This is useful when xdebug.auto_trace is enabled.
- * @return string
+ * @return string|null
  */
-function xdebug_get_tracefile_name () {}
+function xdebug_get_tracefile_name (): ?string {}
 
 /**
  * Returns the name of the file which is used to save profile information to.
  *
- * @return string
+ * @return string|false
  */
-function xdebug_get_profiler_filename () {}
+function xdebug_get_profiler_filename (): string|false {}
 
 /**
  * @return bool
@@ -230,7 +231,7 @@ function xdebug_clear_aggr_profiling_data () {}
  *
  * @return int
  */
-function xdebug_memory_usage () {}
+function xdebug_memory_usage(): int {}
 
 /**
  * Returns the maximum amount of memory the script used until now.
@@ -239,14 +240,14 @@ function xdebug_memory_usage () {}
  *
  * @return int
  */
-function xdebug_peak_memory_usage () {}
+function xdebug_peak_memory_usage(): int {}
 
 /**
  * Returns the current time index since the starting of the script in seconds.
  *
  * @return float
  */
-function xdebug_time_index () {}
+function xdebug_time_index(): float {}
 
 /**
  * This function starts gathering the information for code coverage.
@@ -258,22 +259,22 @@ function xdebug_time_index () {}
  * @param int $options
  * @return void
  */
-function xdebug_start_code_coverage ($options = 0) {}
+function xdebug_start_code_coverage (int $options = 0) {}
 
 /**
  * This function stops collecting information, the information in memory will be destroyed.
  * If you pass 0 ("false") as argument, then the code coverage information will not be destroyed so that you can resume
  * the gathering of information with the xdebug_start_code_coverage() function again.
- * @param int $cleanup Destroy collected information in memory
+ * @param bool $cleanUp Destroy collected information in memory
  * @return void
  */
-function xdebug_stop_code_coverage ($cleanup = 1) {}
+function xdebug_stop_code_coverage (bool $cleanUp = false) {}
 
 /**
  * Returns whether code coverage is active.
  * @return bool
  */
-function xdebug_code_coverage_started () {}
+function xdebug_code_coverage_started(): bool {}
 
 /**
  * Returns a structure which contains information about which lines
@@ -281,14 +282,14 @@ function xdebug_code_coverage_started () {}
  *
  * @return array
  */
-function xdebug_get_code_coverage () {}
+function xdebug_get_code_coverage(): array {}
 
 /**
  * Returns the number of functions called, including constructors, desctructors and methods.
  *
  * @return int
  */
-function xdebug_get_function_count () {}
+function xdebug_get_function_count(): int {}
 
 /**
  * This function dumps the values of the elements of the super globals
@@ -296,7 +297,7 @@ function xdebug_get_function_count () {}
  *
  * @return void
  */
-function xdebug_dump_superglobals () {}
+function xdebug_dump_superglobals(): void {}
 
 /**
  * Returns all the headers that are set with PHP's header() function,
@@ -304,7 +305,7 @@ function xdebug_dump_superglobals () {}
  *
  * @return array
  */
-function xdebug_get_headers () {}
+function xdebug_get_headers(): array {}
 
 function xdebug_get_formatted_function_stack() {}
 
@@ -315,43 +316,44 @@ function xdebug_get_formatted_function_stack() {}
  *
  * @return bool
  */
-function xdebug_is_debugger_active() {}
+function xdebug_is_debugger_active(): bool {}
 
 /**
  * @param string|null $gcstatsFile
  * @return mixed
  */
-function xdebug_start_gcstats($gcstatsFile = null ) {}
+function xdebug_start_gcstats(?string $gcstatsFile = null ) {}
 
 /**
  * Stop garbage collection statistics collection and closes the output file.
  * @return string The function returns the filename of the file where the statistics were written to.
  */
-function xdebug_stop_gcstats() {}
+function xdebug_stop_gcstats(): string {}
 
 /**
  * Returns the name of the file which is used to save garbage collection information to, or false if
  * statistics collection is not active.
  * @return mixed
  */
-function xdebug_get_gcstats_filename() {}
+function xdebug_get_gcstats_filename(): mixed {}
 
 /**
  * @return int
  */
-function xdebug_get_gc_run_count() {}
+function xdebug_get_gc_run_count(): int {}
 
 /**
  * @return int
  */
-function xdebug_get_gc_total_collected_roots() {}
+function xdebug_get_gc_total_collected_roots(): int {}
 
 /**
  * @param int   $group
  * @param int   $listType
  * @param array $configuration
+ * @return void
  */
-function xdebug_set_filter($group, $listType, $configuration ) {}
+function xdebug_set_filter(int $group, int $listType, array $configuration ) {}
 
 define ('XDEBUG_STACK_NO_DESC', 1);
 define ('XDEBUG_TRACE_APPEND', 1);

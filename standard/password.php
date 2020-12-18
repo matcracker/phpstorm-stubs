@@ -38,6 +38,7 @@
  */
 
 use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 
 define("PASSWORD_DEFAULT", "2y");
 
@@ -48,7 +49,7 @@ define("PASSWORD_DEFAULT", "2y");
  * <p>
  * Values for this constant:
  * </p>
- *<ul>
+ * <ul>
  * <li>
  * PHP 5.6.0 - <b>PASSWORD_BCRYPT_DEFAULT_COST</b>
  * </li>
@@ -72,7 +73,7 @@ define("PASSWORD_BCRYPT_DEFAULT_COST", 10);
  * <p>
  * Values for this constant:
  * </p>
- *<ul>
+ * <ul>
  * <li>
  * PHP 5.5.0 - <b>PASSWORD_BCRYPT</b>
  * </li>
@@ -144,7 +145,7 @@ define('PASSWORD_ARGON2_PROVIDER', 'standard');
  * Returns information about the given hash
  * @link https://secure.php.net/manual/en/function.password-get-info.php
  * @param string $hash A hash created by password_hash().
- * @return array Returns an associative array with three elements:
+ * @return array|null Returns an associative array with three elements:
  * <ul>
  * <li>
  * <em>algo</em>, which will match a
@@ -161,7 +162,8 @@ define('PASSWORD_ARGON2_PROVIDER', 'standard');
  * @since 5.5
  */
 #[ArrayShape(["algo" => "int", "algoName" => "string", "options" => "array"])]
-function password_get_info ($hash) {}
+function password_get_info (string $hash): ?array
+{}
 
 /**
  * (PHP 5 &gt;= 5.5.0, PHP 5)<br/>
@@ -169,8 +171,8 @@ function password_get_info ($hash) {}
  * Creates a password hash.
  * @link https://secure.php.net/manual/en/function.password-hash.php
  * @param string $password The user's password.
- * @param int|string $algo A <a href="https://secure.php.net/manual/en/password.constants.php" class="link">password algorithm constant</a>  denoting the algorithm to use when hashing the password.
- * @param array $options [optional] <p> An associative array containing options. See the <a href="https://secure.php.net/manual/en/password.constants.php" class="link">password algorithm constants</a> for documentation on the supported options for each algorithm.
+ * @param string|int|null $algo A <a href="https://secure.php.net/manual/en/password.constants.php" class="link">password algorithm constant</a>  denoting the algorithm to use when hashing the password.
+ * @param array $options [optional] <p> An associative array containing options. See the <a href="https://secure.php.net/manual/en/password.constants.php" class="link">password algorithm constants</a> for documentation on the supported options for each algorithm.</p>
  * If omitted, a random salt will be created and the default cost will be used.
  * <b>Warning<b>
  * <p>
@@ -180,18 +182,21 @@ function password_get_info ($hash) {}
  * @return string|false|null Returns the hashed password, or FALSE on failure, or null if the algorithm is invalid
  * @since 5.5
  */
-function password_hash ($password, $algo, $options = []) {}
+#[LanguageLevelTypeAware(["8.0" => "string"], default: "string|false|null")]
+function password_hash (string $password, string|int|null $algo, array $options = [])
+{}
 
 /**
  * Checks if the given hash matches the given options.
  * @link https://secure.php.net/manual/en/function.password-needs-rehash.php
  * @param string $hash A hash created by password_hash().
- * @param int $algo A <a href="https://secure.php.net/manual/en/password.constants.php" class="link">password algorithm constant</a> denoting the algorithm to use when hashing the password.
- * @param array $options [optional] <p> An associative array containing options. See the password algorithm constants for documentation on the supported options for each algorithm.
+ * @param string|int|null $algo A <a href="https://secure.php.net/manual/en/password.constants.php" class="link">password algorithm constant</a> denoting the algorithm to use when hashing the password.
+ * @param array $options [optional] <p> An associative array containing options. See the password algorithm constants for documentation on the supported options for each algorithm.</p>
  * @return bool Returns TRUE if the hash should be rehashed to match the given algo and options, or FALSE otherwise.
  * @since 5.5
  */
-function password_needs_rehash ($hash, $algo, $options = []) {}
+function password_needs_rehash (string $hash, string|int|null $algo, array $options = []): bool
+{}
 
 /**
  * Checks if the given hash matches the given options.
@@ -201,12 +206,14 @@ function password_needs_rehash ($hash, $algo, $options = []) {}
  * @return bool Returns TRUE if the password and hash match, or FALSE otherwise.
  * @since 5.5
  */
-function password_verify ($password, $hash) {}
+function password_verify (string $password, string $hash): bool
+{}
 
 /**
  * Return a complete list of all registered password hashing algorithms.
  * @return string[]
  * @since 7.4
  */
-function password_algos(){}
+function password_algos(): array
+{}
 // End of password v.

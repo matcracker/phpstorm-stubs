@@ -7,31 +7,31 @@ use JetBrains\PhpStorm\Pure;
 class finfo  {
 
 	/**
-	 * @param int $options [optional]
-	 * @param string $arg [optional]
+	 * @param int $flags [optional]
+	 * @param string $magic_database [optional]
 	 */
-	public function __construct ($options, $arg) {}
+	public function __construct ($flags, $magic_database) {}
 
 	/**
 	 * (PHP &gt;= 5.3.0, PECL fileinfo &gt;= 0.1.0)<br/>
 	 * Set libmagic configuration options
 	 * @link https://php.net/manual/en/function.finfo-set-flags.php
-	 * @param int $options <p>
+	 * @param int $flags <p>
 	 * One or disjunction of more Fileinfo
 	 * constants.
 	 * </p>
 	 * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
 	 */
-	public function set_flags ($options) {}
+	public function set_flags ($flags) {}
 
 	/**
 	 * (PHP &gt;= 5.3.0, PECL fileinfo &gt;= 0.1.0)<br/>
 	 * Return information about a file
 	 * @link https://php.net/manual/en/function.finfo-file.php
-	 * @param string $file_name [optional] <p>
+	 * @param string $filename [optional] <p>
 	 * Name of a file to be checked.
 	 * </p>
-	 * @param int $options [optional] <p>
+	 * @param int $flags [optional] <p>
 	 * One or disjunction of more Fileinfo
 	 * constants.
 	 * </p>
@@ -42,7 +42,7 @@ class finfo  {
 	 * <i>filename</i> argument, or <b>FALSE</b> if an error occurred.
 	 */
 	#[Pure]
-	public function file ($file_name = null, $options = FILEINFO_NONE, $context = null) {}
+	public function file ($filename = null, $flags = FILEINFO_NONE, $context = null) {}
 
 	/**
 	 * (PHP 5 &gt;= 5.3.0, PECL fileinfo &gt;= 0.1.0)<br/>
@@ -51,7 +51,7 @@ class finfo  {
 	 * @param string $string [optional] <p>
 	 * Content of a file to be checked.
 	 * </p>
-	 * @param int $options [optional] <p>
+	 * @param int $flags [optional] <p>
 	 * One or disjunction of more Fileinfo
 	 * constants.
 	 * </p>
@@ -60,7 +60,7 @@ class finfo  {
 	 * argument, or <b>FALSE</b> if an error occurred.
 	 */
 	#[Pure]
-	public function buffer ($string = null, $options = FILEINFO_NONE, $context = null) {}
+	public function buffer ($string = null, $flags = FILEINFO_NONE, $context = null) {}
 
 }
 
@@ -82,7 +82,8 @@ class finfo  {
  * </p>
  * @return resource|false a magic database resource on success or <b>FALSE</b> on failure.
  */
-function finfo_open ($flags = null, $magic_database = null) {}
+function finfo_open (int $flags, string $magic_database)
+{}
 
 /**
  * (PHP &gt;= 5.3.0, PECL fileinfo &gt;= 0.1.0)<br/>
@@ -93,7 +94,8 @@ function finfo_open ($flags = null, $magic_database = null) {}
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function finfo_close ($finfo) {}
+function finfo_close ($finfo): bool
+{}
 
 /**
  * (PHP &gt;= 5.3.0, PECL fileinfo &gt;= 0.1.0)<br/>
@@ -108,7 +110,8 @@ function finfo_close ($finfo) {}
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function finfo_set_flags ($finfo, $flags) {}
+function finfo_set_flags ($finfo, int $flags): bool
+{}
 
 /**
  * (PHP &gt;= 5.3.0, PECL fileinfo &gt;= 0.1.0)<br/>
@@ -127,10 +130,11 @@ function finfo_set_flags ($finfo, $flags) {}
  * @param resource $context [optional] <p>
  * For a description of contexts, refer to .
  * </p>
- * @return mixed a textual description of the contents of the
+ * @return string|false a textual description of the contents of the
  * <i>filename</i> argument, or <b>FALSE</b> if an error occurred.
  */
-function finfo_file ($finfo, $filename, $flags = null, $context = null) {}
+function finfo_file ($finfo, string $filename, int $flags, $context): string|false
+{}
 
 /**
  * (PHP 5 &gt;= 5.3.0, PECL fileinfo &gt;= 0.1.0)<br/>
@@ -142,20 +146,14 @@ function finfo_file ($finfo, $filename, $flags = null, $context = null) {}
  * @param string $string <p>
  * Content of a file to be checked.
  * </p>
- * @param int $flags [optional] <p>
- * One or disjunction of more Fileinfo
- * constants.
- * </p>
- * @param resource $context [optional] <p>
- * </p>
- * @param string $string
  * @param int $flags [optional] One or disjunction of more
  * <a href="https://php.net/manual/en/fileinfo.constants.php">Fileinfo</a> constants.
  * @param resource $context [optional]
  * @return string|false a textual description of the <i>string</i>
  * argument, or <b>FALSE</b> if an error occurred.
  */
-function finfo_buffer ($finfo , $string, $flags = FILEINFO_NONE, $context = null) {}
+function finfo_buffer ($finfo , string $string, int $flags = FILEINFO_NONE, $context): string|false
+{}
 
 /**
  * Detect MIME Content-type for a file
@@ -163,10 +161,11 @@ function finfo_buffer ($finfo , $string, $flags = FILEINFO_NONE, $context = null
  * @param string $filename <p>
  * Path to the tested file.
  * </p>
- * @return string the content type in MIME format, like
+ * @return string|false the content type in MIME format, like
  * text/plain or application/octet-stream.
  */
-function mime_content_type ($filename) {}
+function mime_content_type ($filename): string|false
+{}
 
 
 /**

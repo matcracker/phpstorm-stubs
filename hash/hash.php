@@ -1,6 +1,7 @@
 <?php
 
 // Start of hash v.1.0
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 use JetBrains\PhpStorm\Pure;
 
 /**
@@ -17,12 +18,13 @@ use JetBrains\PhpStorm\Pure;
  * When set to <b>TRUE</b>, outputs raw binary data.
  * <b>FALSE</b> outputs lowercase hexits.
  * </p>
- * @return string a string containing the calculated message digest as lowercase hexits
+ * @return string|false a string containing the calculated message digest as lowercase hexits
  * unless <i>raw_output</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
  */
 #[Pure]
-function hash ($algo, $data, $binary = false) {}
+function hash (string $algo, string $data, bool $binary = false): string|false
+{}
 
 /**
  * Timing attack safe string comparison
@@ -33,7 +35,8 @@ function hash ($algo, $data, $binary = false) {}
  * @since 5.6
  */
 #[Pure]
-function hash_equals($known_string, $user_string) {}
+function hash_equals(string $known_string, string $user_string): bool
+{}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
@@ -49,12 +52,13 @@ function hash_equals($known_string, $user_string) {}
  * When set to <b>TRUE</b>, outputs raw binary data.
  * <b>FALSE</b> outputs lowercase hexits.
  * </p>
- * @return string a string containing the calculated message digest as lowercase hexits
+ * @return string|false a string containing the calculated message digest as lowercase hexits
  * unless <i>raw_output</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
  */
 #[Pure]
-function hash_file ($algo, $filename, $binary = false) {}
+function hash_file (string $algo, string $filename, bool $binary = false): string|false
+{}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
@@ -74,12 +78,13 @@ function hash_file ($algo, $filename, $binary = false) {}
  * When set to <b>TRUE</b>, outputs raw binary data.
  * <b>FALSE</b> outputs lowercase hexits.
  * </p>
- * @return string a string containing the calculated message digest as lowercase hexits
+ * @return string|false a string containing the calculated message digest as lowercase hexits
  * unless <i>raw_output</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
  */
 #[Pure]
-function hash_hmac ($algo, $data, $key, $binary = false) {}
+function hash_hmac (string $algo, string $data, string $key, bool $binary = false): string|false
+{}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
@@ -99,12 +104,13 @@ function hash_hmac ($algo, $data, $key, $binary = false) {}
  * When set to <b>TRUE</b>, outputs raw binary data.
  * <b>FALSE</b> outputs lowercase hexits.
  * </p>
- * @return string a string containing the calculated message digest as lowercase hexits
+ * @return string|false a string containing the calculated message digest as lowercase hexits
  * unless <i>raw_output</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
  */
 #[Pure]
-function hash_hmac_file ($algo, $data, $key, $binary = false) {}
+function hash_hmac_file (string $algo, string $data, string $key, bool $binary = false): string|false
+{}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
@@ -129,7 +135,9 @@ function hash_hmac_file ($algo, $data, $key, $binary = false) {}
  * and <b>hash_final</b>.
  */
 #[Pure]
-function hash_init ($algo, $flags = 0, $key = null) {}
+#[LanguageLevelTypeAware(["7.2" => "HashContext"], default: "resource")]
+function hash_init (string $algo, int $flags = 0, string $key)
+{}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
@@ -143,7 +151,8 @@ function hash_init ($algo, $flags = 0, $key = null) {}
  * </p>
  * @return bool <b>TRUE</b>.
  */
-function hash_update ($context, $data) {}
+function hash_update (#[LanguageLevelTypeAware(["8.0" => "HashContext"], default: "resource")] $context, string $data): bool
+{}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
@@ -161,13 +170,14 @@ function hash_update ($context, $data) {}
  * </p>
  * @return int Actual number of bytes added to the hashing context from <i>handle</i>.
  */
-function hash_update_stream ($context, $stream, $length = -1) {}
+function hash_update_stream (#[LanguageLevelTypeAware(["8.0" => "HashContext"], default: "resource")] $context, $stream, int $length = -1): int
+{}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
  * Pump data into an active hashing context from a file
  * @link https://php.net/manual/en/function.hash-update-file.php
- * @param resource $context <p>
+ * @param HashContext|resource $context <p>
  * Hashing context returned by <b>hash_init</b>.
  * </p>
  * @param string $filename <p>
@@ -178,7 +188,8 @@ function hash_update_stream ($context, $stream, $length = -1) {}
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function hash_update_file ($context, $filename, $stream_context = null) {}
+function hash_update_file (#[LanguageLevelTypeAware(["8.0" => "HashContext"], default: "resource")] $context, string $filename, $stream_context): bool
+{}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
@@ -195,7 +206,8 @@ function hash_update_file ($context, $filename, $stream_context = null) {}
  * unless <i>raw_output</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
  */
-function hash_final ($context, $binary = false) {}
+function hash_final (#[LanguageLevelTypeAware(["8.0" => "HashContext"], default: "resource")] $context, bool $binary = false): string
+{}
 
 /**
  * Copy hashing context
@@ -206,7 +218,9 @@ function hash_final ($context, $binary = false) {}
  * @return HashContext|resource a copy of Hashing Context resource.
  */
 #[Pure]
-function hash_copy ($context) {}
+#[LanguageLevelTypeAware(["7.2" => "HashContext"], default: "resource")]
+function hash_copy (#[LanguageLevelTypeAware(["7.2" => "HashContext"], default: "resource")] $context)
+{}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
@@ -216,7 +230,8 @@ function hash_copy ($context) {}
  * hashing algorithms.
  */
 #[Pure]
-function hash_algos () {}
+function hash_algos (): array
+{}
 
 
 /**
@@ -231,7 +246,7 @@ function hash_algos () {}
  * </blockquote>
  * @param string $key <p>Input keying material (raw binary). Cannot be empty.</p>
  * @param int $length [optional] <p>Desired output length in bytes. Cannot be greater than 255 times the chosen hash function size.
- * If <b>length</b> is 0, the output length will default to the chosen hash function size.
+ * If <b>length</b> is 0, the output length will default to the chosen hash function size.</p>
  * @param string $info [optional] <p>Application/context-specific info string.</p>
  * @param string $salt [optional] <p>Salt to use during derivation. While optional, adding random salt significantly improves the strength of HKDF.</p>
  * @return string|false <p>Returns a string containing a raw binary representation of the derived key (also known as output keying material - OKM); or <b>FALSE</b> on failure.</p>
@@ -240,7 +255,9 @@ function hash_algos () {}
  * @link https://php.net/manual/en/function.hash-hkdf.php
  */
 #[Pure]
-function hash_hkdf(string $algo , string $key, int $length = 0, string $info = '', string $salt = '') {}
+#[LanguageLevelTypeAware(["8.0" => "string"], default: "string|false")]
+function hash_hkdf(string $algo , string $key, int $length = 0, string $info = '', string $salt = '')
+{}
 
 /**
  * Return a list of registered hashing algorithms suitable for hash_hmac
@@ -249,7 +266,8 @@ function hash_hkdf(string $algo , string $key, int $length = 0, string $info = '
  * @return string[] Returns a numerically indexed array containing the list of supported hashing algorithms suitable for {@see hash_hmac()}.
  */
 #[Pure]
-function hash_hmac_algos() {}
+function hash_hmac_algos(): array
+{}
 
 /**
  * Generate a PBKDF2 key derivation of a supplied password
@@ -275,13 +293,14 @@ function hash_hmac_algos() {}
  * @param bool $binary [optional] <p>
  * When set to TRUE, outputs raw binary data. FALSE outputs lowercase hexits.
  * </p>
- * @return mixed a string containing the derived key as lowercase hexits unless
+ * @return string a string containing the derived key as lowercase hexits unless
  * <i>raw_output</i> is set to <b>TRUE</b> in which case the raw
  * binary representation of the derived key is returned.
  * @since 5.5
  */
 #[Pure]
-function hash_pbkdf2 ($algo, $password, $salt, $iterations, $length = 0, $binary = false) {}
+function hash_pbkdf2 (string $algo, string $password, string $salt, int $iterations, int $length = 0, bool $binary = false): string
+{}
 
 /**
  * Generates a key
@@ -306,7 +325,8 @@ function hash_pbkdf2 ($algo, $password, $salt, $iterations, $length = 0, $binary
  * @return string|false the generated key as a string, or <b>FALSE</b> on error.
  */
 #[Pure]
-function mhash_keygen_s2k ($algo, $password, $salt, $length) {}
+function mhash_keygen_s2k (int $algo, string $password, string $salt, int $length): string|false
+{}
 
 /**
  * Gets the block size of the specified hash
@@ -318,7 +338,8 @@ function mhash_keygen_s2k ($algo, $password, $salt, $length) {}
  * does not exist.
  */
 #[Pure]
-function mhash_get_block_size ($algo) {}
+function mhash_get_block_size (int $algo): int|false
+{}
 
 /**
  * Gets the name of the specified hash
@@ -329,7 +350,8 @@ function mhash_get_block_size ($algo) {}
  * @return string|false the name of the hash or <b>FALSE</b>, if the hash does not exist.
  */
 #[Pure]
-function mhash_get_hash_name ($algo) {}
+function mhash_get_hash_name (int $algo): string|false
+{}
 
 /**
  * Gets the highest available hash ID
@@ -338,7 +360,8 @@ function mhash_get_hash_name ($algo) {}
  * hash ID.
  */
 #[Pure]
-function mhash_count () {}
+function mhash_count (): int
+{}
 
 /**
  * Computes hash
@@ -349,17 +372,18 @@ function mhash_count () {}
  * @param string $data <p>
  * The user input, as a string.
  * </p>
- * @param string $key [optional] <p>
+ * @param string|null $key [optional] <p>
  * If specified, the function will return the resulting HMAC instead.
  * HMAC is keyed hashing for message authentication, or simply a message
  * digest that depends on the specified key. Not all algorithms
  * supported in mhash can be used in HMAC mode.
  * </p>
- * @return string the resulting hash (also called digest) or HMAC as a string, or
+ * @return string|false the resulting hash (also called digest) or HMAC as a string, or
  * <b>FALSE</b> on error.
  */
 #[Pure]
-function mhash ($algo, $data, $key = null) {}
+function mhash (int $algo, string $data, ?string $key): string|false
+{}
 
 
 /**
@@ -414,9 +438,9 @@ class HashContext
     public function __serialize(){}
 
     /**
-     * @param array $serialized
+     * @param array $data
      */
-    public function __unserialize($serialized){}
+    public function __unserialize($data){}
 }
 // End of hash v.1.0
 ?>

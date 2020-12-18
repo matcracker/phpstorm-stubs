@@ -92,7 +92,7 @@ class JsonIncrementalParser  {
  * </p>
  * @return string|false a JSON encoded string on success or <b>FALSE</b> on failure.
  */
-function json_encode ($value, $flags = 0, $depth = 512) {}
+function json_encode (mixed $value, int $flags = 0, int $depth = 512): string|false {}
 
 /**
  * (PHP 5 &gt;= 5.2.0, PECL json &gt;= 1.2.0)<br/>
@@ -108,7 +108,7 @@ function json_encode ($value, $flags = 0, $depth = 512) {}
  * JSON - it will also encode and decode scalar types and <b>NULL</b>. The JSON standard
  * only supports these values when they are nested inside an array or an object.
  * </p>
- * @param bool $associative [optional] <p>
+ * @param bool|null $associative [optional] <p>
  * When <b>TRUE</b>, returned objects will be converted into
  * associative arrays.
  * </p>
@@ -130,7 +130,7 @@ function json_encode ($value, $flags = 0, $depth = 512) {}
  * <i>json</i> cannot be decoded or if the encoded
  * data is deeper than the recursion limit.
  */
-function json_decode ($json, $associative = false, $depth = 512, $flags = 0) {}
+function json_decode (string $json, ?bool $associative = false, int $depth = 512, int $flags = 0): mixed {}
 
 /**
  * Returns the last error occurred
@@ -224,16 +224,16 @@ function json_decode ($json, $associative = false, $depth = 512, $flags = 0) {}
  * </table>
  */
 #[Pure]
-function json_last_error () {}
+function json_last_error (): int {}
 
 /**
  * Returns the error string of the last json_encode() or json_decode() call, which did not specify <b>JSON_THROW_ON_ERROR</b>.
  * @link https://php.net/manual/en/function.json-last-error-msg.php
- * @return string|false Returns the error message on success, "No error" if no error has occurred, or FALSE on failure.
+ * @return string Returns the error message on success, "No error" if no error has occurred.
  * @since 5.5
  */
 #[Pure]
-function json_last_error_msg () {}
+function json_last_error_msg (): string {}
 
 
 /**
@@ -243,7 +243,7 @@ function json_last_error_msg () {}
 define ('JSON_HEX_TAG', 1);
 
 /**
- * All &#38;#38;s are converted to \u0026.
+ * All &s are converted to \u0026.
  * @link https://php.net/manual/en/json.constants.php
  */
 define ('JSON_HEX_AMP', 2);

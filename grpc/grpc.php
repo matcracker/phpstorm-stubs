@@ -553,6 +553,7 @@ namespace Grpc
          *                                   Must not be closed.
          * @param string  $method            The method to call
          * @param Timeval $absolute_deadline The deadline for completing the call
+         * @param null|string $host_override The host is set by user (optional)
          *
          * @throws \InvalidArgumentException
          */

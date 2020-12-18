@@ -156,10 +156,10 @@ interface Serializable {
     /**
      * Constructs the object.
      * @link https://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized The string representation of the object.
+     * @param string $data The string representation of the object.
      * @return void
      */
-    public function unserialize($serialized);
+    public function unserialize($data);
 }
 
 
@@ -273,7 +273,7 @@ class Exception implements Throwable {
      * @link https://php.net/manual/en/exception.construct.php
      * @param string $message [optional] The Exception message to throw.
      * @param int $code [optional] The Exception code.
-     * @param Throwable $previous [optional] The previous throwable used for the exception chaining.
+     * @param null|Throwable $previous [optional] The previous throwable used for the exception chaining.
      */
     #[Pure]
     public function __construct($message = "", $code = 0, Throwable $previous = null) { }
@@ -369,7 +369,7 @@ class Error implements Throwable {
      * @link https://php.net/manual/en/error.construct.php
      * @param string $message [optional] The Error message to throw.
      * @param int $code [optional] The Error code.
-     * @param Throwable $previous [optional] The previous throwable used for the exception chaining.
+     * @param null|Throwable $previous [optional] The previous throwable used for the exception chaining.
      */
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
@@ -544,11 +544,11 @@ class ErrorException extends Exception {
      * @param int $code [optional] The Exception code.
      * @param int $severity [optional] The severity level of the exception.
      * @param string $filename [optional] The filename where the exception is thrown.
-     * @param int $lineno [optional] The line number where the exception is thrown.
+     * @param int $line [optional] The line number where the exception is thrown.
      * @param Exception $previous [optional] The previous exception used for the exception chaining.
      */
     #[\JetBrains\PhpStorm\Pure]
-    public function __construct($message = "", $code = 0, $severity = 1, $filename = __FILE__, $lineno = __LINE__, $previous = null) { }
+    public function __construct($message = "", $code = 0, $severity = 1, $filename = __FILE__, $line = __LINE__, $previous = null) { }
 
     /**
      * Gets the exception severity
@@ -588,43 +588,43 @@ final class Closure {
     /**
      * Duplicates the closure with a new bound object and class scope
      * @link https://secure.php.net/manual/en/closure.bindto.php
-     * @param object|null $newthis The object to which the given anonymous function should be bound, or NULL for the closure to be unbound.
-     * @param mixed $newscope The class scope to which associate the closure is to be associated, or 'static' to keep the current one.
+     * @param object|null $newThis The object to which the given anonymous function should be bound, or NULL for the closure to be unbound.
+     * @param mixed $newScope The class scope to which associate the closure is to be associated, or 'static' to keep the current one.
      * If an object is given, the type of the object will be used instead.
      * This determines the visibility of protected and private methods of the bound object.
      * @return Closure|false Returns the newly created Closure object or FALSE on failure
      */
-    function bindTo($newthis, $newscope = 'static') { }
+    function bindTo($newThis, $newScope = 'static') { }
 
     /**
      * This method is a static version of Closure::bindTo().
      * See the documentation of that method for more information.
      * @link https://secure.php.net/manual/en/closure.bind.php
      * @param Closure $closure The anonymous functions to bind.
-     * @param object|null $newthis The object to which the given anonymous function should be bound, or NULL for the closure to be unbound.
-     * @param mixed $newscope The class scope to which associate the closure is to be associated, or 'static' to keep the current one.
+     * @param object|null $newThis The object to which the given anonymous function should be bound, or NULL for the closure to be unbound.
+     * @param mixed $newScope The class scope to which associate the closure is to be associated, or 'static' to keep the current one.
      * If an object is given, the type of the object will be used instead.
      * This determines the visibility of protected and private methods of the bound object.
      * @return Closure|false Returns the newly created Closure object or FALSE on failure
      */
-    static function bind(Closure $closure, $newthis, $newscope = 'static') { }
+    static function bind(Closure $closure, $newThis, $newScope = 'static') { }
 
     /**
      * Temporarily binds the closure to newthis, and calls it with any given parameters.
      * @link https://php.net/manual/en/closure.call.php
      * @param object $newThis The object to bind the closure to for the duration of the call.
-     * @param mixed $parameters [optional] Zero or more parameters, which will be given as parameters to the closure.
+     * @param mixed $args [optional] Zero or more parameters, which will be given as parameters to the closure.
      * @return mixed
      * @since 7.0
      */
-    function call ($newthis, ...$parameters) {}
+    function call ($newThis, ...$args) {}
 
     /**
-     * @param callable $callable
+     * @param callable $callback
      * @return Closure
      * @since 7.1
      */
-    public static function fromCallable (callable $callable) {}
+    public static function fromCallable (callable $callback) {}
 }
 
 /**
@@ -638,9 +638,9 @@ interface Countable {
      * Count elements of an object
      * @link https://php.net/manual/en/countable.count.php
      * @return int The custom count as an integer.
-     * </p>
      * <p>
      * The return value is cast to an integer.
+     * </p>
      */
     public function count();
 }
@@ -713,7 +713,7 @@ final class WeakMap implements \ArrayAccess, \Countable, \IteratorAggregate {
      * @param mixed $value Any value
      * @return void
      */
-    public function offsetSet($object, $value)
+    public function offsetSet($object, mixed $value)
     {
     }
 
@@ -777,44 +777,44 @@ final class Attribute {
     /**
      * Marks that attribute declaration is allowed only in functions.
      */
-    const TARGET_FUNCTION = 1 << 1;
+    const TARGET_FUNCTION = 2;
 
     /**
      * Marks that attribute declaration is allowed only in class methods.
      */
-    const TARGET_METHOD = 1 << 2;
+    const TARGET_METHOD = 4;
 
     /**
      * Marks that attribute declaration is allowed only in class properties.
      */
-    const TARGET_PROPERTY = 1 << 3;
+    const TARGET_PROPERTY = 8;
 
     /**
      * Marks that attribute declaration is allowed only in class constants.
      */
-    const TARGET_CLASS_CONSTANT = 1 << 4;
+    const TARGET_CLASS_CONSTANT = 16;
 
     /**
      * Marks that attribute declaration is allowed only in function or method parameters.
      */
-    const TARGET_PARAMETER = 1 << 5;
+    const TARGET_PARAMETER = 32;
 
     /**
      * Marks that attribute declaration is allowed anywhere.
      */
-    const TARGET_ALL = (1 << 6) - 1;
+    const TARGET_ALL = 63;
 
     /**
      * Notes that an attribute declaration in the same place is
      * allowed multiple times.
      */
-    const IS_REPEATABLE = 1 << 10;
+    const IS_REPEATABLE = 64;
 
     /**
      * @param int $flags A value in the form of a bitmask indicating the places
      * where attributes can be defined.
      */
-    public function __construct(#[ExpectedValues(flagsFromClass: Attribute::class)] $flags = self::TARGET_ALL)
+    public function __construct(#[ExpectedValues(flagsFromClass: Attribute::class)] int $flags = self::TARGET_ALL)
     {
     }
 }
@@ -865,7 +865,7 @@ class PhpToken implements Stringable {
      * @param int $line Strating line
      * @param int $pos Straring position (line offset)
      */
-    final public function __construct($id, $text, $line = -1, $pos = -1)
+    final public function __construct(int $id, string $text, int $line = -1, int $pos = -1)
     {
     }
 
@@ -877,6 +877,13 @@ class PhpToken implements Stringable {
     public function getTokenName()
     {
     }
+
+    /**
+     * @param string $code
+     * @param int $flags
+     * @return static[]
+     */
+    public static function tokenize(string $code, int $flags = 0): array {}
 
     /**
      * Whether the token has the given ID, the given text, or has an ID/text

@@ -59,6 +59,7 @@ class PHPClass extends BasePHPClass
     public function readObjectFromStubNode($node): static
     {
         $this->name = $this->getFQN($node);
+        $this->isFinal = $node->isFinal();
         $this->collectTags($node);
         if (!empty($node->extends)) {
             $this->parentClass = '';
@@ -83,17 +84,17 @@ class PHPClass extends BasePHPClass
         if ($node->getDocComment() !== null) {
             $docBlock = DocBlockFactory::createInstance()->create($node->getDocComment()->getText());
             /** @var PropertyRead[] $properties */
-            $properties = array_merge($docBlock->getTagsByName("property-read"),
-                $docBlock->getTagsByName("property"));
+            $properties = array_merge($docBlock->getTagsByName('property-read'),
+                $docBlock->getTagsByName('property'));
             foreach ($properties as $property) {
                 $propertyName = $property->getVariableName();
-                assert($propertyName !== "", "@property name is empty in class $this->name");
+                assert($propertyName !== '', "@property name is empty in class $this->name");
                 $newProperty = new PHPProperty($this->name);
                 $newProperty->is_static = false;
-                $newProperty->access = "public";
+                $newProperty->access = 'public';
                 $newProperty->name = $propertyName;
                 $newProperty->parentName = $this->name;
-                $newProperty->type = "" . $property->getType();
+                $newProperty->type = '' . $property->getType();
                 assert(!array_key_exists($propertyName, $this->properties),
                     "Property '$propertyName' is already declared in class '$this->name'");
                 $this->properties[$propertyName] = $newProperty;
