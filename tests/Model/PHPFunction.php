@@ -30,7 +30,7 @@ class PHPFunction extends BasePHPElement
 
     /**
      * @param ReflectionFunction $reflectionObject
-     * @return $this
+     * @return static
      */
     public function readObjectFromReflection($reflectionObject): static
     {
@@ -45,16 +45,17 @@ class PHPFunction extends BasePHPElement
 
     /**
      * @param Function_ $node
-     * @return $this
+     * @return static
      */
     public function readObjectFromStubNode($node): static
     {
         $functionName = $this->getFQN($node);
         $this->name = $functionName;
         $typeFromAttribute = self::findTypeFromAttribute($node->attrGroups);
+        $this->availableVersionsRangeFromAttribute = self::findAvailableVersionsRangeFromAttribute($node->attrGroups);
         if ($typeFromAttribute != null) {
             $this->returnType = $typeFromAttribute;
-        } else{
+        } else {
             $this->returnType = self::convertParsedTypeToString($node->getReturnType());
         }
 
@@ -97,7 +98,7 @@ class PHPFunction extends BasePHPElement
     {
         foreach ($jsonData as $function) {
             if ($function->name === $this->name) {
-                if (!empty($function->problems)){
+                if (!empty($function->problems)) {
                     foreach ($function->problems as $problem) {
                         $this->mutedProblems[] = match ($problem) {
                             'parameter mismatch' => StubProblemType::FUNCTION_PARAMETER_MISMATCH,
@@ -105,6 +106,7 @@ class PHPFunction extends BasePHPElement
                             'deprecated function' => StubProblemType::FUNCTION_IS_DEPRECATED,
                             'absent in meta' => StubProblemType::ABSENT_IN_META,
                             'has return typehint' => StubProblemType::FUNCTION_HAS_RETURN_TYPEHINT,
+                            'has duplicate in stubs' => StubProblemType::HAS_DUPLICATION,
                             default => -1
                         };
                     }
@@ -119,7 +121,7 @@ class PHPFunction extends BasePHPElement
         }
     }
 
-    private static function hasDeprecatedAttribute(FunctionLike $node) :bool
+    private static function hasDeprecatedAttribute(FunctionLike $node): bool
     {
         foreach ($node->getAttrGroups() as $group) {
             foreach ($group->attrs as $attr) {
@@ -131,7 +133,7 @@ class PHPFunction extends BasePHPElement
         return false;
     }
 
-    private static function hasDeprecatedDocTag(?Doc $docComment) :bool
+    private static function hasDeprecatedDocTag(?Doc $docComment): bool
     {
         $phpDoc = $docComment != null ? DocFactoryProvider::getDocFactory()->create($docComment->getText()) : null;
         return $phpDoc != null && !empty($phpDoc->getTagsByName('deprecated'));

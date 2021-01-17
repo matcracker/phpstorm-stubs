@@ -58,7 +58,7 @@ class ReflectionConstantsProvider
         }
         /** @var PHPConst[] $resultArray */
         $resultArray = [];
-        foreach (EntitiesFilter::getFiltered($allConstants, StubProblemType::WRONG_CONSTANT_VALUE) as $constant) {
+        foreach (EntitiesFilter::getFiltered($allConstants, problemTypes: StubProblemType::WRONG_CONSTANT_VALUE) as $constant) {
             $resultArray[] = $constant;
         }
         return $resultArray;

@@ -239,7 +239,6 @@ function sodium_crypto_kx_keypair (): string {}
  * @throws SodiumException
  * @since 7.2
  */
-
 function sodium_crypto_kx_publickey (string $key_pair): string {}
 
 /**
@@ -883,7 +882,7 @@ function sodium_crypto_stream_xor(
  * /dev/urandom
  *
  * @param int $length
- * @return string
+ * @return string|false
  * @since 7.2
  */
 function sodium_randombytes_buf(

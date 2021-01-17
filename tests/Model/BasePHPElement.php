@@ -4,9 +4,12 @@ declare(strict_types=1);
 namespace StubTests\Model;
 
 use Exception;
+use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 use JetBrains\PhpStorm\Pure;
 use PhpParser\Node;
+use PhpParser\Node\AttributeGroup;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
@@ -25,6 +28,8 @@ abstract class BasePHPElement
     public bool $stubBelongsToCore = false;
     public ?Exception $parseError = null;
     public array $mutedProblems = [];
+    #[ArrayShape(['from' => 'string', 'to' => 'string'])]
+    public array $availableVersionsRangeFromAttribute = [];
 
     abstract public function readObjectFromReflection(Reflector $reflectionObject): static;
 
@@ -32,6 +37,7 @@ abstract class BasePHPElement
 
     abstract public function readMutedProblems(stdClass|array $jsonData): void;
 
+    #[Pure]
     protected function getFQN(Node $node): string
     {
         $fqn = '';
@@ -77,22 +83,29 @@ abstract class BasePHPElement
         return '';
     }
 
+    #[Pure]
     protected static function getTypeNameFromNode(Name|Identifier|NullableType|string $type): string
     {
         $nullable = false;
+        $typeName = '';
         if ($type instanceof NullableType) {
             $type = $type->type;
             $nullable = true;
         }
         if (empty($type->name)) {
             if (!empty($type->parts)) {
-                return $nullable ? '?' . implode('\\', $type->parts) : implode('\\', $type->parts);
+                $typeName =  $nullable ? '?' . implode('\\', $type->parts) : implode('\\', $type->parts);
             }
         } else {
-            return $nullable ? '?' . $type->name : $type->name;
+            $typeName =  $nullable ? '?' . $type->name : $type->name;
         }
+        return $typeName;
     }
 
+    /**
+     * @param AttributeGroup[] $attrGroups
+     * @return string|null
+     */
     protected static function findTypeFromAttribute(array $attrGroups): ?string
     {
         foreach ($attrGroups as $attrGroup) {
@@ -109,6 +122,40 @@ abstract class BasePHPElement
             }
         }
         return null;
+    }
+
+    /**
+     * @param AttributeGroup[] $attrGroups
+     * @return array
+     */
+    protected static function findAvailableVersionsRangeFromAttribute(array $attrGroups): array
+    {
+        $versionRange = [];
+        foreach ($attrGroups as $attrGroup) {
+            foreach ($attrGroup->attrs as $attr) {
+                if ($attr->name->toString() === PhpStormStubsElementAvailable::class) {
+                    if (count($attr->args) == 2) {
+                        foreach ($attr->args as $arg) {
+                            $versionRange[$arg->name->name] = $arg->value->value;
+                        }
+                    } else {
+                        $arg = $attr->args[0]->value;
+                        if ($arg instanceof Array_) {
+                            $value = $arg->items[0]->value;
+                            if ($value instanceof String_) {
+                                return ['from' => $value->value];
+                            }
+                        } else {
+                            $rangeName = $attr->args[0]->name;
+                            return $rangeName === null || $rangeName->name == 'from' ?
+                                ['from' => $arg->value, 'to' => PhpVersions::getLatest()] :
+                                ['from' => PhpVersions::getFirst(), 'to' => $arg->value];
+                        }
+                    }
+                }
+            }
+        }
+        return $versionRange;
     }
 
     #[Pure]

@@ -372,12 +372,13 @@ function ob_get_contents (): string|false
 /**
  * Turn implicit flush on/off
  * @link https://php.net/manual/en/function.ob-implicit-flush.php
- * @param bool $enable [optional] <p>
- * true to turn implicit flushing on, false otherwise.
+ * @param int|bool $enable [optional] <p>
+ * 1|<b>TRUE</b> to turn implicit flushing on, 0|<b>FALSE</b> turns it off.
+ * <br><br>default: 1|<b>TRUE</b>
  * </p>
  * @return void
  */
-function ob_implicit_flush (bool $enable = true): void {}
+function ob_implicit_flush (#[LanguageLevelTypeAware(["8.0" => "bool"], default: "int")] $enable): void {}
 
 /**
  * List all output handlers in use
@@ -579,7 +580,7 @@ function shuffle (array &$array): bool
 /**
  * Apply a user function to every member of an array
  * @link https://php.net/manual/en/function.array-walk.php
- * @param array|ArrayObject &$array <p>
+ * @param array|object &$array <p>
  * The input array.
  * </p>
  * @param callback $callback <p>
@@ -614,7 +615,7 @@ function array_walk (object|array &$array, callable $callback, mixed $arg): bool
 /**
  * Apply a user function recursively to every member of an array
  * @link https://php.net/manual/en/function.array-walk-recursive.php
- * @param array|ArrayObject &$array <p>
+ * @param array|object &$array <p>
  * The input array.
  * </p>
  * @param callback $callback <p>
@@ -674,13 +675,13 @@ function count (Countable|array $value, int $mode = COUNT_NORMAL): int
 /**
  * Set the internal pointer of an array to its last element
  * @link https://php.net/manual/en/function.end.php
- * @param array|ArrayAccess &$array <p>
+ * @param array|object &$array <p>
  * The array. This array is passed by reference because it is modified by
  * the function. This means you must pass it a real variable and not
  * a function returning an array because only actual variables may be
  * passed by reference.
  * </p>
- * @return mixed the value of the last element or false for empty array.
+ * @return mixed|false the value of the last element or false for empty array.
  * @meta
  */
 function end (object|array &$array): mixed {}
@@ -688,10 +689,10 @@ function end (object|array &$array): mixed {}
 /**
  * Rewind the internal array pointer
  * @link https://php.net/manual/en/function.prev.php
- * @param array|ArrayAccess &$array <p>
+ * @param array|object &$array <p>
  * The input array.
  * </p>
- * @return mixed the array value in the previous place that's pointed to by
+ * @return mixed|false the array value in the previous place that's pointed to by
  * the internal array pointer, or false if there are no more
  * elements.
  * @meta
@@ -701,10 +702,10 @@ function prev (object|array &$array): mixed {}
 /**
  * Advance the internal array pointer of an array
  * @link https://php.net/manual/en/function.next.php
- * @param array|ArrayAccess &$array <p>
+ * @param array|object &$array <p>
  * The array being affected.
  * </p>
- * @return mixed the array value in the next place that's pointed to by the
+ * @return mixed|false the array value in the next place that's pointed to by the
  * internal array pointer, or false if there are no more elements.
  * @meta
  */
@@ -713,10 +714,10 @@ function next (object|array &$array): mixed {}
 /**
  * Set the internal pointer of an array to its first element
  * @link https://php.net/manual/en/function.reset.php
- * @param array|ArrayAccess &$array <p>
+ * @param array|object &$array <p>
  * The input array.
  * </p>
- * @return mixed the value of the first array element, or false if the array is
+ * @return mixed|false the value of the first array element, or false if the array is
  * empty.
  * @meta
  */
@@ -725,10 +726,10 @@ function reset (object|array &$array): mixed {}
 /**
  * Return the current element in an array
  * @link https://php.net/manual/en/function.current.php
- * @param array|ArrayAccess $array <p>
+ * @param array|object $array <p>
  * The array.
  * </p>
- * @return mixed The current function simply returns the
+ * @return mixed|false The current function simply returns the
  * value of the array element that's currently being pointed to by the
  * internal pointer. It does not move the pointer in any way. If the
  * internal pointer points beyond the end of the elements list or the array is
@@ -741,7 +742,7 @@ function current (object|array $array): mixed {}
 /**
  * Fetch a key from an array
  * @link https://php.net/manual/en/function.key.php
- * @param array|ArrayAccess $array <p>
+ * @param array|object $array <p>
  * The array.
  * </p>
  * @return int|string|null The key function simply returns the
@@ -978,7 +979,7 @@ function array_push (array &$array, ...$values): int
  * @param array &$array <p>
  * The array to get the value from.
  * </p>
- * @return mixed the last value of array.
+ * @return mixed|null the last value of array.
  * If array is empty (or is not an array),
  * null will be returned.
  * @meta
@@ -991,7 +992,7 @@ function array_pop (array &$array): mixed {}
  * @param array &$array <p>
  * The input array.
  * </p>
- * @return mixed the shifted value, or null if array is
+ * @return mixed|null the shifted value, or null if array is
  * empty or is not an array.
  * @meta
  */
