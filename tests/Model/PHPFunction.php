@@ -5,8 +5,9 @@ namespace StubTests\Model;
 
 use Exception;
 use JetBrains\PhpStorm\Deprecated;
+use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
-use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\Types\Compound;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Stmt\Function_;
@@ -24,9 +25,14 @@ class PHPFunction extends BasePHPElement
      */
     public array $parameters = [];
 
-    public ?Type $returnTag = null;
+    /** @var string[] $returnTypesFromPhpDoc  */
+    public array $returnTypesFromPhpDoc = [];
 
-    public string $returnType = '';
+    /** @var string[] $returnTypesFromAttribute  */
+    public array $returnTypesFromAttribute = [];
+
+    /** @var string[] $returnTypesFromSignature  */
+    public array $returnTypesFromSignature = [];
 
     /**
      * @param ReflectionFunction $reflectionObject
@@ -39,7 +45,7 @@ class PHPFunction extends BasePHPElement
         foreach ($reflectionObject->getParameters() as $parameter) {
             $this->parameters[] = (new PHPParameter())->readObjectFromReflection($parameter);
         }
-        $this->returnType = self::convertReflectionTypeToString($reflectionObject->getReturnType());
+        array_push($this->returnTypesFromSignature, ...self::getReflectionTypeAsArray($reflectionObject->getReturnType()));
         return $this;
     }
 
@@ -49,26 +55,30 @@ class PHPFunction extends BasePHPElement
      */
     public function readObjectFromStubNode($node): static
     {
-        $functionName = $this->getFQN($node);
+        $functionName = self::getFQN($node);
         $this->name = $functionName;
-        $typeFromAttribute = self::findTypeFromAttribute($node->attrGroups);
+        $typesFromAttribute = self::findTypesFromAttribute($node->attrGroups);
         $this->availableVersionsRangeFromAttribute = self::findAvailableVersionsRangeFromAttribute($node->attrGroups);
-        if ($typeFromAttribute != null) {
-            $this->returnType = $typeFromAttribute;
-        } else {
-            $this->returnType = self::convertParsedTypeToString($node->getReturnType());
-        }
-
+        $this->returnTypesFromAttribute = $typesFromAttribute;
+        array_push($this->returnTypesFromSignature, ...self::convertParsedTypeToArray($node->getReturnType()));
         foreach ($node->getParams() as $parameter) {
             $this->parameters[] = (new PHPParameter())->readObjectFromStubNode($parameter);
         }
 
         $this->collectTags($node);
+        foreach ($this->parameters as $parameter) {
+            $relatedParamTags = array_filter($this->paramTags, fn(Param $tag) => $tag->getVariableName() === $parameter->name);
+            /** @var Param $relatedParamTag */
+            $relatedParamTag = array_pop($relatedParamTags);
+            if (!empty($relatedParamTag)){
+                $parameter->isOptional = $parameter->isOptional || str_contains((string)$relatedParamTag->getDescription(), '[optional]');
+            }
+        }
+
         $this->checkDeprecationTag($node);
         $this->checkReturnTag($node);
         return $this;
     }
-
 
     protected function checkDeprecationTag(FunctionLike $node): void
     {
@@ -86,7 +96,14 @@ class PHPFunction extends BasePHPElement
                 $phpDoc = DocFactoryProvider::getDocFactory()->create($node->getDocComment()->getText());
                 $parsedReturnTag = $phpDoc->getTagsByName('return');
                 if (!empty($parsedReturnTag) && $parsedReturnTag[0] instanceof Return_) {
-                    $this->returnTag = $parsedReturnTag[0]->getType();
+                    $returnType = $parsedReturnTag[0]->getType();
+                    if ($returnType instanceof Compound) {
+                        foreach ($returnType as $nextType) {
+                            array_push($this->returnTypesFromPhpDoc, (string)$nextType);
+                        }
+                    } else {
+                        array_push($this->returnTypesFromPhpDoc, (string)$returnType);
+                    }
                 }
             } catch (Exception $e) {
                 $this->parseError = $e;
@@ -106,7 +123,9 @@ class PHPFunction extends BasePHPElement
                             'deprecated function' => StubProblemType::FUNCTION_IS_DEPRECATED,
                             'absent in meta' => StubProblemType::ABSENT_IN_META,
                             'has return typehint' => StubProblemType::FUNCTION_HAS_RETURN_TYPEHINT,
+                            'wrong return typehint' => StubProblemType::WRONG_RETURN_TYPEHINT,
                             'has duplicate in stubs' => StubProblemType::HAS_DUPLICATION,
+                            'has type mismatch in signature and phpdoc' => StubProblemType::TYPE_IN_PHPDOC_DIFFERS_FROM_SIGNATURE,
                             default => -1
                         };
                     }

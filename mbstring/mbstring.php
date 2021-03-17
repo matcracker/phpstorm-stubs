@@ -773,7 +773,7 @@ function mb_encoding_aliases (string $encoding)
  * @return string The converted string.
  */
 #[Pure]
-function mb_convert_kana (string $string, string $mode, ?string $encoding): string
+function mb_convert_kana (string $string, string $mode = 'KV', ?string $encoding): string
 {}
 
 /**
@@ -809,7 +809,7 @@ function mb_convert_kana (string $string, string $mode, ?string $encoding): stri
  * @return string A converted version of the string represented in ASCII.
  */
 #[Pure]
-function mb_encode_mimeheader (string $string, ?string $charset, ?string $transfer_encoding, string $newline, int $indent): string
+function mb_encode_mimeheader (string $string, ?string $charset, ?string $transfer_encoding, string $newline = "\n", int $indent): string
 {}
 
 /**
@@ -864,7 +864,7 @@ function mb_convert_variables (string $to_encoding, array|string $from_encoding,
  * @return string The converted string.
  */
 #[Pure]
-function mb_encode_numericentity (string $string, array $map, ?string $encoding, bool $hex = false): string
+function mb_encode_numericentity (string $string, array $map, ?string $encoding = null, bool $hex = false): string
 {}
 
 /**
@@ -956,7 +956,7 @@ function mb_send_mail (string $to, string $subject, string $message, array|strin
  * is not specified, otherwise a specific type.
  */
 #[Pure]
-function mb_get_info (string $type): array|string|int|false
+function mb_get_info (string $type = 'all'): array|string|int|false
 {}
 
 /**
@@ -1149,7 +1149,7 @@ function mb_eregi_replace (string $pattern, string $replacement, string $string,
  * @return string[]|false The result as an array.
  */
 #[Pure]
-function mb_split (string $pattern, string $string, int $limit): array|false
+function mb_split (string $pattern, string $string, int $limit = -1): array|false
 {}
 
 /**
@@ -1431,7 +1431,7 @@ function mb_ord (string $string, ?string $encoding): int|false
  */
 #[Pure]
 #[LanguageLevelTypeAware(["8.0" => "string"], default: "string|false")]
-function mb_scrub (string $string, ?string $encoding): bool|string
+function mb_scrub (string $string, ?string $encoding): false|string
 {}
 
 /**
@@ -1501,7 +1501,7 @@ define('MB_CASE_FOLD_SIMPLE', 7);
 /**
  * @since 7.4
  */
-define('MB_ONIGURUMA_VERSION', '6.9.5');
+define('MB_ONIGURUMA_VERSION', '6.9.6');
 
 // End of mbstring v.
 ?>

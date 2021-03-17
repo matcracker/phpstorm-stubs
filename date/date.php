@@ -816,7 +816,7 @@ function time (): int
  * @return array
  */
 #[Pure]
-function localtime (?int $timestamp, bool $associative): array
+function localtime (?int $timestamp, bool $associative = false): array
 {}
 
 /**
@@ -914,7 +914,7 @@ function getdate (?int $timestamp): array
  * @return DateTime|false DateTime object on success or false on failure.
  */
 #[Pure]
-function date_create (string $datetime, ?DateTimeZone $timezone ): DateTime|false
+function date_create (string $datetime = 'now', ?DateTimeZone $timezone ): DateTime|false
 {}
 
 /**
@@ -933,7 +933,7 @@ function date_create (string $datetime, ?DateTimeZone $timezone ): DateTime|fals
  * @return DateTimeImmutable|false DateTime object on success or false on failure.
  */
 #[Pure]
-function date_create_immutable (string $datetime, ?DateTimeZone $timezone): DateTimeImmutable|false
+function date_create_immutable (string $datetime = 'now', ?DateTimeZone $timezone): DateTimeImmutable|false
 {}
 
 /**
@@ -976,7 +976,7 @@ function date_create_from_format (string $format, string $datetime, ?DateTimeZon
  */
 #[Pure]
 #[LanguageLevelTypeAware(["8.0" => "array"], default: "array|false")]
-function date_parse (string $datetime): bool|array
+function date_parse (string $datetime): false|array
 {}
 
 /**
@@ -1094,7 +1094,7 @@ function date_timezone_get (DateTimeInterface $object): DateTimeZone|false
  * Alias:
  * {@see DateTime::setTimezone}
  * @link https://php.net/manual/en/function.date-timezone-set.php
- * @param DateTimeInterface $object <p>A
+ * @param DateTime|DateTimeInterface $object <p>A
  * {@see DateTime} object returned by
  * {@see date_create()}. The function modifies this object.</p>
  * @param DateTimeZone $timezone <p>A
@@ -1103,7 +1103,7 @@ function date_timezone_get (DateTimeInterface $object): DateTimeZone|false
  * {@see DateTime} object for method chaining or <b>FALSE</b> on failure.</p>
  */
 #[LanguageLevelTypeAware(["8.0" => "DateTime"], default: "DateTime|false")]
-function date_timezone_set (DateTimeInterface $object, DateTimeZone $timezone)
+function date_timezone_set (#[LanguageLevelTypeAware(["8.0" => "DateTime"], default: "DateTimeInterface")] $object, DateTimeZone $timezone)
 {}
 
 /**
@@ -1165,7 +1165,7 @@ function date_time_set (DateTime $object, int $hour, int $minute, int $second = 
  * </p>
  */
 #[LanguageLevelTypeAware(["8.0" => "DateTime"], default: "DateTime|false")]
-function date_date_set (DateTime $object, int $year, int $month, int $day): DateTime|bool
+function date_date_set (DateTime $object, int $year, int $month, int $day): DateTime|false
 {}
 
 /**
@@ -1197,7 +1197,7 @@ function date_isodate_set (DateTime $object, int $year, int $week, int $dayOfWee
  * {@see DateTime} object for call chaining or <b>FALSE</b> on failure
  */
 #[LanguageLevelTypeAware(["8.0" => "DateTime"], default: "DateTime|false")]
-function date_timestamp_set (DateTime $object, int $timestamp): DateTime|bool
+function date_timestamp_set (DateTime $object, int $timestamp): DateTime|false
 {}
 
 /**
@@ -1258,7 +1258,7 @@ function timezone_name_get (DateTimeZone $object): string
  * @since 5.1.3
  */
 #[Pure]
-function timezone_name_from_abbr (string $abbr, int $utcOffset, int $isDST): string|false
+function timezone_name_from_abbr (string $abbr, int $utcOffset = -1, int $isDST = -1): string|false
 {}
 
 /**
@@ -1434,12 +1434,12 @@ function date_default_timezone_get (): string
  * @param float|null $zenith [optional] <p>
  * Default: date.sunrise_zenith
  * </p>
- * @param float $utcOffset [optional]
+ * @param float|null $utcOffset [optional]
  * @return string|int|float|false the sunrise time in a specified format on
  * success or false on failure.
  */
 #[Pure]
-function date_sunrise (int $timestamp, int $returnFormat, ?float $latitude, ?float $longitude, ?float $zenith, float $utcOffset): string|int|float|false
+function date_sunrise (int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, ?float $latitude, ?float $longitude, ?float $zenith, ?float $utcOffset): string|int|float|false
 {}
 
 /**
@@ -1485,12 +1485,12 @@ function date_sunrise (int $timestamp, int $returnFormat, ?float $latitude, ?flo
  * @param float|null $zenith [optional] <p>
  * Default: date.sunset_zenith
  * </p>
- * @param float $utcOffset [optional]
+ * @param float|null $utcOffset [optional]
  * @return string|int|float|false the sunset time in a specified format on
  * success or false on failure.
  */
 #[Pure]
-function date_sunset (int $timestamp, int $returnFormat, ?float $latitude, ?float $longitude, ?float $zenith, float $utcOffset): string|int|float|false
+function date_sunset (int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, ?float $latitude, ?float $longitude, ?float $zenith, ?float $utcOffset): string|int|float|false
 {}
 
 /**

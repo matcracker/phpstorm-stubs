@@ -271,7 +271,7 @@ function dirname (string $path, int $levels = 1): string
  * string if not all elements are requested.
  */
 #[Pure]
-function pathinfo (string $path, int $flags): array|string
+function pathinfo (string $path, int $flags = PATHINFO_ALL): array|string
 {}
 
 /**
@@ -320,7 +320,7 @@ function stripcslashes (string $string): string
  * is not found.
  */
 #[Pure]
-function strstr (string $haystack, string $needle, bool $before_needle): string|false
+function strstr (string $haystack, string $needle, bool $before_needle = false): string|false
 {}
 
 /**
@@ -342,7 +342,7 @@ function strstr (string $haystack, string $needle, bool $before_needle): string|
  * found, returns false.
  */
 #[Pure]
-function stristr (string $haystack, string $needle, bool $before_needle): string|false
+function stristr (string $haystack, string $needle, bool $before_needle = false): string|false
 {}
 
 /**
@@ -424,7 +424,7 @@ function str_word_count (string $string, int $format = 0, ?string $characters): 
  */
 #[Pure]
 #[LanguageLevelTypeAware(["8.0" => "array"], default: "array|false")]
-function str_split (string $string, int $length = 1): array|bool
+function str_split (string $string, int $length = 1): array|false
 {}
 
 /**
@@ -472,7 +472,7 @@ function strpbrk (string $string, string $characters): string|false
  * false.
  */
 #[Pure]
-function substr_compare (string $haystack, string $needle, int $offset, ?int $length, bool $case_insensitive): int
+function substr_compare (string $haystack, string $needle, int $offset, ?int $length, bool $case_insensitive = false): int
 {}
 
 /**
@@ -1032,7 +1032,7 @@ function similar_text (string $string1, string $string2, &$percent): int
  */
 #[Pure]
 #[LanguageLevelTypeAware(["8.0" => "string[]"], default: "string[]|false")]
-function explode (string $separator, string $string, int $limit): array|bool
+function explode (string $separator, string $string, int $limit): array|false
 {}
 
 /**
@@ -1049,7 +1049,6 @@ function explode (string $separator, string $string, int $limit): array|bool
  * @return string a string containing a string representation of all the array
  * elements in the same order, with the glue string between each element.
  */
-//DO NOT UPDATE THIS SIGNATURE AND DO NOT ADD OTHER IMPLODE FUNCTIONS AS FUNCTION OVERLOADING IS NOT SUPPORTED
 #[Pure]
 function implode (array|string $separator = "", ?array $array): string
 {}

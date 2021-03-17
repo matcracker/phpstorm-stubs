@@ -30,7 +30,7 @@ function xdebug_get_function_stack(): array {}
  * @param int $options    A bit mask of the following constants: XDEBUG_STACK_NO_DESC
  * @return void
  */
-function xdebug_print_function_stack (string $message = '', int $options = 0) {}
+function xdebug_print_function_stack (string $message = 'user triggered', int $options = 0) {}
 
 /**
  * Returns an array where each element is a variable name which is defined in the current scope.
@@ -170,7 +170,7 @@ function xdebug_stop_error_collection () {}
  * By default this function will not clear the error collection buffer. If you pass true as argument to this function then the buffer will be cleared as well.
  * This function returns a string containing all collected errors formatted as an "Xdebug table".
  * @param bool $emptyList
- * @return string
+ * @return array
  */
 function xdebug_get_collected_errors(bool $emptyList = false): array {}
 
@@ -268,7 +268,7 @@ function xdebug_start_code_coverage (int $options = 0) {}
  * @param bool $cleanUp Destroy collected information in memory
  * @return void
  */
-function xdebug_stop_code_coverage (bool $cleanUp = false) {}
+function xdebug_stop_code_coverage (bool $cleanUp = true) {}
 
 /**
  * Returns whether code coverage is active.

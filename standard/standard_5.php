@@ -1,9 +1,9 @@
 <?php
 
 use JetBrains\PhpStorm\Deprecated;
+use JetBrains\PhpStorm\ExpectedValues;
 use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 use JetBrains\PhpStorm\Pure;
-use JetBrains\PhpStorm\ExpectedValues;
 
 /**
  * (PHP 5.5.0)<br/>
@@ -369,7 +369,7 @@ function is_scalar (mixed $value): bool
  * @return bool <b>TRUE</b> if $var is callable, <b>FALSE</b>
  * otherwise.
  */
-function is_callable (mixed $value, bool $syntax_only, &$callable_name): bool
+function is_callable (mixed $value, bool $syntax_only = false, &$callable_name): bool
 {}
 
 /**
@@ -436,7 +436,7 @@ function popen (string $command, string $mode)
  * </p>
  * @return false|int the number of bytes read from the file, or FALSE on failure
  */
-function readfile (string $filename, bool $use_include_path, $context): int|false
+function readfile (string $filename, bool $use_include_path = false, $context): int|false
 {}
 
 /**
@@ -552,7 +552,7 @@ function fgets ($stream, ?int $length): string|false
  * @removed 8.0
  */
 #[Deprecated(since: '7.3')]
-function fgetss ($handle, ?int $length = null, $allowable_tags = null): bool|string
+function fgetss ($handle, ?int $length = null, $allowable_tags = null): false|string
 {}
 
 /**

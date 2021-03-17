@@ -1,16 +1,18 @@
-FROM php:8.0.1-alpine
+FROM php:8.0.3-alpine
 RUN echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 RUN set -eux; \
     apk add --no-cache --virtual .build-deps \
     gcc g++ make autoconf pkgconfig git \
-    bzip2-dev gettext-dev libxml2-dev php7-dev libffi-dev openssl-dev php7-pear php7-pecl-amqp  rabbitmq-c rabbitmq-c-dev \
+    bzip2-dev gettext-dev libxml2-dev php8-dev php8-gd icu-dev php8-intl libffi-dev openssl-dev php8-pear php7-pecl-amqp  rabbitmq-c rabbitmq-c-dev \
     librrd rrdtool-dev yaml yaml-dev fann fann-dev openldap-dev librdkafka librdkafka-dev libcurl curl-dev gpgme gpgme-dev
-RUN docker-php-ext-install ldap bz2 mysqli bcmath calendar dba exif gettext opcache pcntl pdo_mysql shmop sysvmsg \
+RUN docker-php-ext-install sockets intl gd ldap bz2 mysqli bcmath calendar dba exif gettext opcache pcntl pdo_mysql shmop sysvmsg \
     sysvsem sysvshm xml soap
+
 #TODO: Uncomment below after php 8 released
-#xmlrpc
+#RUN pecl install xmlrpc
+#RUN docker-php-ext-enable xmlrpc
 #RUN pecl install amqp
 #RUN docker-php-ext-enable amqp
 #RUN pecl install Ev
@@ -23,8 +25,8 @@ RUN docker-php-ext-enable igbinary
 #RUN docker-php-ext-enable inotify
 RUN pecl install msgpack
 RUN docker-php-ext-enable msgpack
-RUN pecl install rrd
-RUN docker-php-ext-enable rrd
+#RUN pecl install rrd
+#RUN docker-php-ext-enable rrd
 #RUN pecl install sync
 #RUN docker-php-ext-enable sync
 RUN pecl install yaml

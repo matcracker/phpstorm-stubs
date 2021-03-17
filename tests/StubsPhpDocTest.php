@@ -8,7 +8,6 @@ use phpDocumentor\Reflection\DocBlock\Tags\Link;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url;
 use phpDocumentor\Reflection\DocBlock\Tags\See;
 use phpDocumentor\Reflection\DocBlock\Tags\Since;
-use PHPUnit\Framework\TestCase;
 use StubTests\Model\BasePHPClass;
 use StubTests\Model\BasePHPElement;
 use StubTests\Model\PHPConst;
@@ -19,21 +18,23 @@ use StubTests\Model\Tags\RemovedTag;
 use StubTests\Parsers\Utils;
 use function trim;
 
-class StubsPhpDocTest extends TestCase
+class StubsPhpDocTest extends BaseStubsTest
 {
     /**
      * @dataProvider \StubTests\TestData\Providers\Stubs\StubConstantsProvider::classConstantProvider
+     * @param BasePHPClass $class
+     * @param PHPConst $constant
      */
-    public function testClassConstantsPHPDocs(string $className, PHPConst $constant): void
+    public static function testClassConstantsPHPDocs(BasePHPClass $class, PHPConst $constant): void
     {
         self::assertNull($constant->parseError, $constant->parseError ?: '');
-        self::checkPHPDocCorrectness($constant, "constant $className::$constant->name");
+        self::checkPHPDocCorrectness($constant, "constant $class->sourceFilePath/$class->name::$constant->name");
     }
 
     /**
      * @dataProvider \StubTests\TestData\Providers\Stubs\StubConstantsProvider::globalConstantProvider
      */
-    public function testConstantsPHPDocs(PHPConst $constant): void
+    public static function testConstantsPHPDocs(PHPConst $constant): void
     {
         self::assertNull($constant->parseError, $constant->parseError ?: '');
         self::checkPHPDocCorrectness($constant, "constant $constant->name");
@@ -42,7 +43,7 @@ class StubsPhpDocTest extends TestCase
     /**
      * @dataProvider \StubTests\TestData\Providers\Stubs\StubsTestDataProviders::allFunctionsProvider
      */
-    public function testFunctionPHPDocs(PHPFunction $function): void
+    public static function testFunctionPHPDocs(PHPFunction $function): void
     {
         self::assertNull($function->parseError, $function->parseError ?: '');
         self::checkPHPDocCorrectness($function, "function $function->name");
@@ -51,7 +52,7 @@ class StubsPhpDocTest extends TestCase
     /**
      * @dataProvider \StubTests\TestData\Providers\Stubs\StubsTestDataProviders::allClassesProvider
      */
-    public function testClassesPHPDocs(BasePHPClass $class): void
+    public static function testClassesPHPDocs(BasePHPClass $class): void
     {
         self::assertNull($class->parseError, $class->parseError ?: '');
         self::checkPHPDocCorrectness($class, "class $class->name");
@@ -60,13 +61,13 @@ class StubsPhpDocTest extends TestCase
     /**
      * @dataProvider \StubTests\TestData\Providers\Stubs\StubMethodsProvider::allMethodsProvider
      */
-    public function testMethodsPHPDocs(string $methodName, PHPMethod $method): void
+    public static function testMethodsPHPDocs(PHPMethod $method): void
     {
-        if ($methodName === '__construct') {
-            self::assertNull($method->returnTag, '@return tag for __construct should be omitted');
+        if ($method->name === '__construct') {
+            self::assertEmpty($method->returnTypesFromPhpDoc, '@return tag for __construct should be omitted');
         }
         self::assertNull($method->parseError, $method->parseError ?: '');
-        self::checkPHPDocCorrectness($method, "method $methodName");
+        self::checkPHPDocCorrectness($method, "method $method->name");
     }
 
     private static function checkDeprecatedRemovedSinceVersionsMajor(BasePHPElement $element, string $elementName): void
@@ -177,6 +178,7 @@ class StubsPhpDocTest extends TestCase
             'deprecated',
             'example', //temporary addition due to the number of existing cases
             'inheritdoc',
+            'inheritDoc',
             'internal',
             'link',
             'meta',

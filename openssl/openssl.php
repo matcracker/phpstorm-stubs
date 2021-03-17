@@ -3,7 +3,6 @@
 // Start of openssl v.
 use JetBrains\PhpStorm\Deprecated;
 use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 
 /**
  * Frees a private key
@@ -202,7 +201,7 @@ function openssl_get_publickey($public_key)
  * @return string|false Returns a signed public key and challenge string or NULL on failure.
  * @since 5.6
  */
-function openssl_spki_new(#[LanguageLevelTypeAware(["8.0" => "OpenSSLAsymmetricKey"], default: "resource")] $private_key, string $challenge, int $digest_algo = 0): string|false
+function openssl_spki_new(#[LanguageLevelTypeAware(["8.0" => "OpenSSLAsymmetricKey"], default: "resource")] $private_key, string $challenge, int $digest_algo = 2): string|false
 {}
 
 
@@ -253,7 +252,7 @@ function openssl_x509_read(#[LanguageLevelTypeAware(["8.0" => "OpenSSLCertificat
  * @return string|false <b>FALSE</b> on failure
  * @since 5.6
  */
-function openssl_x509_fingerprint(#[LanguageLevelTypeAware(["8.0" => "OpenSSLCertificate|string"], default: "resource|string")] $certificate, string $digest_algo, bool $binary): string|false
+function openssl_x509_fingerprint(#[LanguageLevelTypeAware(["8.0" => "OpenSSLCertificate|string"], default: "resource|string")] $certificate, string $digest_algo = 'sha1', bool $binary = false): string|false
 {}
 /**
  * Free certificate resource
@@ -626,7 +625,7 @@ function openssl_csr_get_subject(#[LanguageLevelTypeAware(["8.0" => "OpenSSLCert
  * @return OpenSSLAsymmetricKey|resource|false
  */
 #[LanguageLevelTypeAware(["8.0" => "OpenSSLAsymmetricKey|false"], default: "resource|false")]
-function openssl_csr_get_public_key(#[LanguageLevelTypeAware(["8.0" => "OpenSSLCertificateSigningRequest|string"], default: "resource|string")] $csr, bool $short_names = true): bool
+function openssl_csr_get_public_key(#[LanguageLevelTypeAware(["8.0" => "OpenSSLCertificateSigningRequest|string"], default: "resource|string")] $csr, bool $short_names = true)
 { }
 
 /**
@@ -793,7 +792,7 @@ function openssl_open(string $data, &$output, string $encrypted_key, $private_ke
  * @return string|false Returns string or FALSE on failure.
  * @since 5.5
  */
-function openssl_pbkdf2(string $password, string $salt, int $key_length, int $iterations, string $digest_algo): string|false
+function openssl_pbkdf2(string $password, string $salt, int $key_length, int $iterations, string $digest_algo = 'sha1'): string|false
 { }
 
 /**
@@ -1030,7 +1029,7 @@ function openssl_dh_compute_key(string $public_key, #[LanguageLevelTypeAware(["8
  * @return string|false
  * @since 7.3
  */
-function openssl_pkey_derive($public_key, $private_key, int $key_length): string|false {}
+function openssl_pkey_derive($public_key, $private_key, int $key_length = 0): string|false {}
 
 /**
  * Generates a string of pseudo-random bytes, with the number of bytes determined by the length parameter.
@@ -1136,7 +1135,7 @@ function openssl_cms_sign(string $input_filename, string $output_filename, OpenS
  * @return bool
  * @since 8.0
  */
-function openssl_cms_decrypt(string $input_filename, string $output_filename, $certificate, $private_key, int $encoding = OPENSSL_ENCODING_SMIME): bool {}
+function openssl_cms_decrypt(string $input_filename, string $output_filename, $certificate, $private_key = null, int $encoding = OPENSSL_ENCODING_SMIME): bool {}
 
 /**
  * Exports the CMS file to an array of PEM certificates.
