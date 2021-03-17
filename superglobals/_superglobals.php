@@ -7,7 +7,7 @@
  *
  * <p><a href="https://secure.php.net/manual/en/reserved.variables.php">https://secure.php.net/manual/en/reserved.variables.php</a>
  */
-$GLOBALS = array();
+$GLOBALS = [];
 
 /**
  * @xglobal $_ENV array
@@ -19,7 +19,7 @@ $GLOBALS = array();
  * <p><a href="https://secure.php.net/manual/en/reserved.variables.php">
  * https://secure.php.net/manual/en/reserved.variables.php</a>
  */
-$_ENV = array();
+$_ENV = [];
 
 /**
  * @xglobal $_SERVER array
@@ -31,11 +31,11 @@ $_ENV = array();
  * <p><a href="https://secure.php.net/manual/en/reserved.variables.php">
  * https://secure.php.net/manual/en/reserved.variables.php</a>
  */
-$_SERVER = array();
+$_SERVER = [];
 /**
  * @deprecated 4.1
  */
-$HTTP_SERVER_VARS = array();
+$HTTP_SERVER_VARS = [];
 
 $_SERVER['PHP_SELF'] = '';
 $_SERVER['argv'] = '';
@@ -93,7 +93,7 @@ $argc = 0;
  * <p><a href="https://secure.php.net/manual/en/reserved.variables.php">
  * https://secure.php.net/manual/en/reserved.variables.php</a>
  */
-$argv = array();
+$argv = [];
 
 /**
  * @xglobal $php_errormsg string

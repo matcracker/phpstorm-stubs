@@ -2,7 +2,6 @@
 
 define("LEVELDB_NO_COMPRESSION", 0);
 
-/** May not be available */
 define("LEVELDB_SNAPPY_COMPRESSION", 1);
 
 define("LEVELDB_ZLIB_COMPRESSION", 2);
