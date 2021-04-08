@@ -1,6 +1,7 @@
 <?php
 
 use JetBrains\PhpStorm\Immutable;
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 use JetBrains\PhpStorm\Pure;
 
 /**
@@ -212,6 +213,7 @@ abstract class ReflectionFunctionAbstract implements Reflector
      * @since 7.0
      */
     #[Pure]
+    #[LanguageLevelTypeAware(['7.1' => 'ReflectionNamedType|null', '8.0' => 'ReflectionNamedType|ReflectionUnionType|null'], default: 'ReflectionType|null')]
     public function getReturnType() {}
 
     /**
@@ -227,7 +229,7 @@ abstract class ReflectionFunctionAbstract implements Reflector
      * Gets starting line number
      *
      * @link https://php.net/manual/en/reflectionfunctionabstract.getstartline.php
-     * @return int The starting line number.
+     * @return int|false The starting line number or {@see false} if unknown.
      */
     #[Pure]
     public function getStartLine() {}

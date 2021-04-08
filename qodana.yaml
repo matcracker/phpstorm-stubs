@@ -11,8 +11,8 @@ exclude:
   - name: PhpMissingParentConstructorInspection
   - name: PhpMissingReturnTypeInspection
   - name: PhpMissingParamTypeInspection
-  - name: PhpMissingVisibilityInspection
-  - name: PhpTraditionalSyntaxArrayLiteralInspection
+  - name: PhpDefineCanBeReplacedWithConstInspection
+  - name: PhpReturnDocTypeMismatchInspection
     paths:
       - aerospike
       - amqp
@@ -26,6 +26,7 @@ exclude:
       - com_dotnet
       - Core
       - couchbase
+      - couchbase_v3
       - crypto
       - ctype
       - cubrid
@@ -73,6 +74,7 @@ exclude:
       - leveldb
       - libevent
       - libsodium
+      - libvirt-php
       - libxml
       - lua
       - LuaSandbox
