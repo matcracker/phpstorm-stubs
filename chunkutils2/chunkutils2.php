@@ -1,7 +1,21 @@
 <?php
-/**
- * Generated stub file for code completion purposes
- */
+
+namespace pocketmine\world\format {
+final class LightArray
+{
+    public function __construct(string $payload) {}
+
+    public static function fill(int $level): \pocketmine\world\format\LightArray {}
+
+    public function get(int $x, int $y, int $z): int {}
+
+    public function set(int $x, int $y, int $z, int $level): void {}
+
+    public function getData(): string {}
+
+    public function collectGarbage(): void {}
+}
+}
 
 namespace pocketmine\world\format {
 final class PalettedBlockArray
