@@ -1023,6 +1023,7 @@ const CLASSES = array (
   'parallel\\Sync\\Error' => 'parallel/parallel/Sync/Error.php',
   'parallel\\Sync\\Error\\IllegalValue' => 'parallel/parallel/Sync/Error/IllegalValue.php',
   'php_user_filter' => 'standard/standard_0.php',
+  'pocketmine\\world\\format\\LightArray' => 'chunkutils2/chunkutils2.php',
   'pocketmine\\world\\format\\PalettedBlockArray' => 'chunkutils2/chunkutils2.php',
   'pocketmine\\world\\format\\io\\SubChunkConverter' => 'chunkutils2/chunkutils2.php',
   'pointObj' => 'mapscript/mapscript.php',
