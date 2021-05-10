@@ -199,7 +199,7 @@ class StubsPhpDocTest extends BaseStubsTest
         ];
         /** @var PHPDocElement $element */
         foreach ($element->tagNames as $tagName) {
-            self::assertContains($tagName, $VALID_TAGS, "Element $elementName has invalid tag: @$tagName");
+            self::assertTrue(isset($VALID_TAGS[$tagName]) || isset($VALID_TAGS["phpstan-$tagName"]) || isset($VALID_TAGS["psalm-$tagName"]), "Element $elementName has invalid tag: @$tagName");
         }
     }
 
