@@ -197,9 +197,18 @@ class StubsPhpDocTest extends BaseStubsTest
             'var',
             'version',
         ];
+        $prefixes = [
+            'phpstan',
+            'psalm'
+        ];
         /** @var PHPDocElement $element */
         foreach ($element->tagNames as $tagName) {
-            self::assertTrue(in_array($tagName, $VALID_TAGS, true) || in_array("phpstan-$tagName", $VALID_TAGS, true) || in_array("psalm-$tagName", $VALID_TAGS, true), "Element $elementName has invalid tag: @$tagName");
+            foreach ($prefixes as $prefix){
+                if (strpos($tagName, "$prefix-") === 0){
+                    $tagName = substr($tagName, strlen($prefix) + 1);
+                }
+            }
+            self::assertContains($tagName, $VALID_TAGS, "Element $elementName has invalid tag: @$tagName");
         }
     }
 
