@@ -14,6 +14,8 @@ final class LightArray
     public function getData(): string {}
 
     public function collectGarbage(): void {}
+
+    public function isUniform(int $level): bool {}
 }
 }
 
@@ -34,13 +36,11 @@ final class PalettedBlockArray
 
     public function get(int $x, int $y, int $z): int {}
 
-    public function set(int $x, int $y, int $z, int $val) {}
+    public function set(int $x, int $y, int $z, int $val): void {}
 
-    public function replace(int $offset, int $val) {}
+    public function replaceAll(int $oldVal, int $newVal): void {}
 
-    public function replaceAll(int $oldVal, int $newVal) {}
-
-    public function collectGarbage(bool $force = null) {}
+    public function collectGarbage(bool $force = false): void {}
 
     public static function getExpectedWordArraySize(int $bitsPerBlock): int {}
 }
