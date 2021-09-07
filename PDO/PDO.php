@@ -507,7 +507,7 @@ class PDO
      * return code from the method that raised the error condition anyway.
      * @link https://php.net/manual/en/pdo.constants.php#pdo.constants.err-none
      */
-    public const ERR_NONE = 00000;
+    public const ERR_NONE = '00000';
 
     /**
      * Fetch the next row in the result set. Valid only for scrollable cursors.
@@ -547,6 +547,13 @@ class PDO
      * @link https://php.net/manual/en/pdo.constants.php#pdo.constants.fetch-ori-rel
      */
     public const FETCH_ORI_REL = 5;
+
+    /**
+     * Specifies that the default fetch mode shall be used.
+     * @since 8.0.7
+     * @link https://php.net/manual/en/pdo.constants.php#pdo.constants.fetch-default
+     */
+    public const FETCH_DEFAULT = 0;
 
     /**
      * Create a <b>PDOStatement</b> object with a forward-only cursor. This is the
@@ -1467,13 +1474,13 @@ class PDOStatement implements IteratorAggregate
      * @param string $class [optional] <p>
      * Name of the created class.
      * </p>
-     * @param array $ctorArgs [optional] <p>
+     * @param array $constructorArgs [optional] <p>
      * Elements of this array are passed to the constructor.
      * </p>
      * @return mixed an instance of the required class with property names that
      * correspond to the column names or <b>FALSE</b> on failure.
      */
-    public function fetchObject($class = "stdClass", array $ctorArgs = []) {}
+    public function fetchObject($class = "stdClass", array $constructorArgs = []) {}
 
     /**
      * (PHP 5 &gt;= 5.1.0, PHP 7, PECL pdo &gt;= 0.1.0)<br/>

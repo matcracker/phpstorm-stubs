@@ -1,7 +1,7 @@
 <?php
 /**
  * Couchbase extension stubs
- * Gathered from https://docs.couchbase.com/sdk-api/couchbase-php-client-3.1.0/index.html
+ * Gathered from https://docs.couchbase.com/sdk-api/couchbase-php-client-3.1.2/index.html
  * Maintainer: sergey@couchbase.com
  *
  * https://github.com/couchbase/php-couchbase/tree/master/api
@@ -33,7 +33,7 @@
  *     during build phase. In this case \Couchbase\HAVE_ZLIB will be false.
  *   * `"off"` or `"none"` - compression will be disabled, but the library will still read compressed values.
  *
- * * `couchbase.encoder.compression_threshold` (long), default: `0`
+ * * `couchbase.encoder.compression_threshold` (int), default: `0`
  *
  *   controls minimum size of the document value in bytes to use compression. For example, if threshold 100 bytes,
  *   and the document size is 50, compression will be disabled for this particular document.
@@ -49,7 +49,7 @@
  *   controls the form of the documents, returned by the server if they were in JSON format. When true, it will generate
  *   arrays of arrays, otherwise instances of stdClass.
  *
- * * `couchbase.pool.max_idle_time_sec` (long), default: `60`
+ * * `couchbase.pool.max_idle_time_sec` (int), default: `60`
  *
  *   controls the maximum interval the underlying connection object could be idle, i.e. without any data/query
  *   operations. All connections which idle more than this interval will be closed automatically. Cleanup function
@@ -65,10 +65,10 @@
 
 namespace Couchbase;
 
-use DateTimeInterface;
 use JsonSerializable;
 use Exception;
 use Throwable;
+use DateTimeInterface;
 
 /**
  * An object which contains meta information of the document needed to enforce query consistency.
@@ -642,10 +642,22 @@ class BaseException extends Exception implements Throwable
     public function context(): ?object {}
 }
 
+class RequestCanceledException extends BaseException implements Throwable {}
+
 /**
  *  Thrown for exceptions that originate from underlying Http operations.
  */
 class HttpException extends BaseException implements Throwable {}
+
+class ParsingFailureException extends HttpException implements Throwable {}
+
+class IndexNotFoundException extends HttpException implements Throwable {}
+
+class PlanningFailureException extends HttpException implements Throwable {}
+
+class IndexFailureException extends HttpException implements Throwable {}
+
+class KeyspaceNotFoundException extends HttpException implements Throwable {}
 
 /**
  *  Thrown for exceptions that originate from query operations.
@@ -656,6 +668,10 @@ class QueryException extends HttpException implements Throwable {}
  *  Thrown for exceptions that originate from query operations.
  */
 class QueryErrorException extends QueryException implements Throwable {}
+
+class DmlFailureException extends QueryException implements Throwable {}
+
+class PreparedStatementException extends QueryException implements Throwable {}
 
 class QueryServiceException extends QueryException implements Throwable {}
 
@@ -1516,7 +1532,7 @@ class CollectionSpec
 
     public function setScopeName(string $name): CollectionSpec {}
 
-    public function setMaxExpiry(float $ms): CollectionSpec {}
+    public function setMaxExpiry(int $ms): CollectionSpec {}
 }
 
 class CollectionManager
@@ -2927,14 +2943,6 @@ class UpsertOptions
     public function expiry(mixed $arg): UpsertOptions {}
 
     /**
-     * Sets the cas value for the operation.
-     *
-     * @param string $arg the cas value
-     * @return UpsertOptions
-     */
-    public function cas(string $arg): UpsertOptions {}
-
-    /**
      * Sets the durability level to enforce when writing the document.
      *
      * @param int $arg the durability level to enforce
@@ -2968,7 +2976,7 @@ class ReplaceOptions
      * @param int|DateTimeInterface $arg the relative expiry time in seconds or DateTimeInterface object for absolute point in time
      * @return ReplaceOptions
      */
-    public function expiry(mixed $arg): UpsertOptions {}
+    public function expiry(mixed $arg): ReplaceOptions {}
 
     /**
      * Sets the cas value for the operation.
@@ -3092,7 +3100,7 @@ class IncrementOptions
      * @param int|DateTimeInterface $arg the relative expiry time in seconds or DateTimeInterface object for absolute point in time
      * @return IncrementOptions
      */
-    public function expiry(mixed $arg): UpsertOptions {}
+    public function expiry(mixed $arg): IncrementOptions {}
 
     /**
      * Sets the durability level to enforce when writing the document.
@@ -3136,7 +3144,7 @@ class DecrementOptions
      * @param int|DateTimeInterface $arg the relative expiry time in seconds or DateTimeInterface object for absolute point in time
      * @return DecrementOptions
      */
-    public function expiry(mixed $arg): UpsertOptions {}
+    public function expiry(mixed $arg): DecrementOptions {}
 
     /**
      * Sets the durability level to enforce when writing the document.
@@ -3239,7 +3247,7 @@ class MutateInOptions
      * @param int|DateTimeInterface $arg the relative expiry time in seconds or DateTimeInterface object for absolute point in time
      * @return MutateInOptions
      */
-    public function expiry(mixed $arg): UpsertOptions {}
+    public function expiry(mixed $arg): MutateInOptions {}
 
     /**
      * Sets the durability level to enforce when writing the document.

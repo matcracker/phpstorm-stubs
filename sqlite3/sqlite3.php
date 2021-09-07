@@ -178,8 +178,7 @@ class SQLite3
      * @param string $query <p>
      * The SQL query to execute.
      * </p>
-     * @return SQLite3Result an <b>SQLite3Result</b> object if the query returns results. Otherwise,
-     * returns <b>TRUE</b> if the query succeeded, <b>FALSE</b> on failure.
+     * @return SQLite3Result|false an <b>SQLite3Result</b> object, or <b>FALSE</b> on failure.
      */
     public function query($query) {}
 
@@ -381,7 +380,7 @@ class SQLite3Stmt
     /**
      * Executes a prepared statement and returns a result set object
      * @link https://php.net/manual/en/sqlite3stmt.execute.php
-     * @return SQLite3Result an <b>SQLite3Result</b> object on successful execution of the prepared
+     * @return SQLite3Result|false an <b>SQLite3Result</b> object on successful execution of the prepared
      * statement, <b>FALSE</b> on failure.
      */
     public function execute() {}

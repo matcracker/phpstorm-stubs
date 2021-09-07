@@ -1,4 +1,4 @@
-FROM php:8.0.5-alpine
+FROM php:8.0.7-alpine
 RUN echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
@@ -32,8 +32,8 @@ RUN pecl install msgpack
 RUN docker-php-ext-enable msgpack
 RUN pecl install rrd
 RUN docker-php-ext-enable rrd
-#RUN pecl install sync
-#RUN docker-php-ext-enable sync
+RUN pecl install sync
+RUN docker-php-ext-enable sync
 RUN pecl install yaml
 RUN docker-php-ext-enable yaml
 RUN pecl install pcov
@@ -51,7 +51,7 @@ RUN pecl install yaf
 RUN docker-php-ext-enable yaf
 RUN pecl install yar
 RUN docker-php-ext-enable yar
-#RUN pecl install gnupg
-#RUN docker-php-ext-enable gnupg
+RUN pecl install gnupg
+RUN docker-php-ext-enable gnupg
 #RUN pecl install uopz
 #RUN docker-php-ext-enable uopz

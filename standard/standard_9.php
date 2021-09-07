@@ -713,7 +713,7 @@ function array_filter(array $array, ?callable $callback, int $mode = 0): array {
 /**
  * Applies the callback to the elements of the given arrays
  * @link https://php.net/manual/en/function.array-map.php
- * @param callable $callback <p>
+ * @param callable|null $callback <p>
  * Callback function to run for each element in each array.
  * </p>
  * @param array $array <p>
@@ -724,7 +724,7 @@ function array_filter(array $array, ?callable $callback, int $mode = 0): array {
  * after applying the callback function to each one.
  * @meta
  */
-function array_map(callable $callback, array $array, array ...$arrays): array {}
+function array_map(?callable $callback, array $array, array ...$arrays): array {}
 
 /**
  * Split an array into chunks
@@ -802,6 +802,16 @@ function array_key_first(array $array): string|int|null {}
  */
 #[Pure]
 function array_key_last(array $array): string|int|null {}
+
+/**
+ * @link https://secure.php.net/array_is_list
+ * @param array $array An array
+ * @return bool return true if the array keys are 0 .. count($array)-1 in that order.
+ * For other arrays, it returns false. For non-arrays, it throws a TypeError.
+ * @since 8.1
+ */
+#[Pure]
+function array_is_list(array $array): bool {}
 
 /**
  * Alias:
@@ -911,9 +921,9 @@ class AssertionError extends Error {}
  * @param mixed $value [optional] <p>
  * An optional new value for the option.
  * </p>
- * @return object|array|string|int|null The original setting of any option.
+ * @return mixed The original setting of any option.
  */
-function assert_options(int $option, mixed $value): object|array|string|int|null {}
+function assert_options(int $option, mixed $value): mixed {}
 
 /**
  * Compares two "PHP-standardized" version number strings
