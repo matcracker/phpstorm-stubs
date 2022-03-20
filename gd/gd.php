@@ -1,6 +1,8 @@
 <?php
 
 use JetBrains\PhpStorm\Deprecated;
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 use JetBrains\PhpStorm\Pure;
 
 /**
@@ -160,7 +162,14 @@ function imageellipse(GdImage $image, int $center_x, int $center_y, int $width, 
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function imagechar(GdImage $image, int $font, int $x, int $y, string $char, int $color): bool {}
+function imagechar(
+    GdImage $image,
+    #[LanguageLevelTypeAware(['8.1' => 'GdFont|int'], default: 'int')] $font,
+    int $x,
+    int $y,
+    string $char,
+    int $color
+): bool {}
 
 /**
  * Draw a character vertically
@@ -182,7 +191,14 @@ function imagechar(GdImage $image, int $font, int $x, int $y, string $char, int 
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function imagecharup(GdImage $image, int $font, int $x, int $y, string $char, int $color): bool {}
+function imagecharup(
+    GdImage $image,
+    #[LanguageLevelTypeAware(['8.1' => 'GdFont|int'], default: 'int')] $font,
+    int $x,
+    int $y,
+    string $char,
+    int $color
+): bool {}
 
 /**
  * Get the index of the color of a pixel
@@ -247,7 +263,7 @@ function imagecreatefromstring(string $data): GdImage|false {}
  * the specified one or <b>FALSE</b> on failure
  */
 #[Pure]
-function imagecolorclosest(GdImage $image, int $red, int $green, int $blue): int|false {}
+function imagecolorclosest(GdImage $image, int $red, int $green, int $blue): int {}
 
 /**
  * Get the index of the color which has the hue, white and blackness
@@ -260,7 +276,7 @@ function imagecolorclosest(GdImage $image, int $red, int $green, int $blue): int
  * the hue, white and blackness nearest the given color or <b>FALSE</b> on failure
  */
 #[Pure]
-function imagecolorclosesthwb(GdImage $image, int $red, int $green, int $blue): int|false {}
+function imagecolorclosesthwb(GdImage $image, int $red, int $green, int $blue): int {}
 
 /**
  * De-allocate a color for an image
@@ -283,7 +299,7 @@ function imagecolordeallocate(GdImage $image, int $color): bool {}
  * @return int|false a color index or <b>FALSE</b> on failure
  */
 #[Pure]
-function imagecolorresolve(GdImage $image, int $red, int $green, int $blue): int|false {}
+function imagecolorresolve(GdImage $image, int $red, int $green, int $blue): int {}
 
 /**
  * Get the index of the specified color
@@ -296,7 +312,7 @@ function imagecolorresolve(GdImage $image, int $red, int $green, int $blue): int
  * color does not exist, or <b>FALSE</b> on failure
  */
 #[Pure]
-function imagecolorexact(GdImage $image, int $red, int $green, int $blue): int|false {}
+function imagecolorexact(GdImage $image, int $red, int $green, int $blue): int {}
 
 /**
  * Set the color for the specified palette index
@@ -354,7 +370,8 @@ function imagecolorstotal(GdImage $image): int {}
  * contain the appropriate values for the specified color index or <b>FALSE</b> on failure
  */
 #[Pure]
-function imagecolorsforindex(GdImage $image, int $color): array|false {}
+#[LanguageLevelTypeAware(['8.0' => 'array'], default: 'array|false')]
+function imagecolorsforindex(GdImage $image, int $color) {}
 
 /**
  * Copy part of an image
@@ -686,7 +703,7 @@ function imagecolorallocatealpha(GdImage $image, int $red, int $green, int $blue
  * @return int|false a color index or <b>FALSE</b> on failure
  */
 #[Pure]
-function imagecolorresolvealpha(GdImage $image, int $red, int $green, int $blue, int $alpha): int|false {}
+function imagecolorresolvealpha(GdImage $image, int $red, int $green, int $blue, int $alpha): int {}
 
 /**
  * Get the index of the closest color to the specified color + alpha
@@ -710,7 +727,7 @@ function imagecolorresolvealpha(GdImage $image, int $red, int $green, int $blue,
  * <b>FALSE</b> on failure
  */
 #[Pure]
-function imagecolorclosestalpha(GdImage $image, int $red, int $green, int $blue, int $alpha): int|false {}
+function imagecolorclosestalpha(GdImage $image, int $red, int $green, int $blue, int $alpha): int {}
 
 /**
  * Get the index of the specified color + alpha
@@ -735,7 +752,8 @@ function imagecolorclosestalpha(GdImage $image, int $red, int $green, int $blue,
  * on failure
  */
 #[Pure]
-function imagecolorexactalpha(GdImage $image, int $red, int $green, int $blue, int $alpha): int|false {}
+#[LanguageLevelTypeAware(['8.1' => 'int'], default: 'int|false')]
+function imagecolorexactalpha(GdImage $image, int $red, int $green, int $blue, int $alpha) {}
 
 /**
  * Copy and resize part of an image with resampling
@@ -1129,7 +1147,13 @@ function imagefill(GdImage $image, int $x, int $y, int $color): bool {}
  * </p>
  * @return bool true on success or false on failure.
  */
-function imagefilledpolygon(GdImage $image, array $points, int $num_points_or_color, ?int $color = null): bool {}
+function imagefilledpolygon(
+    GdImage $image,
+    array $points,
+    #[Deprecated(since: "8.1")] int $num_points_or_color,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] ?int $color,
+    #[PhpStormStubsElementAvailable(from: '8.0')] ?int $color = null
+): bool {}
 
 /**
  * Draw a filled rectangle
@@ -1184,7 +1208,7 @@ function imagefilltoborder(GdImage $image, int $x, int $y, int $border_color, in
  * @return int the width of the pixel
  */
 #[Pure]
-function imagefontwidth(int $font): int {}
+function imagefontwidth(#[LanguageLevelTypeAware(['8.1' => 'GdFont|int'], default: 'int')] $font): int {}
 
 /**
  * Get font height
@@ -1193,7 +1217,7 @@ function imagefontwidth(int $font): int {}
  * @return int the height of the pixel.
  */
 #[Pure]
-function imagefontheight(int $font): int {}
+function imagefontheight(#[LanguageLevelTypeAware(['8.1' => 'GdFont|int'], default: 'int')] $font): int {}
 
 /**
  * Enable or disable interlace
@@ -1283,7 +1307,8 @@ function imageline(GdImage $image, int $x1, int $y1, int $x2, int $y2, int $colo
  * @return int|false The font identifier which is always bigger than 5 to avoid conflicts with
  * built-in fonts or false on errors.
  */
-function imageloadfont(string $filename): int|false {}
+#[LanguageLevelTypeAware(['8.1' => 'GdFont|false'], default: 'int|false')]
+function imageloadfont(string $filename) {}
 
 /**
  * Draws a polygon
@@ -1317,7 +1342,13 @@ function imageloadfont(string $filename): int|false {}
  * </p>
  * @return bool true on success or false on failure.
  */
-function imagepolygon(GdImage $image, array $points, int $num_points_or_color, ?int $color = null): bool {}
+function imagepolygon(
+    GdImage $image,
+    array $points,
+    int $num_points_or_color,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] ?int $color,
+    #[PhpStormStubsElementAvailable(from: '8.0')] ?int $color = null
+): bool {}
 
 /**
  * Draw a rectangle
@@ -1382,7 +1413,14 @@ function imagesetpixel(GdImage $image, int $x, int $y, int $color): bool {}
  * </p>
  * @return bool true on success or false on failure.
  */
-function imagestring(GdImage $image, int $font, int $x, int $y, string $string, int $color): bool {}
+function imagestring(
+    GdImage $image,
+    #[LanguageLevelTypeAware(['8.1' => 'GdFont|int'], default: 'int')] $font,
+    int $x,
+    int $y,
+    string $string,
+    int $color
+): bool {}
 
 /**
  * Draw a string vertically
@@ -1404,7 +1442,14 @@ function imagestring(GdImage $image, int $font, int $x, int $y, string $string, 
  * </p>
  * @return bool true on success or false on failure.
  */
-function imagestringup(GdImage $image, int $font, int $x, int $y, string $string, int $color): bool {}
+function imagestringup(
+    GdImage $image,
+    #[LanguageLevelTypeAware(['8.1' => 'GdFont|int'], default: 'int')] $font,
+    int $x,
+    int $y,
+    string $string,
+    int $color
+): bool {}
 
 /**
  * Get image width
@@ -1463,7 +1508,7 @@ function imagedashedline(GdImage $image, int $x1, int $y1, int $x2, int $y2, int
  * @param float $angle <p>
  * Angle in degrees in which text will be measured.
  * </p>
- * @param string $fontfile <p>
+ * @param string $font_filename <p>
  * The name of the TrueType font file (can be a URL). Depending on
  * which version of the GD library that PHP is using, it may attempt to
  * search for files that do not begin with a leading '/' by appending
@@ -1518,7 +1563,7 @@ function imagedashedline(GdImage $image, int $x1, int $y1, int $x2, int $y2, int
  * corner seeing the text horizontally.
  */
 #[Pure]
-function imagettfbbox($size, $angle, $fontfile, $text) {}
+function imagettfbbox($size, $angle, $font_filename, $text) {}
 
 /**
  * Write text to the image using TrueType fonts
@@ -1550,12 +1595,12 @@ function imagettfbbox($size, $angle, $fontfile, $text) {}
  * The color index. Using the negative of a color index has the effect of
  * turning off antialiasing. See imagecolorallocate.
  * </p>
- * @param string $fontfile <p>
+ * @param string $font_filename <p>
  * The path to the TrueType font you wish to use.
  * </p>
  * <p>
  * Depending on which version of the GD library PHP is using, when
- * fontfile does not begin with a leading
+ * font_filename does not begin with a leading
  * / then .ttf will be appended
  * to the filename and the library will attempt to search for that
  * filename along a library-defined font path.
@@ -1582,7 +1627,7 @@ function imagettfbbox($size, $angle, $fontfile, $text) {}
  * </pre>
  * <p>
  * <strong>Note:</strong>
- * <code>open_basedir</code> does <em>not</em> apply to fontfile.
+ * <code>open_basedir</code> does <em>not</em> apply to font_filename.
  * </p>
  * @param string $text <p>
  * The text string in UTF-8 encoding.
@@ -1610,7 +1655,7 @@ function imagettfbbox($size, $angle, $fontfile, $text) {}
  * corner when you see the text horizontally.
  * Returns false on error.
  */
-function imagettftext($image, $size, $angle, $x, $y, $color, $fontfile, $text) {}
+function imagettftext($image, $size, $angle, $x, $y, $color, $font_filename, $text) {}
 
 /**
  * Give the bounding box of a text using fonts via freetype2
@@ -1623,7 +1668,7 @@ function imagettftext($image, $size, $angle, $x, $y, $color, $fontfile, $text) {
  * Angle in degrees in which text will be
  * measured.
  * </p>
- * @param string $fontfile <p>
+ * @param string $font_filename <p>
  * The name of the TrueType font file (can be a URL). Depending on
  * which version of the GD library that PHP is using, it may attempt to
  * search for files that do not begin with a leading '/' by appending
@@ -1690,7 +1735,7 @@ function imagettftext($image, $size, $angle, $x, $y, $color, $fontfile, $text) {
  * Returns false on error.
  */
 #[Pure]
-function imageftbbox($size, $angle, $fontfile, $text, $extrainfo = null) {}
+function imageftbbox($size, $angle, $font_filename, $text, $extrainfo = null) {}
 
 /**
  * Write text to the image using fonts using FreeType 2
@@ -1721,12 +1766,12 @@ function imageftbbox($size, $angle, $fontfile, $text, $extrainfo = null) {}
  * The index of the desired color for the text, see
  * imagecolorexact.
  * </p>
- * @param string $fontfile <p>
+ * @param string $font_filename <p>
  * The path to the TrueType font you wish to use.
  * </p>
  * <p>
  * Depending on which version of the GD library PHP is using, when
- * fontfile does not begin with a leading
+ * font_filename does not begin with a leading
  * / then .ttf will be appended
  * to the filename and the library will attempt to search for that
  * filename along a library-defined font path.
@@ -1753,7 +1798,7 @@ function imageftbbox($size, $angle, $fontfile, $text, $extrainfo = null) {}
  * </pre>
  * <p>
  * <strong>Note:</strong>
- * <code>open_basedir</code> does <em>not</em> apply to fontfile.
+ * <code>open_basedir</code> does <em>not</em> apply to font_filename.
  * </p>
  * @param string $text <p>
  * Text to be inserted into image.
@@ -1808,7 +1853,7 @@ function imageftbbox($size, $angle, $fontfile, $text, $extrainfo = null) {}
  * </tr>
  * Returns false on error.
  */
-function imagefttext($image, $size, $angle, $x, $y, $color, $fontfile, $text, $extrainfo = null) {}
+function imagefttext($image, $size, $angle, $x, $y, $color, $font_filename, $text, $extrainfo = null) {}
 
 /**
  * Load a PostScript Type 1 font from file
@@ -2117,7 +2162,14 @@ function imagexbm(GdImage $image, ?string $filename, ?int $foreground_color = nu
  * @param int ...$args
  * @return bool true on success or false on failure.
  */
-function imagefilter(GdImage $image, int $filter, ...$args): bool {}
+function imagefilter(
+    GdImage $image,
+    int $filter,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] $arg2 = null,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] $arg3 = null,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] $arg4 = null,
+    ...$args
+): bool {}
 
 /**
  * Apply a 3x3 convolution matrix, using coefficient and offset
@@ -2194,7 +2246,13 @@ function imagegetclip(GdImage $image): array {}
  * @since 7.2
  * @see imageplygon()
  */
-function imageopenpolygon(GdImage $image, array $points, int $num_points_or_color, ?int $color = null): bool {}
+function imageopenpolygon(
+    GdImage $image,
+    array $points,
+    #[Deprecated(since: "8.1")] int $num_points_or_color,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] ?int $color,
+    #[PhpStormStubsElementAvailable(from: '8.0')] ?int $color = null
+): bool {}
 
 /**
  * <b>imagecreatefrombmp()</b> returns an image identifier representing the image obtained from the given filename.
@@ -2837,6 +2895,15 @@ define('IMG_TRIANGLE', 20);
 define('IMG_TGA', 128);
 
 /**
+ * @since 8.1
+ */
+define('IMG_AVIF', 256);
+
+/**
+ * @since 8.1
+ */
+define('IMG_WEBP_LOSSLESS', 101);
+/**
  * Return an image containing the affine tramsformed src image, using an optional clipping area
  * @link https://secure.php.net/manual/en/function.imageaffine.php
  * @param resource|GdImage $image <p>An image resource, returned by one of the image creation functions,
@@ -2861,11 +2928,15 @@ function imageaffinematrixconcat(array $matrix1, array $matrix2): array|false {}
  * Return an image containing the affine tramsformed src image, using an optional clipping area
  * @link https://secure.php.net/manual/en/function.imageaffinematrixget.php
  * @param int $type <p> One of <b>IMG_AFFINE_*</b> constants.</p>
- * @param mixed $options [optional]
+ * @param mixed $options
  * @return float[]|false Array with keys 0 to 5 and float values or <b>FALSE</b> on failure.
  * @since 5.5
  */
-function imageaffinematrixget(int $type, $options = null): array|false {}
+function imageaffinematrixget(
+    int $type,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] $options = null,
+    #[PhpStormStubsElementAvailable(from: '8.0')] $options
+): array|false {}
 
 /**
  * Crop an image using the given coordinates and size, x, y, width and height

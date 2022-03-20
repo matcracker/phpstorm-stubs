@@ -8,7 +8,10 @@ use StubTests\Parsers\PHPReflectionParser;
 
 class ReflectionStubsSingleton
 {
-    private static ?StubsContainer $reflectionStubs = null;
+    /**
+     * @var StubsContainer|null
+     */
+    private static $reflectionStubs;
 
     public static function getReflectionStubs(): StubsContainer
     {

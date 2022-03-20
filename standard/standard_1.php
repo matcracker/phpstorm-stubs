@@ -3,6 +3,7 @@
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Deprecated;
 use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 use JetBrains\PhpStorm\Pure;
 
 /**
@@ -257,7 +258,7 @@ function dirname(string $path, int $levels = 1): string {}
  * If options is used, this function will return a
  * string if not all elements are requested.
  */
-#[Pure]
+#[Pure(true)]
 function pathinfo(string $path, int $flags = PATHINFO_ALL): array|string {}
 
 /**
@@ -357,7 +358,6 @@ function strrchr(string $haystack, string $needle): string|false {}
  * </p>
  * @return string the shuffled string.
  */
-#[Pure]
 function str_shuffle(string $string): string {}
 
 /**
@@ -986,7 +986,7 @@ function similar_text(string $string1, string $string2, &$percent): int {}
  */
 #[Pure]
 #[LanguageLevelTypeAware(["8.0" => "string[]"], default: "string[]|false")]
-function explode(string $separator, string $string, int $limit): array|false {}
+function explode(string $separator, string $string, int $limit) {}
 
 /**
  * Join array elements with a string
@@ -1076,7 +1076,7 @@ function join(array|string $separator = "", ?array $array): string {}
  * different names on different systems or for providing a fallback
  * for a possibly not available locale.
  * </p>
- * @param string ...$rest [optional]
+ * @param string ...$rest
  * @return string|false <p>the new current locale, or false if the locale functionality is
  * not implemented on your platform, the specified locale does not exist or
  * the category name is invalid.
@@ -1092,7 +1092,12 @@ function join(array|string $separator = "", ?array $array): string {}
  * on the system that PHP is running. It returns exactly
  * what the system setlocale function returns.</p>
  */
-function setlocale(int $category, array|string|int $locales, ...$rest): string|false {}
+function setlocale(
+    int $category,
+    #[PhpStormStubsElementAvailable(from: '8.0')] $locales,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] $rest,
+    ...$rest
+): string|false {}
 
 /**
  * Get numeric formatting information

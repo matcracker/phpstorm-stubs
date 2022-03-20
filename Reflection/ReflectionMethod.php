@@ -2,6 +2,9 @@
 
 use JetBrains\PhpStorm\Deprecated;
 use JetBrains\PhpStorm\Immutable;
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use JetBrains\PhpStorm\Internal\TentativeType;
 use JetBrains\PhpStorm\Pure;
 
 /**
@@ -22,6 +25,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @var string Fully qualified class name where this method was defined
      */
     #[Immutable]
+    #[LanguageLevelTypeAware(['8.1' => 'string'], default: '')]
     public $class;
 
     /**
@@ -69,9 +73,12 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * method name delimited by ::.
      * @param string|null $method Name of the method if the first argument is a
      * classname or an object.
-     * @throws \ReflectionException if the class or method does not exist.
+     * @throws ReflectionException if the class or method does not exist.
      */
-    public function __construct($objectOrMethod, $method = null) {}
+    public function __construct(
+        #[LanguageLevelTypeAware(['8.0' => 'object|string'], default: '')] $objectOrMethod,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $method = null
+    ) {}
 
     /**
      * Export a reflection method.
@@ -95,7 +102,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @link https://php.net/manual/en/reflectionmethod.tostring.php
      * @return string A string representation of this {@see ReflectionMethod} instance.
      */
-    public function __toString() {}
+    #[TentativeType]
+    public function __toString(): string {}
 
     /**
      * Checks if method is public
@@ -104,7 +112,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @return bool Returns {@see true} if the method is public, otherwise {@see false}
      */
     #[Pure]
-    public function isPublic() {}
+    #[TentativeType]
+    public function isPublic(): bool {}
 
     /**
      * Checks if method is private
@@ -113,7 +122,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @return bool Returns {@see true} if the method is private, otherwise {@see false}
      */
     #[Pure]
-    public function isPrivate() {}
+    #[TentativeType]
+    public function isPrivate(): bool {}
 
     /**
      * Checks if method is protected
@@ -122,7 +132,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @return bool Returns {@see true} if the method is protected, otherwise {@see false}
      */
     #[Pure]
-    public function isProtected() {}
+    #[TentativeType]
+    public function isProtected(): bool {}
 
     /**
      * Checks if method is abstract
@@ -131,7 +142,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @return bool Returns {@see true} if the method is abstract, otherwise {@see false}
      */
     #[Pure]
-    public function isAbstract() {}
+    #[TentativeType]
+    public function isAbstract(): bool {}
 
     /**
      * Checks if method is final
@@ -140,7 +152,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @return bool Returns {@see true} if the method is final, otherwise {@see false}
      */
     #[Pure]
-    public function isFinal() {}
+    #[TentativeType]
+    public function isFinal(): bool {}
 
     /**
      * Checks if method is static
@@ -149,7 +162,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @return bool Returns {@see true} if the method is static, otherwise {@see false}
      */
     #[Pure]
-    public function isStatic() {}
+    #[TentativeType]
+    public function isStatic(): bool {}
 
     /**
      * Checks if method is a constructor
@@ -158,7 +172,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @return bool Returns {@see true} if the method is a constructor, otherwise {@see false}
      */
     #[Pure]
-    public function isConstructor() {}
+    #[TentativeType]
+    public function isConstructor(): bool {}
 
     /**
      * Checks if method is a destructor
@@ -167,7 +182,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @return bool Returns {@see true} if the method is a destructor, otherwise {@see false}
      */
     #[Pure]
-    public function isDestructor() {}
+    #[TentativeType]
+    public function isDestructor(): bool {}
 
     /**
      * Returns a dynamically created closure for the method
@@ -178,7 +194,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @since 5.4
      */
     #[Pure]
-    public function getClosure($object = null) {}
+    #[TentativeType]
+    public function getClosure(#[LanguageLevelTypeAware(['8.0' => 'object|null'], default: '')] $object = null): Closure {}
 
     /**
      * Gets the method modifiers
@@ -198,7 +215,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      *  - {@see ReflectionMethod::IS_FINAL} - Indicates that the method is final.
      */
     #[Pure]
-    public function getModifiers() {}
+    #[TentativeType]
+    public function getModifiers(): int {}
 
     /**
      * Invokes a reflected method.
@@ -228,7 +246,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * instance of the class that this method was declared in or the method
      * invocation failed.
      */
-    public function invokeArgs($object, array $args) {}
+    #[TentativeType]
+    public function invokeArgs(#[LanguageLevelTypeAware(['8.0' => 'object|null'], default: '')] $object, array $args): mixed {}
 
     /**
      * Gets declaring class for the reflected method.
@@ -238,7 +257,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * reflected method is part of.
      */
     #[Pure]
-    public function getDeclaringClass() {}
+    #[TentativeType]
+    public function getDeclaringClass(): ReflectionClass {}
 
     /**
      * Gets the method prototype (if there is one).
@@ -248,7 +268,8 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @throws ReflectionException if the method does not have a prototype
      */
     #[Pure]
-    public function getPrototype() {}
+    #[TentativeType]
+    public function getPrototype(): ReflectionMethod {}
 
     /**
      * Set method accessibility
@@ -258,5 +279,20 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @return void No value is returned.
      * @since 5.3.2
      */
-    public function setAccessible($accessible) {}
+    #[PhpStormStubsElementAvailable(to: "8.0")]
+    #[TentativeType]
+    public function setAccessible(#[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $accessible): void {}
+
+    /**
+     * Set method accessibility
+     * This method is no-op starting from PHP 8.1
+     *
+     * @link https://php.net/manual/en/reflectionmethod.setaccessible.php
+     * @param bool $accessible {@see true} to allow accessibility, or {@see false}
+     * @return void No value is returned.
+     */
+    #[Pure]
+    #[PhpStormStubsElementAvailable(from: "8.1")]
+    #[TentativeType]
+    public function setAccessible(bool $accessible): void {}
 }

@@ -2,6 +2,7 @@
 
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 use JetBrains\PhpStorm\Internal\ReturnTypeContract as TypeContract;
 use JetBrains\PhpStorm\Pure;
 
@@ -222,14 +223,18 @@ function ord(string $character): int {}
  * @param string $string <p>
  * The input string.
  * </p>
- * @param array &$result [optional] <p>
+ * @param array &$result <p>
  * If the second parameter arr is present,
  * variables are stored in this variable as array elements instead.<br/>
  * Since 7.2.0 this parameter is not optional.
  * </p>
  * @return void
  */
-function parse_str(string $string, &$result): void {}
+function parse_str(
+    string $string,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] &$result = [],
+    #[PhpStormStubsElementAvailable(from: '8.0')] &$result
+): void {}
 
 /**
  * Parse a CSV string into an array
@@ -333,7 +338,7 @@ function strchr(string $haystack, string $needle, bool $before_needle = false): 
  * format.
  */
 #[Pure]
-function sprintf(string $format, ...$values): string {}
+function sprintf(string $format, mixed ...$values): string {}
 
 /**
  * Output a formatted string
@@ -346,7 +351,7 @@ function sprintf(string $format, ...$values): string {}
  * </p>
  * @return int the length of the outputted string.
  */
-function printf(string $format, ...$values): int {}
+function printf(string $format, mixed ...$values): int {}
 
 /**
  * Output a formatted string
@@ -389,7 +394,7 @@ function vsprintf(string $format, array $values): string {}
  * </p>
  * @return int the length of the string written.
  */
-function fprintf($stream, string $format, ...$values): int {}
+function fprintf($stream, string $format, mixed ...$values): int {}
 
 /**
  * Write a formatted string to a stream
@@ -423,7 +428,7 @@ function vfprintf($stream, string $format, array $values): int {}
  * i stands for integer with base detection.
  * n stands for number of characters processed so far.
  * </p>
- * @param mixed &...$vars
+ * @param mixed &...$vars [optional]
  * @return array|int|null If only
  * two parameters were passed to this function, the values parsed
  * will be returned as an array. Otherwise, if optional parameters are passed,
@@ -479,18 +484,9 @@ function fscanf($stream, string $format, #[TypeContract(exists: "int|false|null"
  * If the component parameter is specified a
  * string is returned instead of an array.
  */
-#[ArrayShape([
-    "scheme" => "string",
-    "host" => "string",
-    "port" => "int",
-    "user" => "string",
-    "pass" => "string",
-    "query" => "string",
-    "path" => "string",
-    "fragment" => "string",
-])]
+#[ArrayShape(["scheme" => "string", "host" => "string", "port" => "int", "user" => "string", "pass" => "string", "query" => "string", "path" => "string", "fragment" => "string"])]
 #[Pure]
-function parse_url(string $url, int $component = -1) {}
+function parse_url(string $url, int $component = -1): array|string|int|false|null {}
 
 /**
  * URL-encodes string
@@ -594,6 +590,7 @@ function http_build_query(object|array $data, string $numeric_prefix = "", ?stri
  * </p>
  * @return string|false the contents of the symbolic link path or false on error.
  */
+#[Pure(true)]
 function readlink(string $path): string|false {}
 
 /**
@@ -606,7 +603,7 @@ function readlink(string $path): string|false {}
  * of the Unix C stat structure returned by the lstat
  * system call. Returns 0 or false in case of error.
  */
-#[Pure]
+#[Pure(true)]
 function linkinfo(string $path): int|false {}
 
 /**
@@ -911,16 +908,7 @@ function proc_terminate($process, int $signal = 15): bool {}
  * </td>
  * </tr>
  */
-#[ArrayShape([
-    "command" => "string",
-    "pid" => "int",
-    "running" => "bool",
-    "signaled" => "bool",
-    "stopped" => "bool",
-    "exitcode" => "int",
-    "termsig" => "int",
-    "stopsig" => "int",
-])]
+#[ArrayShape(["command" => "string", "pid" => "int", "running" => "bool", "signaled" => "bool", "stopped" => "bool", "exitcode" => "int", "termsig" => "int", "stopsig" => "int"])]
 #[LanguageLevelTypeAware(["8.0" => "array"], default: "array|false")]
 function proc_get_status($process) {}
 

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace StubTests\TestData\Providers;
 
+use RuntimeException;
 use StubTests\Model\BasePHPElement;
 use StubTests\Model\PHPClass;
 use StubTests\Model\PHPFunction;
@@ -15,8 +16,6 @@ class EntitiesFilter
 {
     /**
      * @param BasePHPElement[] $entities
-     * @param callable|null $additionalFilter
-     * @param int ...$problemTypes
      * @return BasePHPElement[]
      */
     public static function getFiltered(array $entities, callable $additionalFilter = null, int ...$problemTypes): array
@@ -30,7 +29,6 @@ class EntitiesFilter
                 }
             }
             if ($entity->hasMutedProblem(StubProblemType::STUB_IS_MISSED) ||
-                $entity->hasMutedProblem(StubProblemType::HAS_DUPLICATION) ||
                 $additionalFilter !== null && $additionalFilter($entity) === true) {
                 $hasProblem = true;
             }
@@ -44,7 +42,11 @@ class EntitiesFilter
         return $resultArray;
     }
 
-    public static function getFilteredFunctions(PHPClass|PHPInterface $class = null): array
+    /**
+     * @return PHPFunction[]
+     * @throws RuntimeException
+     */
+    public static function getFilteredFunctions(PHPInterface|PHPClass $class = null, bool $shouldSuitCurrentPhpVersion = true): array
     {
         if ($class === null) {
             $allFunctions = ReflectionStubsSingleton::getReflectionStubs()->getFunctions();
@@ -53,7 +55,11 @@ class EntitiesFilter
         }
         /** @var PHPFunction[] $resultArray */
         $resultArray = [];
-        foreach (EntitiesFilter::getFiltered($allFunctions, problemTypes: StubProblemType::FUNCTION_PARAMETER_MISMATCH) as $function) {
+        $allFunctions = array_filter(
+            $allFunctions,
+            fn ($function) => !$shouldSuitCurrentPhpVersion || BasePHPElement::entitySuitsCurrentPhpVersion($function)
+        );
+        foreach (self::getFiltered($allFunctions, null, StubProblemType::HAS_DUPLICATION, StubProblemType::FUNCTION_PARAMETER_MISMATCH) as $function) {
             $resultArray[] = $function;
         }
         return $resultArray;
@@ -63,21 +69,15 @@ class EntitiesFilter
     {
         /** @var PHPParameter[] $resultArray */
         $resultArray = [];
-        foreach (EntitiesFilter::getFiltered(
+        foreach (self::getFiltered(
             $function->parameters,
             $additionalFilter,
-            StubProblemType::PARAMETER_NAME_MISMATCH,
+            StubProblemType::FUNCTION_PARAMETER_MISMATCH,
             ...$problemType
         ) as $parameter) {
             $resultArray[] = $parameter;
         }
         return $resultArray;
-    }
-
-    public static function getFilterFunctionForLanguageLevel(float $languageVersion): callable
-    {
-        return fn (PHPClass|PHPInterface $class, PHPMethod $method, ?float $firstSinceVersion) => $class !== null && !$method->isFinal && !$class->isFinal && $firstSinceVersion !== null &&
-            $firstSinceVersion < $languageVersion;
     }
 
     public static function getFilterFunctionForAllowedTypeHintsInLanguageLevel(float $languageVersion): callable
@@ -86,7 +86,10 @@ class EntitiesFilter
             $reflectionClass = ReflectionStubsSingleton::getReflectionStubs()->getClass($stubClass->name);
             $reflectionMethod = null;
             if ($reflectionClass !== null) {
-                $reflectionMethods = array_filter($reflectionClass->methods, fn (PHPMethod $method) => $stubMethod->name === $method->name);
+                $reflectionMethods = array_filter(
+                    $reflectionClass->methods,
+                    fn (PHPMethod $method) => $stubMethod->name === $method->name
+                );
                 $reflectionMethod = array_pop($reflectionMethods);
             }
             return $reflectionMethod !== null && ($stubMethod->isFinal || $stubClass->isFinal || $firstSinceVersion !== null &&

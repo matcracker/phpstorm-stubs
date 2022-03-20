@@ -2,6 +2,8 @@
 
 use JetBrains\PhpStorm\Deprecated;
 use JetBrains\PhpStorm\Immutable;
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\TentativeType;
 use JetBrains\PhpStorm\Pure;
 
 /**
@@ -32,14 +34,15 @@ class ReflectionFunction extends ReflectionFunctionAbstract
      * @param string|Closure $function The name of the function to reflect or a closure.
      * @throws ReflectionException if the function does not exist.
      */
-    public function __construct($function) {}
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'Closure|string'], default: '')] $function) {}
 
     /**
      * Returns the string representation of the ReflectionFunction object.
      *
      * @link https://php.net/manual/en/reflectionfunction.tostring.php
      */
-    public function __toString() {}
+    #[TentativeType]
+    public function __toString(): string {}
 
     /**
      * Exports function
@@ -64,18 +67,20 @@ class ReflectionFunction extends ReflectionFunctionAbstract
      */
     #[Deprecated(since: '8.0')]
     #[Pure]
-    public function isDisabled() {}
+    #[TentativeType]
+    public function isDisabled(): bool {}
 
     /**
      * Invokes function
      *
      * @link https://www.php.net/manual/en/reflectionfunction.invoke.php
-     * @param mixed ...$args The passed in argument list. It accepts a
+     * @param mixed ...$args [optional] The passed in argument list. It accepts a
      * variable number of arguments which are passed to the function much
      * like {@see call_user_func} is.
      * @return mixed Returns the result of the invoked function call.
      */
-    public function invoke(...$args) {}
+    #[TentativeType]
+    public function invoke(#[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] ...$args): mixed {}
 
     /**
      * Invokes function args
@@ -85,7 +90,8 @@ class ReflectionFunction extends ReflectionFunctionAbstract
      * like {@see call_user_func_array} works.
      * @return mixed the result of the invoked function
      */
-    public function invokeArgs(array $args) {}
+    #[TentativeType]
+    public function invokeArgs(array $args): mixed {}
 
     /**
      * Returns a dynamically created closure for the function
@@ -94,5 +100,6 @@ class ReflectionFunction extends ReflectionFunctionAbstract
      * @return Closure Returns {@see Closure} or {@see null} in case of an error.
      */
     #[Pure]
-    public function getClosure() {}
+    #[TentativeType]
+    public function getClosure(): Closure {}
 }

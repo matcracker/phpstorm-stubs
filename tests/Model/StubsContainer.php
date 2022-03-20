@@ -5,25 +5,26 @@ namespace StubTests\Model;
 
 use RuntimeException;
 use function array_key_exists;
+use function count;
 
 class StubsContainer
 {
     /**
      * @var PHPConst[]
      */
-    private array $constants = [];
+    private $constants = [];
     /**
      * @var PHPFunction[]
      */
-    private array $functions = [];
+    private $functions = [];
     /**
      * @var PHPClass[]
      */
-    private array $classes = [];
+    private $classes = [];
     /**
      * @var PHPInterface[]
      */
-    private array $interfaces = [];
+    private $interfaces = [];
 
     /**
      * @return PHPConst[]
@@ -33,16 +34,40 @@ class StubsContainer
         return $this->constants;
     }
 
-    /**
-     * @param PHPConst $constant
-     */
+    public function getConstant(string $constantName, ?string $sourceFilePath = null): ?PHPConst
+    {
+        $constants = array_filter($this->constants, function (PHPConst $const) use ($constantName): bool {
+            return $const->name === $constantName && $const->duplicateOtherElement === false
+                && BasePHPElement::entitySuitsCurrentPhpVersion($const);
+        });
+        if (count($constants) === 1) {
+            return array_pop($constants);
+        }
+
+        if ($sourceFilePath !== null) {
+            $constants = array_filter($constants, function (PHPConst $constant) use ($sourceFilePath) {
+                return $constant->sourceFilePath === $sourceFilePath
+                    && BasePHPElement::entitySuitsCurrentPhpVersion($constant);
+            });
+        }
+        if (count($constants) > 1) {
+            throw new RuntimeException("Multiple constants with name $constantName found");
+        }
+        if (!empty($constants)) {
+            return array_pop($constants);
+        }
+        return null;
+    }
+
     public function addConstant(PHPConst $constant): void
     {
         if (isset($constant->name)) {
             if (array_key_exists($constant->name, $this->constants)) {
                 $amount = count(array_filter(
                     $this->constants,
-                    fn (PHPConst $nextConstant) => $nextConstant->name === $constant->name
+                    function (PHPConst $nextConstant) use ($constant) {
+                        return $nextConstant->name === $constant->name;
+                    }
                 ));
                 $this->constants[$constant->name . '_duplicated_' . $amount] = $constant;
             } else {
@@ -62,24 +87,35 @@ class StubsContainer
     /**
      * @param string $name
      * @param string|null $sourceFilePath
+     * @param bool $shouldSuitCurrentPhpVersion
      * @return PHPFunction|null
      * @throws RuntimeException
      */
-    public function getFunction(string $name, ?string $sourceFilePath = null): ?PHPFunction
+    public function getFunction(string $name, ?string $sourceFilePath = null, bool $shouldSuitCurrentPhpVersion = true): ?PHPFunction
     {
-        $functions = array_filter($this->functions, fn (PHPFunction $function): bool => $function->name === $name);
+        $functions = array_filter($this->functions, function (PHPFunction $function) use ($shouldSuitCurrentPhpVersion, $name): bool {
+            return $function->name === $name && (!$shouldSuitCurrentPhpVersion || BasePHPElement::entitySuitsCurrentPhpVersion($function));
+        });
+        if (count($functions) > 1) {
+            $functions = array_filter($functions, function (PHPFunction $function): bool {
+                return $function->duplicateOtherElement === false;
+            });
+        }
         if (count($functions) === 1) {
             return array_pop($functions);
-        } else {
-            if ($sourceFilePath !== null) {
-                $functions = array_filter($functions, fn (PHPFunction $function) => $function->sourceFilePath === $sourceFilePath);
-            }
-            if (count($functions) > 1) {
-                throw new RuntimeException("Multiple functions with name $name found");
-            }
-            if (!empty($functions)) {
-                return array_pop($functions);
-            }
+        }
+
+        if ($sourceFilePath !== null) {
+            $functions = array_filter($functions, function (PHPFunction $function) use ($shouldSuitCurrentPhpVersion, $sourceFilePath) {
+                return $function->sourceFilePath === $sourceFilePath
+                    && (!$shouldSuitCurrentPhpVersion || BasePHPElement::entitySuitsCurrentPhpVersion($function));
+            });
+        }
+        if (count($functions) > 1) {
+            throw new RuntimeException("Multiple functions with name $name found");
+        }
+        if (!empty($functions)) {
+            return array_pop($functions);
         }
         return null;
     }
@@ -90,38 +126,16 @@ class StubsContainer
             if (array_key_exists($function->name, $this->functions)) {
                 $amount = count(array_filter(
                     $this->functions,
-                    fn (PHPFunction $nextFunction) => $nextFunction->name === $function->name
+                    function (PHPFunction $nextFunction) use ($function) {
+                        return $nextFunction->name === $function->name;
+                    }
                 ));
+                $function->duplicateOtherElement = true;
                 $this->functions[$function->name . '_duplicated_' . $amount] = $function;
             } else {
                 $this->functions[$function->name] = $function;
             }
         }
-    }
-
-    /**
-     * @param string $name
-     * @param string|null $sourceFilePath
-     * @return PHPClass|null
-     * @throws RuntimeException
-     */
-    public function getClass(string $name, ?string $sourceFilePath = null): ?PHPClass
-    {
-        $classes = array_filter($this->classes, fn (PHPClass $class): bool => $class->name === $name);
-        if (count($classes) === 1) {
-            return array_pop($classes);
-        } else {
-            if ($sourceFilePath !== null) {
-                $classes = array_filter($classes, fn (PHPClass $class) => $class->sourceFilePath === $sourceFilePath);
-            }
-            if (count($classes) > 1) {
-                throw new RuntimeException("Multiple classes with name $name found");
-            }
-            if (!empty($classes)) {
-                return array_pop($classes);
-            }
-        }
-        return null;
     }
 
     /**
@@ -133,23 +147,56 @@ class StubsContainer
     }
 
     /**
+     * @param string $name
+     * @param string|null $sourceFilePath
+     * @param bool $shouldSuitCurrentPhpVersion
+     * @return PHPClass|null
+     * @throws RuntimeException
+     */
+    public function getClass(string $name, ?string $sourceFilePath = null, bool $shouldSuitCurrentPhpVersion = true): ?PHPClass
+    {
+        $classes = array_filter($this->classes, function (PHPClass $class) use ($shouldSuitCurrentPhpVersion, $name): bool {
+            return $class->name === $name &&
+                (!$shouldSuitCurrentPhpVersion || BasePHPElement::entitySuitsCurrentPhpVersion($class));
+        });
+        if (count($classes) === 1) {
+            return array_pop($classes);
+        }
+
+        if ($sourceFilePath !== null) {
+            $classes = array_filter($classes, function (PHPClass $class) use ($shouldSuitCurrentPhpVersion, $sourceFilePath) {
+                return $class->sourceFilePath === $sourceFilePath &&
+                    (!$shouldSuitCurrentPhpVersion || BasePHPElement::entitySuitsCurrentPhpVersion($class));
+            });
+        }
+        if (count($classes) > 1) {
+            throw new RuntimeException("Multiple classes with name $name found");
+        }
+        if (!empty($classes)) {
+            return array_pop($classes);
+        }
+        return null;
+    }
+
+    /**
      * @return PHPClass[]
      */
     public function getCoreClasses(): array
     {
-        return array_filter($this->classes, fn (PHPClass $class): bool => $class->stubBelongsToCore === true);
+        return array_filter($this->classes, function (PHPClass $class): bool {
+            return $class->stubBelongsToCore === true;
+        });
     }
 
-    /**
-     * @param PHPClass $class
-     */
     public function addClass(PHPClass $class): void
     {
         if (isset($class->name)) {
             if (array_key_exists($class->name, $this->classes)) {
                 $amount = count(array_filter(
                     $this->classes,
-                    fn (PHPClass $nextClass) => $nextClass->name === $class->name
+                    function (PHPClass $nextClass) use ($class) {
+                        return $nextClass->name === $class->name;
+                    }
                 ));
                 $this->classes[$class->name . '_duplicated_' . $amount] = $class;
             } else {
@@ -161,24 +208,31 @@ class StubsContainer
     /**
      * @param string $name
      * @param string|null $sourceFilePath
+     * @param bool $shouldSuitCurrentPhpVersion
      * @return PHPInterface|null
      * @throws RuntimeException
      */
-    public function getInterface(string $name, ?string $sourceFilePath = null): ?PHPInterface
+    public function getInterface(string $name, ?string $sourceFilePath = null, bool $shouldSuitCurrentPhpVersion = true): ?PHPInterface
     {
-        $interfaces = array_filter($this->interfaces, fn (PHPInterface $interface): bool => $interface->name === $name);
+        $interfaces = array_filter($this->interfaces, function (PHPInterface $interface) use ($shouldSuitCurrentPhpVersion, $name): bool {
+            return $interface->name === $name &&
+                (!$shouldSuitCurrentPhpVersion || BasePHPElement::entitySuitsCurrentPhpVersion($interface));
+        });
         if (count($interfaces) === 1) {
             return array_pop($interfaces);
-        } else {
-            if ($sourceFilePath !== null) {
-                $interfaces = array_filter($interfaces, fn (PHPInterface $interface) => $interface->sourceFilePath === $sourceFilePath);
-            }
-            if (count($interfaces) > 1) {
-                throw new RuntimeException("Multiple interfaces with name $name found");
-            }
-            if (!empty($interfaces)) {
-                return array_pop($interfaces);
-            }
+        }
+
+        if ($sourceFilePath !== null) {
+            $interfaces = array_filter($interfaces, function (PHPInterface $interface) use ($shouldSuitCurrentPhpVersion, $sourceFilePath) {
+                return $interface->sourceFilePath === $sourceFilePath &&
+                    (!$shouldSuitCurrentPhpVersion || BasePHPElement::entitySuitsCurrentPhpVersion($interface));
+            });
+        }
+        if (count($interfaces) > 1) {
+            throw new RuntimeException("Multiple interfaces with name $name found");
+        }
+        if (!empty($interfaces)) {
+            return array_pop($interfaces);
         }
         return null;
     }
@@ -196,19 +250,20 @@ class StubsContainer
      */
     public function getCoreInterfaces(): array
     {
-        return array_filter($this->interfaces, fn (PHPInterface $interface): bool => $interface->stubBelongsToCore === true);
+        return array_filter($this->interfaces, function (PHPInterface $interface): bool {
+            return $interface->stubBelongsToCore === true;
+        });
     }
 
-    /**
-     * @param PHPInterface $interface
-     */
     public function addInterface(PHPInterface $interface): void
     {
         if (isset($interface->name)) {
             if (array_key_exists($interface->name, $this->interfaces)) {
                 $amount = count(array_filter(
                     $this->interfaces,
-                    fn (PHPInterface $nextInterface) => $nextInterface->name === $interface->name
+                    function (PHPInterface $nextInterface) use ($interface) {
+                        return $nextInterface->name === $interface->name;
+                    }
                 ));
                 $this->interfaces[$interface->name . '_duplicated_' . $amount] = $interface;
             } else {

@@ -11,6 +11,7 @@ use RuntimeException;
 use SplFileInfo;
 use StubTests\Parsers\StubParser;
 use UnexpectedValueException;
+use function count;
 
 class MetaOverrideFunctionsParser extends NodeVisitorAbstract
 {
@@ -36,8 +37,6 @@ class MetaOverrideFunctionsParser extends NodeVisitorAbstract
     }
 
     /**
-     * @param Node $node
-     * @return void
      * @throws RuntimeException
      */
     public function enterNode(Node $node): void
@@ -51,10 +50,9 @@ class MetaOverrideFunctionsParser extends NodeVisitorAbstract
         }
     }
 
-    private static function getOverrideFunctionName($param): string
+    private static function getOverrideFunctionName(Node\Arg $param): string
     {
         $paramValue = $param->value;
-        $targetFunction = null;
         if ($paramValue instanceof Expr\StaticCall) {
             $targetFunction = $paramValue->class . '::' . $paramValue->name;
         } else {

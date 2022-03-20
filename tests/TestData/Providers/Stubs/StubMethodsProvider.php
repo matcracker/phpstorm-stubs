@@ -4,10 +4,13 @@ declare(strict_types=1);
 namespace StubTests\TestData\Providers\Stubs;
 
 use Generator;
+use RuntimeException;
+use StubTests\Model\PHPClass;
 use StubTests\Model\PHPFunction;
+use StubTests\Model\PHPInterface;
 use StubTests\Model\PHPMethod;
 use StubTests\Model\StubProblemType;
-use StubTests\Parsers\Utils;
+use StubTests\Parsers\ParserUtils;
 use StubTests\TestData\Providers\EntitiesFilter;
 use StubTests\TestData\Providers\PhpStormStubsSingleton;
 
@@ -30,7 +33,7 @@ class StubMethodsProvider
             PhpStormStubsSingleton::getPhpStormStubs()->getInterfaces();
         $allFunctions = PhpStormStubsSingleton::getPhpStormStubs()->getFunctions();
         $filteredMethods = [];
-        foreach (EntitiesFilter::getFiltered($coreClassesAndInterfaces) as $className => $class) {
+        foreach (EntitiesFilter::getFiltered($coreClassesAndInterfaces) as $class) {
             $filteredMethods = EntitiesFilter::getFiltered(
                 $class->methods,
                 fn (PHPMethod $method) => empty($method->returnTypesFromSignature) || empty($method->returnTypesFromPhpDoc)
@@ -52,9 +55,12 @@ class StubMethodsProvider
         }
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public static function methodsForReturnTypeHintTestsProvider(): ?Generator
     {
-        $filterFunction = EntitiesFilter::getFilterFunctionForLanguageLevel(7);
+        $filterFunction = self::getFilterFunctionForLanguageLevel(7);
         return self::yieldFilteredMethods(
             $filterFunction,
             StubProblemType::FUNCTION_HAS_RETURN_TYPEHINT,
@@ -62,9 +68,12 @@ class StubMethodsProvider
         );
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public static function methodsForNullableReturnTypeHintTestsProvider(): ?Generator
     {
-        $filterFunction = EntitiesFilter::getFilterFunctionForLanguageLevel(7.1);
+        $filterFunction = self::getFilterFunctionForLanguageLevel(7.1);
         return self::yieldFilteredMethods(
             $filterFunction,
             StubProblemType::HAS_NULLABLE_TYPEHINT,
@@ -72,9 +81,12 @@ class StubMethodsProvider
         );
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public static function methodsForUnionReturnTypeHintTestsProvider(): ?Generator
     {
-        $filterFunction = EntitiesFilter::getFilterFunctionForLanguageLevel(8);
+        $filterFunction = self::getFilterFunctionForLanguageLevel(8);
         return self::yieldFilteredMethods(
             $filterFunction,
             StubProblemType::HAS_UNION_TYPEHINT,
@@ -82,6 +94,15 @@ class StubMethodsProvider
         );
     }
 
+    private static function getFilterFunctionForLanguageLevel(float $languageVersion): callable
+    {
+        return fn (PHPClass|PHPInterface $class, PHPMethod $method, ?float $firstSinceVersion) => !$method->isFinal &&
+            !$class->isFinal && $firstSinceVersion !== null && $firstSinceVersion < $languageVersion && !$method->isReturnTypeTentative;
+    }
+
+    /**
+     * @throws RuntimeException
+     */
     private static function yieldFilteredMethods(callable $filterFunction, int ...$problemTypes): ?Generator
     {
         $coreClassesAndInterfaces = PhpStormStubsSingleton::getPhpStormStubs()->getCoreClasses() +
@@ -92,7 +113,7 @@ class StubMethodsProvider
                 fn (PHPMethod $method) => $method->parentName === '___PHPSTORM_HELPERS\object',
                 ...$problemTypes
             ) as $methodName => $method) {
-                $firstSinceVersion = Utils::getDeclaredSinceVersion($method);
+                $firstSinceVersion = ParserUtils::getDeclaredSinceVersion($method);
                 if ($filterFunction($class, $method, $firstSinceVersion) === true) {
                     yield "method $className::$methodName" => [$method];
                 }

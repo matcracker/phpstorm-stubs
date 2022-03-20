@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace StubTests;
 
+use JetBrains\PhpStorm\Pure;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\ConstFetch;
@@ -18,6 +19,14 @@ use StubTests\Model\StubsContainer;
 use StubTests\Parsers\ExpectedFunctionArgumentsInfo;
 use StubTests\Parsers\MetaExpectedArgumentsCollector;
 use StubTests\TestData\Providers\PhpStormStubsSingleton;
+use function array_key_exists;
+use function array_map;
+use function array_walk_recursive;
+use function count;
+use function method_exists;
+use function property_exists;
+use function str_starts_with;
+use function substr;
 
 class StubsMetaExpectedArgumentsTest extends BaseStubsTest
 {
@@ -29,8 +38,17 @@ class StubsMetaExpectedArgumentsTest extends BaseStubsTest
      * @var string[]
      */
     private static array $registeredArgumentsSet;
+    /**
+     * @var string[]
+     */
     private static array $functionsFqns;
+    /**
+     * @var string[]
+     */
     private static array $methodsFqns;
+    /**
+     * @var string[]
+     */
     private static array $constantsFqns;
 
     public static function setUpBeforeClass(): void
@@ -239,6 +257,7 @@ class StubsMetaExpectedArgumentsTest extends BaseStubsTest
         }
     }
 
+    #[Pure]
     private static function getClassMemberFqn(string $className, string $memberName): string
     {
         return self::toPresentableFqn($className) . '.' . $memberName;
@@ -253,8 +272,6 @@ class StubsMetaExpectedArgumentsTest extends BaseStubsTest
     }
 
     /**
-     * @param Expr|null $expr
-     * @return string
      * @throws Exception
      */
     private static function getFqn(?Expr $expr): string

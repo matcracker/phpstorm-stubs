@@ -1,6 +1,7 @@
 <?php
 
 // Start of sockets v.
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 
 /**
  * (PHP 7 &gt;= 7.2.0)<br/>
@@ -701,7 +702,12 @@ function socket_send(Socket $socket, string $data, int $length, int $flags): int
  * @return int|false
  * @since 5.5
  */
-function socket_sendmsg(Socket $socket, array $message, int $flags = 0): int|false {}
+function socket_sendmsg(
+    Socket $socket,
+    array $message,
+    #[PhpStormStubsElementAvailable(from: '5.5', to: '7.4')] int $flags,
+    #[PhpStormStubsElementAvailable(from: '8.0')] int $flags = 0
+): int|false {}
 
 /**
  * Receives data from a socket whether or not it is connection-oriented
@@ -782,11 +788,16 @@ function socket_recvfrom(Socket $socket, &$data, int $length, int $flags, &$addr
  * @link https://secure.php.net/manual/en/function.socket-recvmsg.php
  * @param resource|Socket $socket
  * @param array &$message
- * @param int $flags [optional]
+ * @param int $flags
  * @return int|false
  * @since 5.5
  */
-function socket_recvmsg(Socket $socket, array &$message, int $flags): int|false {}
+function socket_recvmsg(
+    Socket $socket,
+    array &$message,
+    #[PhpStormStubsElementAvailable(from: '5.5', to: '7.4')] int $flags,
+    #[PhpStormStubsElementAvailable(from: '8.0')] int $flags = 0
+): int|false {}
 
 /**
  * Sends a message to a socket, whether it is connected or not
@@ -1310,11 +1321,15 @@ function socket_import_stream($stream): Socket|false {}
  * @link https://php.net/manual/en/function.socket-cmsg-space.php
  * @param int $level
  * @param int $type
- * @param int $n [optional]
+ * @param int $num [optional]
  * @return int|null
  * @since 5.5
  */
-function socket_cmsg_space($level, $type, $n = 0): ?int {}
+function socket_cmsg_space(
+    int $level,
+    int $type,
+    #[PhpStormStubsElementAvailable(from: '8.0')] int $num = 0
+): ?int {}
 
 /**
  * Alias of {@see socket_get_option}
@@ -1435,7 +1450,10 @@ define('SO_ERROR', 4);
 define('SO_BINDTODEVICE', 25);
 define('SOL_SOCKET', 1);
 define('SOMAXCONN', 128);
-
+/**
+ * @since 8.1
+ */
+define('SO_MARK', 36);
 /**
  * Used to disable Nagle TCP algorithm.
  * Added in PHP 5.2.7.
@@ -2159,6 +2177,10 @@ define('AI_NUMERICSERV', 1024);
 define('AI_V4MAPPED', 8);
 define('AI_ALL', 16);
 
+/**
+ * @since 8.1
+ */
+define('TCP_DEFER_ACCEPT', 9);
 /**
  * @since 8.0
  */

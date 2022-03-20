@@ -2,20 +2,33 @@
 
 // Start of ldap v.
 use JetBrains\PhpStorm\Deprecated;
-use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware as PhpVersionAware;
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable as Available;
 
 /**
  * PASSWD extended operation helper
  * @link https://www.php.net/manual/en/function.ldap-exop-passwd.php
  * @param resource $ldap An LDAP link identifier, returned by ldap_connect().
- * @param string $user [optional] dn of the user to change the password of.
- * @param string $old_password [optional] The old password of this user. May be omitted depending of server configuration.
- * @param string $new_password [optional] The new password for this user. May be omitted or empty to have a generated password.
- * @param array &$controls [optional] If provided, a password policy request control is send with the request and this is filled with an array of LDAP Controls returned with the request.
+ * @param string $user dn of the user to change the password of.
+ * @param string $old_password The old password of this user. May be omitted depending of server configuration.
+ * @param string $new_password The new password for this user. May be omitted or empty to have a generated password.
+ * @param array &$controls If provided, a password policy request control is send with the request and this is filled with an array of LDAP Controls returned with the request.
  * @return string|bool Returns the generated password if newpw is empty or omitted. Otherwise returns TRUE on success and FALSE on failure.
  * @since 7.2
  */
-function ldap_exop_passwd($ldap, string $user = "", string $old_password = "", string $new_password = "", &$controls = []): string|bool {}
+function ldap_exop_passwd(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[Available(from: '7.1', to: '7.1')] string $user = "",
+    #[Available(from: '7.2', to: '7.2')] string $user,
+    #[Available(from: '7.3')] string $user = "",
+    #[Available(from: '7.1', to: '7.1')] string $old_password = "",
+    #[Available(from: '7.2', to: '7.2')] string $old_password,
+    #[Available(from: '7.3')] string $old_password = "",
+    #[Available(from: '7.1', to: '7.1')] string $new_password = "",
+    #[Available(from: '7.2', to: '7.2')] string $new_password,
+    #[Available(from: '7.3')] string $new_password = "",
+    #[Available(from: '7.3')] &$controls = []
+): string|bool {}
 
 /**
  * Refresh extended operation helper
@@ -26,7 +39,7 @@ function ldap_exop_passwd($ldap, string $user = "", string $old_password = "", s
  * @return int|false From RFC: The responseTtl field is the time in seconds which the server chooses to have as the time-to-live field for that entry. It must not be any smaller than that which the client requested, and it may be larger. However, to allow servers to maintain a relatively accurate directory, and to prevent clients from abusing the dynamic extensions, servers are permitted to shorten a client-requested time-to-live value, down to a minimum of 86400 seconds (one day). FALSE will be returned on error.
  * @since 7.3
  */
-function ldap_exop_refresh($ldap, string $dn, int $ttl): int|false {}
+function ldap_exop_refresh(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, string $dn, int $ttl): int|false {}
 
 /**
  * WHOAMI extended operation helper
@@ -35,7 +48,7 @@ function ldap_exop_refresh($ldap, string $dn, int $ttl): int|false {}
  * @return string|false The data returned by the server, or FALSE on error.
  * @since 7.2
  */
-function ldap_exop_whoami($ldap): string|false {}
+function ldap_exop_whoami(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap): string|false {}
 
 /**
  * Performs an extended operation on the specified link with reqoid the OID of the operation and reqdata the data.
@@ -49,19 +62,27 @@ function ldap_exop_whoami($ldap): string|false {}
  * @return resource|bool When used with retdata, returns TRUE on success or FALSE on error. When used without retdata, returns a result identifier or FALSE on error.
  * @since 7.2
  */
-function ldap_exop($ldap, string $request_oid, ?string $request_data, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = [], &$response_data, &$response_oid) {}
+#[PhpVersionAware(['8.1' => 'LDAP\Result|bool'], default: 'resource|bool')]
+function ldap_exop(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, string $request_oid, ?string $request_data, #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = [], &$response_data, &$response_oid) {}
 
 /**
  * Parse LDAP extended operation data from result object result
  * @link https://www.php.net/manual/en/function.ldap-parse-exop.php
  * @param resource $ldap An LDAP link identifier, returned by ldap_connect().
  * @param resource $result An LDAP result resource, returned by ldap_exop().
- * @param string &$response_data [optional] Will be filled by the response data.
- * @param string &$response_oid [optional] Will be filled by the response OID.
+ * @param string &$response_data  Will be filled by the response data.
+ * @param string &$response_oid Will be filled by the response OID.
  * @return bool Returns TRUE on success or FALSE on failure.
  * @since 7.2
  */
-function ldap_parse_exop($ldap, $result, &$response_data, &$response_oid): bool {}
+function ldap_parse_exop(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\Result'], default: 'resource')] $result,
+    #[Available(from: '7.2', to: '7.4')] &$response_data,
+    #[Available(from: '8.0')] &$response_data = '',
+    #[Available(from: '7.2', to: '7.4')] &$response_oid,
+    #[Available(from: '8.0')] &$response_oid = ''
+): bool {}
 
 /**
  * Translate 8859 characters to t61 characters
@@ -102,6 +123,7 @@ function ldap_t61_to_8859(string $value): string {}
  * If no arguments are specified then the link identifier of the already
  * opened link will be returned.
  */
+#[PhpVersionAware(['8.1' => 'LDAP\Connection|false'], default: 'resource|false')]
 function ldap_connect(?string $uri, int $port = 389) {}
 
 /**
@@ -110,7 +132,7 @@ function ldap_connect(?string $uri, int $port = 389) {}
  * @param resource $ldap
  * @return bool
  */
-function ldap_close($ldap): bool {}
+function ldap_close(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap): bool {}
 
 /**
  * Bind to LDAP directory
@@ -122,7 +144,7 @@ function ldap_close($ldap): bool {}
  * @param string|null $password [optional]
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_bind($ldap, ?string $dn, ?string $password): bool {}
+function ldap_bind(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, ?string $dn, ?string $password): bool {}
 
 /**
  * Bind to LDAP directory
@@ -137,7 +159,8 @@ function ldap_bind($ldap, ?string $dn, ?string $password): bool {}
  * @return resource|false
  * @since 7.3
  */
-function ldap_bind_ext($ldap, ?string $dn, ?string $password, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
+#[PhpVersionAware(['8.1' => 'LDAP\Result|false'], default: 'resource|false')]
+function ldap_bind_ext(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, ?string $dn, ?string $password, #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
 
 /**
  * Bind to LDAP directory using SASL
@@ -152,7 +175,7 @@ function ldap_bind_ext($ldap, ?string $dn, ?string $password, #[LanguageLevelTyp
  * @param string $props [optional]
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_sasl_bind($ldap, $binddn = null, $password = null, $sasl_mech = null, $sasl_realm = null, $sasl_authc_id = null, $sasl_authz_id = null, $props = null): bool {}
+function ldap_sasl_bind(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, $binddn = null, $password = null, $sasl_mech = null, $sasl_realm = null, $sasl_authc_id = null, $sasl_authz_id = null, $props = null): bool {}
 
 /**
  * Unbind from LDAP directory
@@ -162,7 +185,7 @@ function ldap_sasl_bind($ldap, $binddn = null, $password = null, $sasl_mech = nu
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_unbind($ldap): bool {}
+function ldap_unbind(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap): bool {}
 
 /**
  * Read an entry
@@ -226,7 +249,18 @@ function ldap_unbind($ldap): bool {}
  * @param array|null $controls [optional] Array of LDAP Controls to send with the request.
  * @return resource|false a search result identifier or <b>FALSE</b> on error.
  */
-function ldap_read($ldap, array|string $base, array|string $filter, array $attributes, int $attributes_only, int $sizelimit = -1, int $timelimit = -1, int $deref, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
+#[PhpVersionAware(['8.1' => 'LDAP\Result|array|false'], default: 'resource|false')]
+function ldap_read(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    array|string $base,
+    array|string $filter,
+    array $attributes,
+    int $attributes_only,
+    int $sizelimit = -1,
+    int $timelimit = -1,
+    int $deref,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+) {}
 
 /**
  * Single-level search
@@ -284,7 +318,18 @@ function ldap_read($ldap, array|string $base, array|string $filter, array $attri
  * @param array|null $controls [optional] Array of LDAP Controls to send with the request.
  * @return resource|false a search result identifier or <b>FALSE</b> on error.
  */
-function ldap_list($ldap, array|string $base, array|string $filter, array $attributes, int $attributes_only, int $sizelimit = -1, int $timelimit = -1, int $deref, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
+#[PhpVersionAware(['8.1' => 'LDAP\Result|array|false'], default: 'resource|false')]
+function ldap_list(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    array|string $base,
+    array|string $filter,
+    array $attributes,
+    int $attributes_only,
+    int $sizelimit = -1,
+    int $timelimit = -1,
+    int $deref,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+) {}
 
 /**
  * Search LDAP tree
@@ -346,15 +391,26 @@ function ldap_list($ldap, array|string $base, array|string $filter, array $attri
  * @param array|null $controls [optional] Array of LDAP Controls to send with the request.
  * @return resource|false a search result identifier or <b>FALSE</b> on error.
  */
-function ldap_search($ldap, array|string $base, array|string $filter, array $attributes, int $attributes_only, int $sizelimit = -1, int $timelimit = -1, int $deref, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
+#[PhpVersionAware(['8.1' => 'LDAP\Result|array|false'], default: 'resource|false')]
+function ldap_search(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    array|string $base,
+    array|string $filter,
+    array $attributes,
+    int $attributes_only,
+    int $sizelimit = -1,
+    int $timelimit = -1,
+    int $deref,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+) {}
 
 /**
  * Free result memory
  * @link https://php.net/manual/en/function.ldap-free-result.php
- * @param resource $ldap
+ * @param resource $result
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_free_result($ldap): bool {}
+function ldap_free_result(#[PhpVersionAware(['8.1' => 'LDAP\Result'], default: 'resource')] $result): bool {}
 
 /**
  * Count the number of entries in a search
@@ -367,8 +423,11 @@ function ldap_free_result($ldap): bool {}
  * </p>
  * @return int|false number of entries in the result or <b>FALSE</b> on error.
  */
-#[LanguageLevelTypeAware(["8.0" => "int"], default: "int|false")]
-function ldap_count_entries($ldap, $result) {}
+#[PhpVersionAware(["8.0" => "int"], default: "int|false")]
+function ldap_count_entries(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\Result'], default: 'resource')] $result
+) {}
 
 /**
  * Return first result id
@@ -380,7 +439,11 @@ function ldap_count_entries($ldap, $result) {}
  * @return resource|false the result entry identifier for the first entry on success and
  * <b>FALSE</b> on error.
  */
-function ldap_first_entry($ldap, $result) {}
+#[PhpVersionAware(['8.1' => 'LDAP\ResultEntry|false'], default: 'resource|false')]
+function ldap_first_entry(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\Result'], default: 'resource')] $result
+) {}
 
 /**
  * Get next result entry
@@ -393,7 +456,11 @@ function ldap_first_entry($ldap, $result) {}
  * are being read starting with <b>ldap_first_entry</b>. If
  * there are no more entries in the result then it returns <b>FALSE</b>.
  */
-function ldap_next_entry($ldap, $entry) {}
+#[PhpVersionAware(['8.1' => 'LDAP\ResultEntry|false'], default: 'resource|false')]
+function ldap_next_entry(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\ResultEntry'], default: 'resource')] $entry
+) {}
 
 /**
  * Get all result entries
@@ -421,7 +488,10 @@ function ldap_next_entry($ldap, $entry) {}
  * return_value[i]["attribute"][j] = jth value of attribute in ith entry
  * </pre>
  */
-function ldap_get_entries($ldap, $result): array|false {}
+function ldap_get_entries(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\Result'], default: 'resource')] $result
+): array|false {}
 
 /**
  * Return first attribute
@@ -433,7 +503,10 @@ function ldap_get_entries($ldap, $result): array|false {}
  * @return string|false the first attribute in the entry on success and <b>FALSE</b> on
  * error.
  */
-function ldap_first_attribute($ldap, $entry): string|false {}
+function ldap_first_attribute(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\ResultEntry'], default: 'resource')] $entry
+): string|false {}
 
 /**
  * Get the next attribute in result
@@ -445,7 +518,10 @@ function ldap_first_attribute($ldap, $entry): string|false {}
  * @return string|false the next attribute in an entry on success and <b>FALSE</b> on
  * error.
  */
-function ldap_next_attribute($ldap, $entry): string|false {}
+function ldap_next_attribute(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\ResultEntry'], default: 'resource')] $entry
+): string|false {}
 
 /**
  * Get attributes from a search result entry
@@ -457,7 +533,10 @@ function ldap_next_attribute($ldap, $entry): string|false {}
  * @return array a complete entry information in a multi-dimensional array
  * on success and <b>FALSE</b> on error.
  */
-function ldap_get_attributes($ldap, $entry): array {}
+function ldap_get_attributes(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\ResultEntry'], default: 'resource')] $entry
+): array {}
 
 /**
  * Get all values from a result entry
@@ -480,7 +559,11 @@ function ldap_get_attributes($ldap, $entry): array {}
  * return_value[0] = first value of attribute
  * return_value[i] = ith value of attribute
  */
-function ldap_get_values($ldap, $entry, string $attribute): array|false {}
+function ldap_get_values(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\ResultEntry'], default: 'resource')] $entry,
+    string $attribute
+): array|false {}
 
 /**
  * Get all binary values from a result entry
@@ -495,7 +578,11 @@ function ldap_get_values($ldap, $entry, string $attribute): array|false {}
  * first index is 0. The number of values can be found by indexing "count"
  * in the resultant array.
  */
-function ldap_get_values_len($ldap, $entry, string $attribute): array|false {}
+function ldap_get_values_len(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\ResultEntry'], default: 'resource')] $entry,
+    string $attribute
+): array|false {}
 
 /**
  * Get the DN of a result entry
@@ -506,7 +593,10 @@ function ldap_get_values_len($ldap, $entry, string $attribute): array|false {}
  * @param resource $entry
  * @return string|false the DN of the result entry and <b>FALSE</b> on error.
  */
-function ldap_get_dn($ldap, $entry): string|false {}
+function ldap_get_dn(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\ResultEntry'], default: 'resource')] $entry
+): string|false {}
 
 /**
  * Splits DN into its component parts
@@ -560,7 +650,12 @@ function ldap_dn2ufn(string $dn): string|false {}
  * @param array|null $controls [optional] Array of LDAP Controls to send with the request.
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_add($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []): bool {}
+function ldap_add(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    string $dn,
+    array $entry,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+): bool {}
 
 /**
  * Add entries to LDAP directory
@@ -587,7 +682,8 @@ function ldap_add($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(["8.
  * @return resource|false
  * @since 7.3
  */
-function ldap_add_ext($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
+#[PhpVersionAware(['8.1' => 'LDAP\Result|false'], default: 'resource|false')]
+function ldap_add_ext(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, string $dn, array $entry, #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
 
 /**
  * Delete an entry from a directory
@@ -601,7 +697,11 @@ function ldap_add_ext($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(
  * @param array|null $controls [optional] Array of LDAP Controls to send with the request.
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_delete($ldap, string $dn, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []): bool {}
+function ldap_delete(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    string $dn,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+): bool {}
 
 /**
  * Delete an entry from a directory
@@ -617,7 +717,8 @@ function ldap_delete($ldap, string $dn, #[LanguageLevelTypeAware(["8.0" => "null
  * @return resource|false
  * @since 7.3
  */
-function ldap_delete_ext($ldap, string $dn, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
+#[PhpVersionAware(['8.1' => 'LDAP\Result|false'], default: 'resource|false')]
+function ldap_delete_ext(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, string $dn, #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
 
 /**
  * This function is an alias of: ldap_mod_replace().
@@ -634,7 +735,12 @@ function ldap_delete_ext($ldap, string $dn, #[LanguageLevelTypeAware(["8.0" => "
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  * @since 7.0
  */
-function ldap_modify($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []): bool {}
+function ldap_modify(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    string $dn,
+    array $entry,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+): bool {}
 
 /**
  * Add attribute values to current attributes
@@ -649,7 +755,12 @@ function ldap_modify($ldap, string $dn, array $entry, #[LanguageLevelTypeAware([
  * @param array|null $controls [optional] Array of LDAP Controls to send with the request.
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_mod_add($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []): bool {}
+function ldap_mod_add(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    string $dn,
+    array $entry,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+): bool {}
 
 /**
  * Add attribute values to current attributes
@@ -666,7 +777,8 @@ function ldap_mod_add($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(
  * @return resource|false
  * @since 7.3
  */
-function ldap_mod_add_ext($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
+#[PhpVersionAware(['8.1' => 'LDAP\Result|false'], default: 'resource|false')]
+function ldap_mod_add_ext(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, string $dn, array $entry, #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
 
 /**
  * Replace attribute values with new ones
@@ -681,7 +793,12 @@ function ldap_mod_add_ext($ldap, string $dn, array $entry, #[LanguageLevelTypeAw
  * @param array|null $controls [optional] Array of LDAP Controls to send with the request.
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_mod_replace($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []): bool {}
+function ldap_mod_replace(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    string $dn,
+    array $entry,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+): bool {}
 
 /**
  * Replace attribute values with new ones
@@ -698,7 +815,8 @@ function ldap_mod_replace($ldap, string $dn, array $entry, #[LanguageLevelTypeAw
  * @return resource|false
  * @since 7.3
  */
-function ldap_mod_replace_ext($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
+#[PhpVersionAware(['8.1' => 'LDAP\Result|false'], default: 'resource|false')]
+function ldap_mod_replace_ext(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, string $dn, array $entry, #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
 
 /**
  * Delete attribute values from current attributes
@@ -713,7 +831,12 @@ function ldap_mod_replace_ext($ldap, string $dn, array $entry, #[LanguageLevelTy
  * @param array|null $controls [optional] Array of LDAP Controls to send with the request.
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_mod_del($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []): bool {}
+function ldap_mod_del(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    string $dn,
+    array $entry,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+): bool {}
 
 /**
  * Delete attribute values from current attributes
@@ -730,7 +853,8 @@ function ldap_mod_del($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(
  * @return resource|false
  * @since 7.3
  */
-function ldap_mod_del_ext($ldap, string $dn, array $entry, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
+#[PhpVersionAware(['8.1' => 'LDAP\Result|false'], default: 'resource|false')]
+function ldap_mod_del_ext(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, string $dn, array $entry, #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
 
 /**
  * Return the LDAP error number of the last LDAP command
@@ -741,7 +865,7 @@ function ldap_mod_del_ext($ldap, string $dn, array $entry, #[LanguageLevelTypeAw
  * @return int Return the LDAP error number of the last LDAP command for this
  * link.
  */
-function ldap_errno($ldap): int {}
+function ldap_errno(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap): int {}
 
 /**
  * Convert LDAP error number into string error message
@@ -761,7 +885,7 @@ function ldap_err2str(int $errno): string {}
  * </p>
  * @return string string error message.
  */
-function ldap_error($ldap): string {}
+function ldap_error(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap): string {}
 
 /**
  * Compare value of attribute found in entry specified with DN
@@ -782,7 +906,13 @@ function ldap_error($ldap): string {}
  * @return int|bool <b>TRUE</b> if <i>value</i> matches otherwise returns
  * <b>FALSE</b>. Returns -1 on error.
  */
-function ldap_compare($ldap, string $dn, string $attribute, string $value, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []): int|bool {}
+function ldap_compare(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    string $dn,
+    string $attribute,
+    string $value,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+): int|bool {}
 
 /**
  * Sort LDAP result entries
@@ -801,7 +931,7 @@ function ldap_compare($ldap, string $dn, string $attribute, string $value, #[Lan
  * @return bool
  */
 #[Deprecated(since: "7.0")]
-function ldap_sort($ldap, $result, string $sortfilter): bool {}
+function ldap_sort(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, $result, string $sortfilter): bool {}
 
 /**
  * Modify the name of an entry
@@ -825,7 +955,14 @@ function ldap_sort($ldap, $result, string $sortfilter): bool {}
  * @param array|null $controls [optional] Array of LDAP Controls to send with the request.
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_rename($ldap, string $dn, string $new_rdn, string $new_parent, bool $delete_old_rdn, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []): bool {}
+function ldap_rename(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    string $dn,
+    string $new_rdn,
+    string $new_parent,
+    bool $delete_old_rdn,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+): bool {}
 
 /**
  * Modify the name of an entry
@@ -851,7 +988,8 @@ function ldap_rename($ldap, string $dn, string $new_rdn, string $new_parent, boo
  * @return resource|false
  * @since 7.3
  */
-function ldap_rename_ext($ldap, string $dn, string $new_rdn, string $new_parent, bool $delete_old_rdn, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
+#[PhpVersionAware(['8.1' => 'LDAP\Result|false'], default: 'resource|false')]
+function ldap_rename_ext(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, string $dn, string $new_rdn, string $new_parent, bool $delete_old_rdn, #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []) {}
 
 /**
  * Get the current value for given option
@@ -923,7 +1061,12 @@ function ldap_rename_ext($ldap, string $dn, string $new_rdn, string $new_parent,
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_get_option($ldap, int $option, &$value = null): bool {}
+function ldap_get_option(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    int $option,
+    #[Available(from: '5.3', to: '7.4')] &$value,
+    #[Available(from: '8.0')] &$value = null
+): bool {}
 
 /**
  * Set the value of the given option
@@ -1024,7 +1167,11 @@ function ldap_get_option($ldap, int $option, &$value = null): bool {}
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function ldap_set_option($ldap, int $option, $value): bool {}
+function ldap_set_option(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection|null'], default: 'resource')] $ldap,
+    int $option,
+    $value
+): bool {}
 
 /**
  * Return first reference
@@ -1033,7 +1180,11 @@ function ldap_set_option($ldap, int $option, $value): bool {}
  * @param resource $result
  * @return resource
  */
-function ldap_first_reference($ldap, $result) {}
+#[PhpVersionAware(['8.1' => 'LDAP\ResultEntry|false'], default: 'resource')]
+function ldap_first_reference(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\Result'], default: 'resource')] $result
+) {}
 
 /**
  * Get next reference
@@ -1042,7 +1193,11 @@ function ldap_first_reference($ldap, $result) {}
  * @param resource $entry
  * @return resource
  */
-function ldap_next_reference($ldap, $entry) {}
+#[PhpVersionAware(['8.1' => 'LDAP\ResultEntry|false'], default: 'resource')]
+function ldap_next_reference(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\ResultEntry'], default: 'resource')] $entry
+) {}
 
 /**
  * Extract information from reference entry
@@ -1052,7 +1207,11 @@ function ldap_next_reference($ldap, $entry) {}
  * @param array &$referrals
  * @return bool
  */
-function ldap_parse_reference($ldap, $entry, &$referrals): bool {}
+function ldap_parse_reference(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\ResultEntry'], default: 'resource')] $entry,
+    &$referrals
+): bool {}
 
 /**
  * Extract information from result
@@ -1066,7 +1225,15 @@ function ldap_parse_reference($ldap, $entry, &$referrals): bool {}
  * @param array &$controls [optional] An array of LDAP Controls which have been sent with the response.
  * @return bool
  */
-function ldap_parse_result($ldap, $result, &$error_code, &$matched_dn, &$error_message, &$referrals, &$controls = []): bool {}
+function ldap_parse_result(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\Result'], default: 'resource')] $result,
+    &$error_code,
+    &$matched_dn,
+    &$error_message,
+    &$referrals,
+    #[Available(from: '7.3')] &$controls = []
+): bool {}
 
 /**
  * Start TLS
@@ -1074,7 +1241,7 @@ function ldap_parse_result($ldap, $result, &$error_code, &$matched_dn, &$error_m
  * @param resource $ldap
  * @return bool
  */
-function ldap_start_tls($ldap): bool {}
+function ldap_start_tls(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap): bool {}
 
 /**
  * Set a callback function to do re-binds on referral chasing
@@ -1083,7 +1250,7 @@ function ldap_start_tls($ldap): bool {}
  * @param callable|null $callback
  * @return bool
  */
-function ldap_set_rebind_proc($ldap, ?callable $callback): bool {}
+function ldap_set_rebind_proc(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, ?callable $callback): bool {}
 
 /**
  * Send LDAP pagination control
@@ -1108,7 +1275,7 @@ function ldap_set_rebind_proc($ldap, ?callable $callback): bool {}
  * @removed 8.0
  */
 #[Deprecated(since: "7.4")]
-function ldap_control_paged_result($ldap, int $pagesize, $iscritical = false, $cookie = ""): bool {}
+function ldap_control_paged_result(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, int $pagesize, $iscritical = false, $cookie = ""): bool {}
 
 /**
  * Retrieve the LDAP pagination cookie
@@ -1128,7 +1295,7 @@ function ldap_control_paged_result($ldap, int $pagesize, $iscritical = false, $c
  * @removed 8.0
  */
 #[Deprecated(since: "7.4")]
-function ldap_control_paged_result_response($ldap, $result, &$cookie = null, &$estimated = null): bool {}
+function ldap_control_paged_result_response(#[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap, $result, &$cookie = null, &$estimated = null): bool {}
 
 /**
  * Escape a string for use in an LDAP filter or DN
@@ -1213,7 +1380,12 @@ function ldap_escape(string $value, string $ignore = "", int $flags = 0): string
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  * @since 5.4
  */
-function ldap_modify_batch($ldap, string $dn, array $modifications_info, #[LanguageLevelTypeAware(["8.0" => "null|array"], default: "array")] $controls = []): bool {}
+function ldap_modify_batch(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    string $dn,
+    array $modifications_info,
+    #[Available(from: '7.3')] #[PhpVersionAware(["8.0" => "null|array"], default: "array")] $controls = []
+): bool {}
 
 /**
  * @param resource $ldap
@@ -1221,7 +1393,10 @@ function ldap_modify_batch($ldap, string $dn, array $modifications_info, #[Langu
  * @return int returns the number of reference messages in a search result.
  * @since 8.0
  */
-function ldap_count_references($ldap, $result): int {}
+function ldap_count_references(
+    #[PhpVersionAware(['8.1' => 'LDAP\Connection'], default: 'resource')] $ldap,
+    #[PhpVersionAware(['8.1' => 'LDAP\Result'], default: 'resource')] $result
+): int {}
 
 define('LDAP_ESCAPE_FILTER', 1);
 define('LDAP_ESCAPE_DN', 2);
@@ -1360,167 +1535,168 @@ define('LDAP_OPT_DIAGNOSTIC_MESSAGE', 50);
 /**
  * Control Constant - Manage DSA IT (» RFC 3296)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_MANAGEDSAIT", "2.16.840.1.113730.3.4.2");
-echo /**
+
+/**
  * Control Constant - Proxied Authorization (» RFC 4370)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_PROXY_AUTHZ", "2.16.840.1.113730.3.4.18");
 
 /**
  * Control Constant - Subentries (» RFC 3672)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_SUBENTRIES", "1.3.6.1.4.1.4203.1.10.1");
 
 /**
  * Control Constant - Filter returned values (» RFC 3876)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_VALUESRETURNFILTER", "1.2.826.0.1.3344810.2.3");
 
 /**
  * Control Constant - Assertion (» RFC 4528)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_ASSERT", "1.3.6.1.1.12");
 
 /**
  * Control Constant - Pre read (» RFC 4527)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_PRE_READ", "1.3.6.1.1.13.1");
 
 /**
  * Control Constant - Post read (» RFC 4527)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_POST_READ", "1.3.6.1.1.13.2");
 
 /**
  * Control Constant - Sort request (» RFC 2891)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_SORTREQUEST", "1.2.840.113556.1.4.473");
 
 /**
  * Control Constant - Sort response (» RFC 2891)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_SORTRESPONSE", "1.2.840.113556.1.4.474");
 
 /**
  * Control Constant - Paged results (» RFC 2696)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_PAGEDRESULTS", "1.2.840.113556.1.4.319");
 
 /**
  * Control Constant - Content Synchronization Operation (» RFC 4533)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_SYNC", "1.3.6.1.4.1.4203.1.9.1.1");
 
 /**
  * Control Constant - Content Synchronization Operation State (» RFC 4533)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_SYNC_STATE", "1.3.6.1.4.1.4203.1.9.1.2");
 
 /**
  * Control Constant - Content Synchronization Operation Done (» RFC 4533)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_SYNC_DONE", "1.3.6.1.4.1.4203.1.9.1.3");
 
 /**
  * Control Constant - Don't Use Copy (» RFC 6171)
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_DONTUSECOPY", "1.3.6.1.1.22");
 
 /**
  * Control Constant - Password Policy Request
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_PASSWORDPOLICYREQUEST", "1.3.6.1.4.1.42.2.27.8.5.1");
 
 /**
  * Control Constant - Password Policy Response
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_PASSWORDPOLICYRESPONSE", "1.3.6.1.4.1.42.2.27.8.5.1");
 
 /**
  * Control Constant - Active Directory Incremental Values
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_X_INCREMENTAL_VALUES", "1.2.840.113556.1.4.802");
 
 /**
  * Control Constant - Active Directory Domain Scope
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_X_DOMAIN_SCOPE", "1.2.840.113556.1.4.1339");
 
 /**
  * Control Constant - Active Directory Permissive Modify
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_X_PERMISSIVE_MODIFY", "1.2.840.113556.1.4.1413");
 
 /**
  * Control Constant - Active Directory Search Options
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_X_SEARCH_OPTIONS", "1.2.840.113556.1.4.1340");
 
 /**
  * Control Constant - Active Directory Tree Delete
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_X_TREE_DELETE", "1.2.840.113556.1.4.805");
 
 /**
  * Control Constant - Active Directory Extended DN
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_X_EXTENDED_DN", "1.2.840.113556.1.4.529");
 
 /**
  * Control Constant - Virtual List View Request
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_VLVREQUEST", "2.16.840.1.113730.3.4.9");
 
 /**
  * Control Constant - Virtual List View Response
  * @link https://php.net/manual/en/ldap.constants.php
- * @since 7.3
+ * @since 7.2
  */
 define("LDAP_CONTROL_VLVRESPONSE", "2.16.840.1.113730.3.4.10");
 

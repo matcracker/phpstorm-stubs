@@ -1,5 +1,7 @@
 <?php
 
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+
 const SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES = 32;
 const SODIUM_CRYPTO_AEAD_AES256GCM_NSECBYTES = 0;
 const SODIUM_CRYPTO_AEAD_AES256GCM_NPUBBYTES = 12;
@@ -87,6 +89,68 @@ const SODIUM_CRYPTO_PWHASH_ALG_ARGON2I13 = 1;
 const SODIUM_CRYPTO_PWHASH_ALG_DEFAULT = 2;
 const SODIUM_CRYPTO_PWHASH_SALTBYTES = 16;
 const SODIUM_CRYPTO_PWHASH_STRPREFIX = '$argon2id$';
+const SODIUM_CRYPTO_STREAM_XCHACHA20_NONCEBYTES = 24;
+const SODIUM_CRYPTO_STREAM_XCHACHA20_KEYBYTES = 32;
+const SODIUM_CRYPTO_SCALARMULT_RISTRETTO255_BYTES = 32;
+const SODIUM_CRYPTO_SCALARMULT_RISTRETTO255_SCALARBYTES = 32;
+const SODIUM_CRYPTO_CORE_RISTRETTO255_BYTES = 32;
+const SODIUM_CRYPTO_CORE_RISTRETTO255_HASHBYTES = 64;
+const SODIUM_CRYPTO_CORE_RISTRETTO255_SCALARBYTES = 32;
+const SODIUM_CRYPTO_CORE_RISTRETTO255_NONREDUCEDSCALARBYTES = 64;
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_add(string $p, string $q): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_from_hash(string $s): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_is_valid_point(string $s): bool {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_random(): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_scalar_add(string $x, string $y): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_scalar_complement(string $s): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_scalar_invert(string $s): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_scalar_mul(string $x, string $y): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_scalar_negate(string $s): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_scalar_reduce(string $s): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_scalar_sub(string $x, string $y): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_scalar_random(): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_core_ristretto255_sub(string $p, string $q): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_scalarmult_ristretto255(string $n, string $p): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_scalarmult_ristretto255_base(string $n): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_stream_xchacha20(int $length, string $nonce, string $key): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_stream_xchacha20_xor(string $message, string $nonce, string $key): string {}
+
+#[PhpStormStubsElementAvailable('8.1')]
+function sodium_crypto_stream_xchacha20_keygen(): string {}
 
 /**
  * Can you access AES-256-GCM? This is only available if you have supported
@@ -582,7 +646,14 @@ function sodium_crypto_pwhash_str_verify(string $hash, string $password): bool {
  * @throws SodiumException
  * @since 7.2
  */
-function sodium_crypto_pwhash_scryptsalsa208sha256(int $length, string $password, string $salt, int $opslimit, int $memlimit): string {}
+function sodium_crypto_pwhash_scryptsalsa208sha256(
+    int $length,
+    string $password,
+    string $salt,
+    int $opslimit,
+    int $memlimit,
+    #[PhpStormStubsElementAvailable(from: '7.2', to: '7.4')] $alg = null
+): string {}
 
 /**
  * Get a formatted password hash (for storage)
@@ -953,7 +1024,10 @@ function sodium_version_string(): string {}
  * @throws SodiumException
  * @since 7.2
  */
-function sodium_crypto_scalarmult_base(string $secret_key): string {}
+function sodium_crypto_scalarmult_base(
+    string $secret_key,
+    #[PhpStormStubsElementAvailable(from: '7.2', to: '7.4')] $string_2
+): string {}
 
 /**
  * Creates a random key
@@ -1054,18 +1128,6 @@ function sodium_crypto_secretstream_xchacha20poly1305_keygen(): string {}
 function sodium_crypto_secretstream_xchacha20poly1305_init_push(string $key): array {}
 
 /**
- * @param string &$state
- * @param string $message
- * @param string $additional_data [optional]
- * @param int $tag [optional]
- * @return string
- * @throws SodiumException
- * @since 7.2
- * @see https://www.php.net/manual/en/function.sodium-crypto-secretstream-xchacha20poly1305-push.php
- */
-function sodium_crypto_secretstream_xchacha20poly1305_push(string &$state, string $message, string $additional_data, int $tag): string {}
-
-/**
  * @param string $header
  * @param string $key
  * @return string
@@ -1074,17 +1136,6 @@ function sodium_crypto_secretstream_xchacha20poly1305_push(string &$state, strin
  * @see https://www.php.net/manual/en/function.sodium-crypto-secretstream-xchacha20poly1305-init-pull.php
  */
 function sodium_crypto_secretstream_xchacha20poly1305_init_pull(string $header, string $key): string {}
-
-/**
- * @param string &$state
- * @param string $ciphertext
- * @param string $additional_data
- * @return array|false
- * @throws SodiumException
- * @since 7.2
- * @see https://www.php.net/manual/en/function.sodium-crypto-secretstream-xchacha20poly1305-pull.php
- */
-function sodium_crypto_secretstream_xchacha20poly1305_pull(string &$state, string $ciphertext, string $additional_data = ''): array|false {}
 
 /**
  * @param string &$state

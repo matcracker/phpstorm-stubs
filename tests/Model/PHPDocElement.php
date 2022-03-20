@@ -9,6 +9,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Link;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\DocBlock\Tags\See;
 use phpDocumentor\Reflection\DocBlock\Tags\Since;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use PhpParser\Node;
 use StubTests\Model\Tags\RemovedTag;
 use StubTests\Parsers\DocFactoryProvider;
@@ -18,43 +19,57 @@ trait PHPDocElement
     /**
      * @var Link[]
      */
-    public array $links = [];
+    public $links = [];
 
-    public string $phpdoc = '';
+    /**
+     * @var string
+     */
+    public $phpdoc = '';
 
     /**
      * @var See[]
      */
-    public array $see = [];
+    public $see = [];
 
     /**
      * @var Since[]
      */
-    public array $sinceTags = [];
+    public $sinceTags = [];
 
     /**
      * @var Deprecated[]
      */
-    public array $deprecatedTags = [];
+    public $deprecatedTags = [];
 
     /**
      * @var RemovedTag[]
      */
-    public array $removedTags = [];
+    public $removedTags = [];
 
     /**
      * @var Param[]
      */
-    public array $paramTags = [];
+    public $paramTags = [];
+
+    /**
+     * @var Var_[]
+     */
+    public $varTags = [];
 
     /**
      * @var string[]
      */
-    public array $tagNames = [];
+    public $tagNames = [];
 
-    public bool $hasInheritDocTag = false;
+    /**
+     * @var bool
+     */
+    public $hasInheritDocTag = false;
 
-    public bool $hasInternalMetaTag = false;
+    /**
+     * @var bool
+     */
+    public $hasInternalMetaTag = false;
 
     protected function collectTags(Node $node): void {
         if ($node->getDocComment() !== null) {
@@ -67,6 +82,7 @@ trait PHPDocElement
                     $this->tagNames[] = $tag->getName();
                 }
                 $this->paramTags = $phpDoc->getTagsByName('param');
+                $this->varTags = $phpDoc->getTagsByName('var');
                 $this->links = $phpDoc->getTagsByName('link');
                 $this->see = $phpDoc->getTagsByName('see');
                 $this->sinceTags = $phpDoc->getTagsByName('since');

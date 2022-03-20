@@ -199,7 +199,7 @@ function mb_substitute_character(string|int|null $substitute_character = null): 
  * </p>
  * @return bool true on success or false on failure.
  */
-#[PhpStormStubsElementAvailable(to: '7.4')]
+#[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')]
 function mb_parse_str(string $string, &$result): bool {}
 
 /**
@@ -213,7 +213,7 @@ function mb_parse_str(string $string, &$result): bool {}
  * </p>
  * @return bool true on success or false on failure.
  */
-#[PhpStormStubsElementAvailable('8.0')]
+#[PhpStormStubsElementAvailable(from: '8.0')]
 function mb_parse_str(string $string, &$result): bool {}
 
 /**
@@ -812,7 +812,13 @@ function mb_decode_mimeheader(string $string): string {}
  * @return string|false The character encoding before conversion for success,
  * or false for failure.
  */
-function mb_convert_variables(string $to_encoding, array|string $from_encoding, mixed &$var, mixed &...$vars): string|false {}
+function mb_convert_variables(
+    string $to_encoding,
+    array|string $from_encoding,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] &$vars,
+    #[PhpStormStubsElementAvailable(from: '8.0')] mixed &$var,
+    mixed &...$vars
+): string|false {}
 
 /**
  * Encode character to HTML numeric string reference
@@ -848,25 +854,8 @@ function mb_encode_numericentity(string $string, array $map, ?string $encoding =
  * @return string|false|null The converted string.
  */
 #[Pure]
-#[PhpStormStubsElementAvailable(to: '7.4')]
-function mb_decode_numericentity($string, array $map, ?string $encoding, $is_hex = false): string|false|null {}
-
-/**
- * Decode HTML numeric string reference to character
- * @link https://php.net/manual/en/function.mb-decode-numericentity.php
- * @param string $string <p>
- * The string being decoded.
- * </p>
- * @param int[] $map <p>
- * convmap is an array that specifies
- * the code area to convert.
- * </p>
- * @param null|string $encoding
- * @return string The converted string.
- */
-#[Pure]
-#[PhpStormStubsElementAvailable('8.0')]
-function mb_decode_numericentity($string, array $map, ?string $encoding): string {}
+#[LanguageLevelTypeAware(['8.0' => 'string'], default: 'string|false|null')]
+function mb_decode_numericentity(string $string, array $map, ?string $encoding = null, #[PhpStormStubsElementAvailable(from: '7.2', to: '7.4')] $is_hex = false) {}
 
 /**
  * Send encoded mail
@@ -1439,6 +1428,6 @@ define('MB_CASE_FOLD_SIMPLE', 7);
 /**
  * @since 7.4
  */
-define('MB_ONIGURUMA_VERSION', '6.9.6');
+define('MB_ONIGURUMA_VERSION', '6.9.7');
 
 // End of mbstring v.

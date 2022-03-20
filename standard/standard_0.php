@@ -2,22 +2,29 @@
 
 // Start of standard v.5.3.2-0.dotdeb.1
 
+use JetBrains\PhpStorm\Deprecated;
 use JetBrains\PhpStorm\ExpectedValues;
 use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\TentativeType;
 use JetBrains\PhpStorm\Pure;
 
 class __PHP_Incomplete_Class
 {
-        /**
-         * @var string
-         */
-        public $__PHP_Incomplete_Class_Name;
+    /**
+     * @var string
+     */
+    public $__PHP_Incomplete_Class_Name;
 }
 
 class php_user_filter
 {
-        public $filtername;
-        public $params;
+    #[LanguageLevelTypeAware(['8.1' => 'string'], default: '')]
+    public $filtername;
+
+    #[LanguageLevelTypeAware(['8.1' => 'mixed'], default: '')]
+    public $params;
+
+    public $stream;
 
     /**
      * @link https://php.net/manual/en/php-user-filter.filter.php
@@ -62,18 +69,26 @@ class php_user_filter
      * </td>
      * </tr>
      */
-    public function filter($in, $out, &$consumed, $closing) {}
+    #[TentativeType]
+    public function filter(
+        $in,
+        $out,
+        &$consumed,
+        #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $closing
+    ): int {}
 
     /**
      * @link https://php.net/manual/en/php-user-filter.oncreate.php
      * @return bool
      */
-    public function onCreate() {}
+    #[TentativeType]
+    public function onCreate(): bool {}
 
     /**
      * @link https://php.net/manual/en/php-user-filter.onclose.php
      */
-    public function onClose() {}
+    #[TentativeType]
+    public function onClose(): void {}
 }
 
 /**
@@ -84,11 +99,13 @@ class Directory
     /**
      * @var string The directory that was opened.
      */
+    #[LanguageLevelTypeAware(['8.1' => 'string'], default: '')]
     public $path;
 
     /**
      * @var resource Can be used with other directory functions such as {@see readdir()}, {@see rewinddir()} and {@see closedir()}.
      */
+    #[LanguageLevelTypeAware(['8.1' => 'mixed'], default: '')]
     public $handle;
 
     /**
@@ -256,8 +273,10 @@ function time_sleep_until(float $timestamp): bool {}
  * </tr>
  * </table>
  * </p>
+ * @deprecated 8.1
  */
 #[Pure]
+#[Deprecated(since: '8.1')]
 function strptime(string $timestamp, string $format): array|false {}
 
 /**
@@ -408,7 +427,7 @@ function wordwrap(string $string, int $width = 75, string $break = "\n", bool $c
  * @return string The converted string.
  */
 #[Pure]
-function htmlspecialchars(string $string, int $flags = ENT_COMPAT|ENT_HTML401, ?string $encoding = 'UTF-8', bool $double_encode = true): string {}
+function htmlspecialchars(string $string, int $flags = ENT_QUOTES|ENT_SUBSTITUTE, ?string $encoding = 'UTF-8', bool $double_encode = true): string {}
 
 /**
  * Convert all applicable characters to HTML entities
@@ -454,7 +473,7 @@ function htmlspecialchars(string $string, int $flags = ENT_COMPAT|ENT_HTML401, ?
  * @return string the encoded string.
  */
 #[Pure]
-function htmlentities(string $string, int $flags = ENT_COMPAT, ?string $encoding, bool $double_encode = true): string {}
+function htmlentities(string $string, int $flags = ENT_QUOTES|ENT_SUBSTITUTE, ?string $encoding, bool $double_encode = true): string {}
 
 /**
  * Convert HTML entities  to their corresponding characters
@@ -495,7 +514,7 @@ function htmlentities(string $string, int $flags = ENT_COMPAT, ?string $encoding
  * @return string the decoded string.
  */
 #[Pure]
-function html_entity_decode(string $string, int $flags = ENT_COMPAT, ?string $encoding): string {}
+function html_entity_decode(string $string, int $flags = ENT_QUOTES|ENT_SUBSTITUTE, ?string $encoding): string {}
 
 /**
  * Convert special HTML entities back to characters
@@ -529,7 +548,7 @@ function html_entity_decode(string $string, int $flags = ENT_COMPAT, ?string $en
  * @return string the decoded string.
  */
 #[Pure]
-function htmlspecialchars_decode(string $string, int $flags = ENT_COMPAT): string {}
+function htmlspecialchars_decode(string $string, int $flags = ENT_QUOTES|ENT_SUBSTITUTE): string {}
 
 /**
  * Returns the translation table used by <function>htmlspecialchars</function> and <function>htmlentities</function>
@@ -705,7 +724,7 @@ function htmlspecialchars_decode(string $string, int $flags = ENT_COMPAT): strin
  * @return array the translation table as an array.
  */
 #[Pure]
-function get_html_translation_table(int $table, int $flags = ENT_COMPAT, string $encoding = "UTF-8"): array {}
+function get_html_translation_table(int $table, int $flags = ENT_QUOTES|ENT_SUBSTITUTE, string $encoding = "UTF-8"): array {}
 
 /**
  * Calculate the sha1 hash of a string
@@ -977,7 +996,7 @@ function image_type_to_mime_type(int $image_type): string {}
  * @return string|false A string with the extension corresponding to the given image type.
  */
 #[Pure]
-function image_type_to_extension(int $image_type, $include_dot = true): string|false {}
+function image_type_to_extension(int $image_type, bool $include_dot = true): string|false {}
 
 /**
  * Outputs information about PHP's configuration

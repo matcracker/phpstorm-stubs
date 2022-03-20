@@ -15,6 +15,9 @@ use function array_pop;
 
 class StubsMetaInternalTagTest extends BaseStubsTest
 {
+    /**
+     * @var string[]
+     */
     private static array $overriddenFunctionsInMeta;
 
     public static function setUpBeforeClass(): void
@@ -36,7 +39,7 @@ class StubsMetaInternalTagTest extends BaseStubsTest
                     fn ($refFunction) => $refFunction->name === $function->name
                 );
                 $reflectionFunction = array_pop($reflectionFunctions);
-                if (!$reflectionFunction->hasMutedProblem(StubProblemType::ABSENT_IN_META)) {
+                if ($reflectionFunction !== null && !$reflectionFunction->hasMutedProblem(StubProblemType::ABSENT_IN_META)) {
                     self::checkInternalMetaInOverride($function->name);
                 }
             }
@@ -73,7 +76,6 @@ class StubsMetaInternalTagTest extends BaseStubsTest
     }
 
     /**
-     * @param string $elementName
      * @throws Exception
      */
     private static function checkInternalMetaInOverride(string $elementName): void

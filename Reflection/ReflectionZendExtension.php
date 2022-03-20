@@ -1,6 +1,8 @@
 <?php
 
 use JetBrains\PhpStorm\Immutable;
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\TentativeType;
 use JetBrains\PhpStorm\Pure;
 
 /**
@@ -13,6 +15,7 @@ class ReflectionZendExtension implements Reflector
      * @var string Name of the extension, same as calling the {@see ReflectionZendExtension::getName()} method
      */
     #[Immutable]
+    #[LanguageLevelTypeAware(['8.1' => 'string'], default: '')]
     public $name;
 
     /**
@@ -20,10 +23,10 @@ class ReflectionZendExtension implements Reflector
      *
      * @link https://php.net/manual/en/reflectionzendextension.construct.php
      * @param string $name
-     * @throws \ReflectionException if the extension does not exist.
+     * @throws ReflectionException if the extension does not exist.
      * @since 5.4
      */
-    public function __construct($name) {}
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name) {}
 
     /**
      * Exports a reflected zend extension.
@@ -45,7 +48,8 @@ class ReflectionZendExtension implements Reflector
      * @return string
      * @since 5.4
      */
-    public function __toString() {}
+    #[TentativeType]
+    public function __toString(): string {}
 
     /**
      * Gets name
@@ -55,7 +59,8 @@ class ReflectionZendExtension implements Reflector
      * @since 5.4
      */
     #[Pure]
-    public function getName() {}
+    #[TentativeType]
+    public function getName(): string {}
 
     /**
      * Gets version
@@ -65,7 +70,8 @@ class ReflectionZendExtension implements Reflector
      * @since 5.4
      */
     #[Pure]
-    public function getVersion() {}
+    #[TentativeType]
+    public function getVersion(): string {}
 
     /**
      * Gets author
@@ -75,7 +81,8 @@ class ReflectionZendExtension implements Reflector
      * @since 5.4
      */
     #[Pure]
-    public function getAuthor() {}
+    #[TentativeType]
+    public function getAuthor(): string {}
 
     /**
      * Gets URL
@@ -85,7 +92,8 @@ class ReflectionZendExtension implements Reflector
      * @since 5.4
      */
     #[Pure]
-    public function getURL() {}
+    #[TentativeType]
+    public function getURL(): string {}
 
     /**
      * Gets copyright
@@ -95,7 +103,8 @@ class ReflectionZendExtension implements Reflector
      * @since 5.4
      */
     #[Pure]
-    public function getCopyright() {}
+    #[TentativeType]
+    public function getCopyright(): string {}
 
     /**
      * Clone handler
@@ -104,5 +113,5 @@ class ReflectionZendExtension implements Reflector
      * @return void
      * @since 5.4
      */
-    final private function __clone() {}
+    final private function __clone(): void {}
 }

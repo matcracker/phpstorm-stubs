@@ -86,7 +86,7 @@ function gzgets($stream, ?int $length = 1024): string|false {}
  * The gz-file pointer. It must be valid, and must point to a file
  * successfully opened by <b>gzopen</b>.
  * </p>
- * @param int $length <p>
+ * @param int $length [optional] <p>
  * The length of data to get.
  * </p>
  * @param string $allowable_tags [optional] <p>
@@ -526,7 +526,7 @@ function inflate_get_status(#[LanguageLevelTypeAware(["8.0" => "InflateContext"]
 /**
  * @since 8.0
  */
-class InflateContext
+final class InflateContext
 {
     /**
      * Use inflate_init() instead
@@ -538,7 +538,7 @@ class InflateContext
 /**
  * @since 8.0
  */
-class DeflateContext
+final class DeflateContext
 {
     /**
      * Use deflate_init() instead

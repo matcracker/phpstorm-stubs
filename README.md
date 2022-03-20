@@ -1,9 +1,12 @@
 # phpstorm-stubs 
 
 [![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
-![GitHub Action Status](https://github.com/JetBrains/phpstorm-stubs/workflows/PhpStorm%20Stubs%20Tests/badge.svg?branch=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Total Downloads](https://poser.pugx.org/jetbrains/phpstorm-stubs/downloads)](https://packagist.org/packages/jetbrains/phpstorm-stubs)
+
+[![PhpStorm Stubs Tests](https://github.com/JetBrains/phpstorm-stubs/actions/workflows/main.yml/badge.svg)](https://github.com/JetBrains/phpstorm-stubs/actions/workflows/main.yml)
+[![PhpStorm Stubs PECL Test](https://github.com/JetBrains/phpstorm-stubs/actions/workflows/testPeclExtensions.yml/badge.svg)](https://github.com/JetBrains/phpstorm-stubs/actions/workflows/testPeclExtensions.yml)
+[![PhpStorm Stubs Check Links](https://github.com/JetBrains/phpstorm-stubs/actions/workflows/testLinks.yml/badge.svg)](https://github.com/JetBrains/phpstorm-stubs/actions/workflows/testLinks.yml)
 
 STUBS are normal, syntactically correct PHP files that contain function & class signatures, constant definitions, etc. for all built-in PHP stuff and most standard extensions. Stubs need to include complete [PHPDOC], especially proper @return annotations.
 
@@ -25,11 +28,11 @@ Have a full copy of the .git repo within an IDE and provide its path in `Setting
 The set of extensions enabled by default in PhpStorm can change anytime without prior notice. To learn how to view the enabled extensions, look [here](https://blog.jetbrains.com/phpstorm/2017/03/per-project-php-extension-settings-in-phpstorm-2017-1/).
 
 ### How to run tests
-1. Execute `docker-compose -f docker-compose.yml run php composer install -d /opt/project/phpstorm-stubs --ignore-platform-reqs`
-2. Execute `docker-compose -f docker-compose.yml run php /opt/project/phpstorm-stubs/vendor/bin/phpunit /opt/project/phpstorm-stubs/tests/`
+1. Execute `docker-compose -f docker-compose.yml run test_runner composer install -d /opt/project/phpstorm-stubs --ignore-platform-reqs`
+2. Execute `docker-compose -f docker-compose.yml run -e PHP_VERSION=8.0 test_runner /opt/project/phpstorm-stubs/vendor/bin/phpunit --configuration /opt/project/phpstorm-stubs/phpunit.xml --testsuite PHP_8.0`
 
 ### How to update stub map
-Execute `docker-compose -f docker-compose.yml run php /usr/local/bin/php /opt/project/phpstorm-stubs/generate-stub-map` and commit the resulting `PhpStormStubsMap.php`
+Execute `docker-compose -f docker-compose.yml run test_runner /usr/local/bin/php /opt/project/phpstorm-stubs/tests/Tools/generate-stub-map` and commit the resulting `PhpStormStubsMap.php`
 
 ### License
 [Apache 2]

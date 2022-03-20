@@ -618,6 +618,7 @@ define('FILE_NO_DEFAULT_CONTEXT', 16);
  * </p>
  * @since 5.2.7
  * @link https://php.net/manual/en/filesystem.constants.php
+ * @deprecated 8.1
  */
 define('FILE_TEXT', 0);
 
@@ -628,6 +629,7 @@ define('FILE_TEXT', 0);
  * </p>
  * @since 5.2.7
  * @link https://php.net/manual/en/filesystem.constants.php
+ * @deprecated 8.1
  */
 define('FILE_BINARY', 0);
 
@@ -1016,8 +1018,12 @@ define('IMAGETYPE_ICO', 17);
  */
 define('IMAGETYPE_WEBP', 18);
 define('IMAGETYPE_UNKNOWN', 0);
-define('IMAGETYPE_COUNT', 19);
+define('IMAGETYPE_COUNT', 20);
 
+/**
+ * @since 8.1
+ */
+define('IMAGETYPE_AVIF', 19);
 /**
  * IPv4 Address Resource
  * @link https://php.net/manual/en/network.constants.php

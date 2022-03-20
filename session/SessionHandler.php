@@ -1,4 +1,8 @@
 <?php
+
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\TentativeType;
+
 /**
  * <b>SessionHandlerInterface</b> is an interface which defines
  * a prototype for creating a custom session handler.
@@ -19,7 +23,8 @@ interface SessionHandlerInterface
      * </p>
      * @since 5.4
      */
-    public function close();
+    #[TentativeType]
+    public function close(): bool;
 
     /**
      * Destroy a session
@@ -31,7 +36,8 @@ interface SessionHandlerInterface
      * </p>
      * @since 5.4
      */
-    public function destroy($id);
+    #[TentativeType]
+    public function destroy(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $id): bool;
 
     /**
      * Cleanup old sessions
@@ -40,13 +46,15 @@ interface SessionHandlerInterface
      * Sessions that have not updated for
      * the last maxlifetime seconds will be removed.
      * </p>
-     * @return bool <p>
-     * The return value (usually TRUE on success, FALSE on failure).
+     * @return int|false <p>
+     * Returns the number of deleted sessions on success, or false on failure. Prior to PHP version 7.1, the function returned true on success.
      * Note this value is returned internally to PHP for processing.
      * </p>
      * @since 5.4
      */
-    public function gc($max_lifetime);
+    #[LanguageLevelTypeAware(['7.1' => 'int|false'], default: 'bool')]
+    #[TentativeType]
+    public function gc(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $max_lifetime): int|false;
 
     /**
      * Initialize session
@@ -59,20 +67,25 @@ interface SessionHandlerInterface
      * </p>
      * @since 5.4
      */
-    public function open($path, $name);
+    #[TentativeType]
+    public function open(
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $path,
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name
+    ): bool;
 
     /**
      * Read session data
      * @link https://php.net/manual/en/sessionhandlerinterface.read.php
      * @param string $id The session id to read data for.
-     * @return string <p>
+     * @return string|false <p>
      * Returns an encoded string of the read data.
-     * If nothing was read, it must return an empty string.
+     * If nothing was read, it must return false.
      * Note this value is returned internally to PHP for processing.
      * </p>
      * @since 5.4
      */
-    public function read($id);
+    #[TentativeType]
+    public function read(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $id): string|false;
 
     /**
      * Write session data
@@ -91,7 +104,11 @@ interface SessionHandlerInterface
      * </p>
      * @since 5.4
      */
-    public function write($id, $data);
+    #[TentativeType]
+    public function write(
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $id,
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data
+    ): bool;
 }
 
 /**
@@ -104,9 +121,12 @@ interface SessionIdInterface
     /**
      * Create session ID
      * @link https://php.net/manual/en/sessionidinterface.create-sid.php
-     * @return string
+     * @return string <p>
+     * The new session ID. Note that this value is returned internally to PHP for processing.
+     * </p>
      */
-    public function create_sid();
+    #[TentativeType]
+    public function create_sid(): string;
 }
 
 /**
@@ -120,15 +140,18 @@ interface SessionUpdateTimestampHandlerInterface
 {
     /**
      * Validate session id
+     * @link https://www.php.net/manual/sessionupdatetimestamphandlerinterface.validateid
      * @param string $id The session id
      * @return bool <p>
      * Note this value is returned internally to PHP for processing.
      * </p>
      */
-    public function validateId($id);
+    #[TentativeType]
+    public function validateId(string $id): bool;
 
     /**
      * Update timestamp of a session
+     * @link https://www.php.net/manual/sessionupdatetimestamphandlerinterface.updatetimestamp.php
      * @param string $id The session id
      * @param string $data <p>
      * The encoded session data. This data is the
@@ -139,7 +162,8 @@ interface SessionUpdateTimestampHandlerInterface
      * </p>
      * @return bool
      */
-    public function updateTimestamp($id, $data);
+    #[TentativeType]
+    public function updateTimestamp(string $id, string $data): bool;
 }
 
 /**
@@ -168,7 +192,8 @@ class SessionHandler implements SessionHandlerInterface, SessionIdInterface
      * </p>
      * @since 5.4
      */
-    public function close() {}
+    #[TentativeType]
+    public function close(): bool {}
 
     /**
      * Return a new session ID
@@ -176,7 +201,8 @@ class SessionHandler implements SessionHandlerInterface, SessionIdInterface
      * @return string <p>A session ID valid for the default session handler.</p>
      * @since 5.5.1
      */
-    public function create_sid() {}
+    #[TentativeType]
+    public function create_sid(): string {}
 
     /**
      * Destroy a session
@@ -188,7 +214,8 @@ class SessionHandler implements SessionHandlerInterface, SessionIdInterface
      * </p>
      * @since 5.4
      */
-    public function destroy($id) {}
+    #[TentativeType]
+    public function destroy(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $id): bool {}
 
     /**
      * Cleanup old sessions
@@ -197,13 +224,14 @@ class SessionHandler implements SessionHandlerInterface, SessionIdInterface
      * Sessions that have not updated for
      * the last maxlifetime seconds will be removed.
      * </p>
-     * @return bool <p>
+     * @return int|bool <p>
      * The return value (usually TRUE on success, FALSE on failure).
      * Note this value is returned internally to PHP for processing.
      * </p>
      * @since 5.4
      */
-    public function gc($max_lifetime) {}
+    #[TentativeType]
+    public function gc(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $max_lifetime): int|false {}
 
     /**
      * Initialize session
@@ -216,20 +244,25 @@ class SessionHandler implements SessionHandlerInterface, SessionIdInterface
      * </p>
      * @since 5.4
      */
-    public function open($path, $name) {}
+    #[TentativeType]
+    public function open(
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $path,
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name
+    ): bool {}
 
     /**
      * Read session data
      * @link https://php.net/manual/en/sessionhandler.read.php
      * @param string $id The session id to read data for.
-     * @return string <p>
+     * @return string|false <p>
      * Returns an encoded string of the read data.
      * If nothing was read, it must return an empty string.
      * Note this value is returned internally to PHP for processing.
      * </p>
      * @since 5.4
      */
-    public function read($id) {}
+    #[TentativeType]
+    public function read(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $id): string|false {}
 
     /**
      * Write session data
@@ -248,7 +281,11 @@ class SessionHandler implements SessionHandlerInterface, SessionIdInterface
      * </p>
      * @since 5.4
      */
-    public function write($id, $data) {}
+    #[TentativeType]
+    public function write(
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $id,
+        #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data
+    ): bool {}
 
     /**
      * Validate session id

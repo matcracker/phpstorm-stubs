@@ -278,6 +278,8 @@ define('FILTER_VALIDATE_BOOLEAN', 258);
 /**
  * ID of "boolean" filter.
  * @link https://php.net/manual/en/filter.constants.php
+ * @link https://php.net/manual/en/filter.filters.validate.php
+ * @since 8.0 Using `FILTER_VALIDATE_BOOL` is preferred.
  */
 define('FILTER_VALIDATE_BOOL', 258);
 
@@ -334,12 +336,14 @@ define('FILTER_UNSAFE_RAW', 516);
 /**
  * ID of "string" filter.
  * @link https://php.net/manual/en/filter.constants.php
+ * @deprecated 8.1
  */
 define('FILTER_SANITIZE_STRING', 513);
 
 /**
  * ID of "stripped" filter.
  * @link https://php.net/manual/en/filter.constants.php
+ * @deprecated 8.1
  */
 define('FILTER_SANITIZE_STRIPPED', 513);
 

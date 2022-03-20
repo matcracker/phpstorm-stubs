@@ -40,9 +40,9 @@ class StubsParameterNamesTest extends BaseStubsTest
         $className = $reflectionClass->name;
         $methodName = $reflectionMethod->name;
         if ($reflectionClass instanceof PHPClass) {
-            $stubMethod = PhpStormStubsSingleton::getPhpStormStubs()->getClass($className)->methods[$methodName];
+            $stubMethod = PhpStormStubsSingleton::getPhpStormStubs()->getClass($className)->getMethod($methodName);
         } else {
-            $stubMethod = PhpStormStubsSingleton::getPhpStormStubs()->getInterface($className)->methods[$methodName];
+            $stubMethod = PhpStormStubsSingleton::getPhpStormStubs()->getInterface($className)->getMethod($methodName);
         }
         self::assertNotEmpty(
             array_filter(
@@ -56,7 +56,6 @@ class StubsParameterNamesTest extends BaseStubsTest
 
     /**
      * @param PHPParameter[] $params
-     * @return string
      */
     #[Pure]
     public static function printParameters(array $params): string
