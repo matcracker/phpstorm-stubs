@@ -5,7 +5,7 @@ final class LightArray
 {
     public function __construct(string $payload) {}
 
-    public static function fill(int $level): \pocketmine\world\format\LightArray {}
+    public static function fill(int $level): LightArray {}
 
     public function get(int $x, int $y, int $z): int {}
 
@@ -24,7 +24,7 @@ final class PalettedBlockArray
 {
     public function __construct(int $fillEntry) {}
 
-    public static function fromData(int $bitsPerBlock, string $wordArray, array $palette): \pocketmine\world\format\PalettedBlockArray {}
+    public static function fromData(int $bitsPerBlock, string $wordArray, array $palette): PalettedBlockArray {}
 
     public function getWordArray(): string {}
 
