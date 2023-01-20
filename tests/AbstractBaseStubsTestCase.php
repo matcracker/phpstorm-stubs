@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace StubTests;
 
+use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\BinaryOp\BitwiseOr;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\ConstFetch;
@@ -25,7 +26,7 @@ use function array_pop;
 use function property_exists;
 use function strval;
 
-abstract class BaseStubsTest extends TestCase
+abstract class AbstractBaseStubsTestCase extends TestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -85,6 +86,10 @@ abstract class BaseStubsTest extends TestCase
                 $constant = $parentClass->getConstant((string)$defaultValue->name);;
                 $value = $constant->value;
             }
+        } elseif ($defaultValue === null) {
+            $value = "null";
+        } elseif (is_array($defaultValue) || $defaultValue instanceof Array_) {
+            $value = '[]';
         } else {
             $value = strval($defaultValue);
         }

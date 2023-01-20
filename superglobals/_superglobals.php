@@ -34,6 +34,7 @@ $_ENV = [];
 $_SERVER = [];
 /**
  * @deprecated 4.1
+ * @removed 5.4
  */
 $HTTP_SERVER_VARS = [];
 
@@ -77,6 +78,7 @@ $_SERVER['ORIG_PATH_INFO'] = '';
 
 /**
  * @xglobal $argc int
+ * @type int<1, max>
  *
  * The number of arguments passed to script
  *
@@ -93,7 +95,7 @@ $argc = 0;
  * <p><a href="https://secure.php.net/manual/en/reserved.variables.php">
  * https://secure.php.net/manual/en/reserved.variables.php</a>
  */
-$argv = [];
+$argv = [1 + 1 => "a" . "b"];
 
 /**
  * @xglobal $php_errormsg string
@@ -101,5 +103,6 @@ $argv = [];
  *
  * <p><a href="https://secure.php.net/manual/en/reserved.variables.php">
  * https://secure.php.net/manual/en/reserved.variables.php</a>
+ * @deprecated 7.2
  */
 $php_errormsg = '';
