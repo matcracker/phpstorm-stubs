@@ -6754,8 +6754,8 @@ function intltz_get_id_for_windows_id(string $timezoneId, ?string $region = null
  * @link https://php.net/manual/en/intl.constants.php
  */
 define('INTL_MAX_LOCALE_LEN', 156);
-define('INTL_ICU_VERSION', "71.1");
-define('INTL_ICU_DATA_VERSION', "71.1");
+define('INTL_ICU_VERSION', "72.1");
+define('INTL_ICU_DATA_VERSION', "72.1");
 define('ULOC_ACTUAL_LOCALE', 0);
 define('ULOC_VALID_LOCALE', 1);
 define('GRAPHEME_EXTR_COUNT', 0);
@@ -7208,7 +7208,11 @@ class IntlBreakIterator implements IteratorAggregate
      */
     #[Pure]
     #[TentativeType]
-    public function getPartsIterator(#[TypeAware(['8.0' => 'string'], default: '')] $type = IntlPartsIterator::KEY_SEQUENTIAL): IntlPartsIterator {}
+    public function getPartsIterator(
+        #[TypeAware(['8.0' => 'int'], default: '')]
+        #[EV([IntlPartsIterator::KEY_SEQUENTIAL, IntlPartsIterator::KEY_LEFT, IntlPartsIterator::KEY_RIGHT])]
+        $type = IntlPartsIterator::KEY_SEQUENTIAL
+    ): IntlPartsIterator {}
 
     /**
      * (PHP 5 &gt;=5.5.0)<br/>
